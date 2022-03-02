@@ -212,9 +212,9 @@ plot_distr.patchdistr_sews <- function(x, along = NULL, best_only = TRUE,
 
 #'@export
 plot_distr.patchdistr_sews_single <- function(x, 
-                                               along = NULL, 
-                                               best_only = TRUE, 
-                                               plrange = TRUE) { 
+                                              along = NULL, 
+                                              best_only = TRUE, 
+                                              plrange = TRUE) { 
   
   if ( !is.null(along) ) { 
     warning('Ignoring along parameter when plotting only one patch-size', 
@@ -228,9 +228,10 @@ plot_distr.patchdistr_sews_single <- function(x,
   plot <- ggplot() + 
     scale_x_continuous(trans = "log10") +
     scale_y_continuous(trans = "log10") + 
-    xlab('Patch size') + 
-    ylab('Frequency (P>=x)') + 
-    theme_spwarnings()
+    spatialwarnings:::theme_spwarnings() +
+    labs(x = 'Patch size',
+         y = 'Observed frequency (P>=x)',
+         color = 'Fitted type')
   
   # If plrange exists, then add it to the plot 
   plrange_dat <- x[['plrange']]
@@ -252,10 +253,37 @@ plot_distr.patchdistr_sews_single <- function(x,
   # It can happen that no distribution have been fitted. Check for that 
   # before plotting otherwize it produces an error. 
   if ( any(!is.na(values[['pred']][ ,"y"])) ) { 
+    trimmed <- data.frame(na.omit(values[["pred"]])) # remove NA rows
+    
+    # y intercept correction for xmin_fit != 1
+    
+    xmins_for_fit <- x$psd_type$xmin_fit # compare xmin used for fit with xmin_est
+    xmin_est <- x$plrange$xmin_est
+    
+    if (all(xmins_for_fit != 1) && xmin_est != 1){
+      cpsd <- spatialwarnings:::cumpsd(x$psd_obs)
+      intercept <- cpsd[cpsd$patchsize == xmin_est,"y"]
+      
+      # Ensure that we are still plotting something if xmin_est 
+      # is not in cpsd$patchsize
+      if (is.na(intercept)){
+        intercept <- 1
+        warning('No patch size frequency was available for estimated xmin,',
+                'fitted distributions plotted with a y-offset')
+      }
+      
+      # correct predicted values (we're in log scale so it's a multiplication)
+      trimmed$y <- intercept*trimmed$y
+      # for tpl, pl (and lnorm ?), predicted values for x < xmin make no sense
+      trimmed <- dplyr::filter(trimmed, !(type != "exp" & patchsize < xmin_est))
+    }
+    
+    # after correction (or not), plot fitted distributions
+    
     plot <- plot + 
       geom_line(aes_string(x = "patchsize", y = "y", color = "type"), 
-                data = values[["pred"]])
-      
+                data = trimmed)
+    
   } else { 
     warning('No distribution has been fitted to the observed patch size distribution')
   }

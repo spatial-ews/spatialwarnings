@@ -228,7 +228,7 @@ plot_distr.patchdistr_sews_single <- function(x,
   plot <- ggplot() + 
     scale_x_continuous(trans = "log10") +
     scale_y_continuous(trans = "log10") + 
-    spatialwarnings:::theme_spwarnings() +
+    theme_spwarnings() +
     labs(x = 'Patch size',
          y = 'Observed frequency (P>=x)',
          color = 'Fitted type')
@@ -261,7 +261,7 @@ plot_distr.patchdistr_sews_single <- function(x,
     xmin_est <- x$plrange$xmin_est
     
     if (all(xmins_for_fit != 1) && xmin_est != 1){
-      cpsd <- spatialwarnings:::cumpsd(x$psd_obs)
+      cpsd <- cumpsd(x$psd_obs)
       intercept <- cpsd[cpsd$patchsize == xmin_est,"y"]
       
       # Ensure that we are still plotting something if xmin_est 

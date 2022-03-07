@@ -166,11 +166,11 @@ patchdistr_sews <- function(mat,
     xmin_bounds <- range(psd)
   }
   
-  # Estimate power-law range and set xmin to the estimated value if set to 
+  # Estimate power-law range and set xmin to its estimated value if set to 
   # auto. 
   plr_est <- plrange(psd, xmin_bounds)
   if ( xmin == "estimate" ) { 
-    xmin <- plr_est['xmin_est']
+    xmin <- plr_est[ ,'xmin_est'] # plrange returns a data frame
   }
   
   # Compute percolation 

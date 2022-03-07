@@ -222,7 +222,7 @@ plot_distr.patchdistr_sews_single <- function(x,
   }
   
   # Get plottable data.frames
-  values <- predict(x, best_only = best_only)  
+  values <- predict(x, best_only = best_only, xmin_rescale = TRUE)  
   
   # Create base plot 
   plot <- ggplot() + 
@@ -251,38 +251,23 @@ plot_distr.patchdistr_sews_single <- function(x,
     geom_point(aes_string(x = "patchsize", y = "y"), data = values[['obs']]) 
   
   # It can happen that no distribution have been fitted. Check for that 
-  # before plotting otherwize it produces an error. 
+  # before plotting otherwise it produces an error. 
   if ( any(!is.na(values[['pred']][ ,"y"])) ) { 
-    trimmed <- data.frame(na.omit(values[["pred"]])) # remove NA rows
     
-    # y intercept correction for xmin_fit != 1
+    # Get data and remove NAs (where no fit has been carried out
+    pred_values <- values[["pred"]]
+    pred_values <- pred_values[!is.na(pred_values[ ,"y"]), ]
     
-    xmins_for_fit <- x$psd_type$xmin_fit # compare xmin used for fit with xmin_est
-    xmin_est <- x$plrange$xmin_est
+    # Use only the y values of the fit that falls within the range of the observed 
+    # values. Otherwise fit curves can go very low and we don't see a thing on the plot 
+    pred_values <- pred_values[pred_values[ ,"y"] >= min(values[["obs"]]) & 
+                               pred_values[ ,"y"] <= max(values[["obs"]]), ]
     
-    if (all(xmins_for_fit != 1) && xmin_est != 1){
-      cpsd <- cumpsd(x$psd_obs)
-      intercept <- cpsd[cpsd$patchsize == xmin_est,"y"]
-      
-      # Ensure that we are still plotting something if xmin_est 
-      # is not in cpsd$patchsize
-      if (is.na(intercept)){
-        intercept <- 1
-        warning('No patch size frequency was available for estimated xmin,',
-                'fitted distributions plotted with a y-offset')
-      }
-      
-      # correct predicted values (we're in log scale so it's a multiplication)
-      trimmed$y <- intercept*trimmed$y
-      # for tpl, pl (and lnorm ?), predicted values for x < xmin make no sense
-      trimmed <- dplyr::filter(trimmed, !(type != "exp" & patchsize < xmin_est))
+    if ( nrow(pred_values) > 0 ) { 
+      plot <- plot + 
+        geom_line(aes_string(x = "patchsize", y = "y", color = "type"), 
+                  data = pred_values)
     }
-    
-    # after correction (or not), plot fitted distributions
-    
-    plot <- plot + 
-      geom_line(aes_string(x = "patchsize", y = "y", color = "type"), 
-                data = trimmed)
     
   } else { 
     warning('No distribution has been fitted to the observed patch size distribution')
@@ -293,16 +278,16 @@ plot_distr.patchdistr_sews_single <- function(x,
 
 #'@export
 plot_distr.patchdistr_sews_list <- function(x, 
-                                             along = NULL, 
-                                             best_only = TRUE, 
-                                             plrange = TRUE) { 
+                                            along = NULL, 
+                                            best_only = TRUE, 
+                                            plrange = TRUE) { 
   
   if ( !is.null(along) && (length(along) != length(x)) ) { 
     stop('The along values are unfit for plotting (size mismatch)')
   }
   
   # Get plottable data.frames
-  values <- predict(x, best_only = best_only)
+  values <- predict(x, best_only = best_only, xmin_rescale = TRUE)
   
   values[['obs']][ ,"along"]  <- values[['obs']][ ,'matrixn']
   values[['pred']][ ,"along"] <- values[['pred']][ ,'matrixn']
@@ -352,15 +337,30 @@ plot_distr.patchdistr_sews_list <- function(x,
                data = values[['obs']]) 
   
   # It can happen that no distribution have been fitted. Check for that 
-  # before plotting otherwize it produces an error. 
+  # before plotting otherwise it produces an error. 
   if ( any(!is.na(values[['pred']][ ,"y"])) ) { 
     # Get data and remove NAs (where no fit has been carried out
     pred_values <- values[["pred"]]
-    pred_values <- pred_values[!is.na(pred_values[ ,"type"]), ]
+    pred_values <- pred_values[! is.na(pred_values[ ,"type"]) & 
+                               ! is.na(pred_values[ ,"y"]), ]
+    
+    # Use only the y values of the fit that falls within the range of the observed 
+    # values. Otherwise fit curves can go very low and we don't see a thing on the plot 
+    pred_values <- pred_values[pred_values[ ,"y"] >= min(values[["obs"]]) & 
+                               pred_values[ ,"y"] <= max(values[["obs"]]), ]
+    if ( any(is.na(pred_values[ ,"type"])) ) browser()
+    
+    if ( nrow(pred_values) > 0 ) { 
+      plot <- plot + 
+        geom_line(aes_string(x = "patchsize", y = "y", color = "type"), 
+                  data = pred_values)
+    }
     
     plot <- plot + 
-              geom_line(aes_string(x = "patchsize", y = "y", color = "type", 
-                                   group = "matrixn"), 
+              geom_line(aes_string(x = "patchsize", 
+                                   y = "y", 
+                                   color = "type", 
+                                   group = "paste(type, matrixn)"), 
                         data = pred_values)
 
   } else { 
@@ -393,6 +393,10 @@ plot_distr.patchdistr_sews_list <- function(x,
 #' @param best_only Return values for only the best fit of each element (matrix)
 #'   in \code{object}, or return the values for all fitted distribution. 
 #' 
+#' @param xmin_rescale If the xmin value used for fits is above one, then setting this
+#'   to \code{TRUE} will rescale the predicted probabilities so that they align on 
+#'   the cumulative distribution of the observed patch sizes 
+#' 
 #' @return A list with component obs, a data.frame containing the observed 
 #'   distribution values and pred, a data.frame containing the fitted 
 #'   values. 
@@ -415,14 +419,17 @@ plot_distr.patchdistr_sews_list <- function(x,
 #' 
 #'@export
 predict.patchdistr_sews_single <- function(object, ..., 
-                                            newdata = NULL,
-                                            best_only = FALSE) { 
+                                           newdata = NULL,
+                                           best_only = FALSE, 
+                                           xmin_rescale = FALSE) { 
   
   # Get observed values
   vals_obs <- cumpsd(object[["psd_obs"]])
   
   # Shapes table
   shptbl <- object[['psd_type']]
+  xmin_used <- shptbl[1, "xmin_fit"] # should be the same for all distribs
+  stopifnot(length(unique(shptbl[ , "xmin_fit"])) == 1) # enforce it
   
   # Bail if no fit carried out. Note that we need to set classes in the 
   # output pred df otherwise coercion when merging with existing results 
@@ -435,10 +442,12 @@ predict.patchdistr_sews_single <- function(object, ...,
     return(result)
   }
   
-  # Create x vector of values
+  # Create x vector of values. We predict only values above xmin, as the distribution 
+  # is undefined below that. 
   if ( is.null(newdata) ) { 
-    newdata <- unique( round(10^(seq(0, log10(max(object[["psd_obs"]])), 
-                                     length.out = 200))) )
+    newdata <- unique( round(10^(seq(log10(xmin_used), 
+                                     log10(max(object[["psd_obs"]])), 
+                                     length.out = 256))) )
   }
   
   if ( best_only ) { 
@@ -450,27 +459,38 @@ predict.patchdistr_sews_single <- function(object, ...,
   for ( type in shptbl[ ,"type"] ) { 
     type_yvals <- switch(type, 
                          pl  = ippl(newdata, 
-                                   shptbl[type, "plexpo"], 
-                                   shptbl[type, "xmin_fit"]),
-                         tpl = iptpl(newdata, 
                                     shptbl[type, "plexpo"], 
-                                    shptbl[type, "cutoff"], 
-                                    shptbl[type, 'xmin_fit']),
+                                    shptbl[type, "xmin_fit"]),
+                         tpl = iptpl(newdata, 
+                                     shptbl[type, "plexpo"], 
+                                     shptbl[type, "cutoff"], 
+                                     shptbl[type, 'xmin_fit']),
                          exp = ipdisexp(newdata,  
-                                       shptbl[type, "cutoff"], 
-                                       shptbl[type, "xmin_fit"]),
+                                        shptbl[type, "cutoff"], 
+                                        shptbl[type, "xmin_fit"]),
                          lnorm = ipdislnorm(newdata, 
-                                           shptbl[type, "meanlog"], 
-                                           shptbl[type, "sdlog"],  
-                                           shptbl[type, "xmin_fit"]))
+                                            shptbl[type, "meanlog"], 
+                                            shptbl[type, "sdlog"],  
+                                            shptbl[type, "xmin_fit"]))
     
     vals_pred <- rbind(vals_pred, 
-                       data.frame(type = type, patchsize = newdata, 
+                       data.frame(type = type, 
+                                  patchsize = newdata, 
                                   y = type_yvals))
   }
   
-  # Crop data to y range
-  vals_pred <- vals_pred[ vals_pred[ ,'y'] >= min(vals_obs[ ,'y']), ] 
+  # If xmin > 1, we need to rescale the values by a factor so that the probability 
+  # matches the observed data in the cumulative distribution representation. This is 
+  # mainly used when plotting the distributions. 
+  if ( xmin_rescale ) { 
+    # We use approx because there is no guarantee that the xmin used falls on an 
+    # observed patch size
+    scale_factor <- approx(vals_obs[ ,"patchsize"], 
+                           vals_obs[ ,"y"], 
+                           xmin_used)[["y"]]
+    
+    vals_pred[ ,"y"] <- vals_pred[ ,"y"] * scale_factor
+  }
   
   # Return data
   return( list(obs = vals_obs, 
@@ -479,10 +499,13 @@ predict.patchdistr_sews_single <- function(object, ...,
 
 #'@export
 predict.patchdistr_sews_list <- function(object, ..., 
-                                          newdata = NULL, best_only = FALSE) { 
+                                         newdata = NULL, 
+                                         best_only = FALSE, 
+                                         xmin_rescale = FALSE) { 
   
   dat <- lapply(object, predict.patchdistr_sews_single, 
-                newdata = newdata, best_only = best_only)
+                newdata = newdata, best_only = best_only, 
+                xmin_rescale = xmin_rescale)
   
   # Add id but handle when psd is empty
   add_id <- function(n, x) { 
@@ -635,7 +658,7 @@ print.patchdistr_sews_list <- function(x, ...) {
 # Helper function 
 # ---------------
 # Get the inverse cumulative distribution of a psd (P(x >= k)). x here are the 
-# values at which to evalue the inverse cumulative psd. 
+# values at which to evaluate the inverse cumulative psd. 
 cumpsd <- function(dat, x = sort(unique(dat))) { 
   N <- length(dat)
   y <- sapply(x, function(k) { sum(dat >= k) / N })

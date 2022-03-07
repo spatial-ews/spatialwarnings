@@ -5,7 +5,7 @@
 \alias{predict.patchdistr_sews_single}
 \title{predict method for patchdistr_sews objects}
 \usage{
-\method{predict}{patchdistr_sews_single}(object, ..., newdata = NULL, best_only = FALSE)
+\method{predict}{patchdistr_sews_single}(object, ..., newdata = NULL, best_only = FALSE, xmin_rescale = FALSE)
 }
 \arguments{
 \item{object}{An \code{\link{patchdistr_sews}} object}
@@ -17,6 +17,10 @@ to 200 regularly-spaced values).}
 
 \item{best_only}{Return values for only the best fit of each element (matrix)
 in \code{object}, or return the values for all fitted distribution.}
+
+\item{xmin_rescale}{If the xmin value used for fits is above one, then setting this
+to \code{TRUE} will rescale the predicted probabilities so that they align on 
+the cumulative distribution of the observed patch sizes}
 }
 \value{
 A list with component obs, a data.frame containing the observed 

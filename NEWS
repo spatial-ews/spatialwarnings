@@ -1,4 +1,18 @@
 
+spatialwarnings v3.0.3 (Release date: unknown)
+==============================================
+  
+This release has received external contributions from J. Guerber.
+
+Improvements: 
+
+  * In patch size distribution plots, fits are now rescaled when xmin is above 1 
+      so they overlay nicely on the observed distribution
+
+Bug fixes: 
+  
+  * Fixed an error occurring when using xmin = "estimate" in patchdistr_sews
+
 spatialwarnings v3.0.2 (Release date: 2021-12-16)
 =================================================
   

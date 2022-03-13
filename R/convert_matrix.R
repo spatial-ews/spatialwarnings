@@ -35,6 +35,15 @@ convert_to_matrix.matrix <- function(object, ...) {
   object
 }
 
+#'@export 
+convert_to_matrix.factor <- function(object, ...) { 
+  if ( is.matrix(object) ) { 
+    convert_to_matrix.matrix(object) 
+  } else { 
+    stop("This factor object has no dimensions. I cannot convert it to a matrix.")
+  }
+}
+
 #'@export
 convert_to_matrix.list <- function(object, ...) { 
   lapply(object, convert_to_matrix) 

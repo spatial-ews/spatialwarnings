@@ -8,7 +8,7 @@ NULL
 check_mat <- function(mat, NAerror = TRUE) { 
   
   # Not a matrix or something we can handle ? 
-  if ( ! inherits(mat, "matrix") ) {
+  if ( ! is.matrix(mat) ) {
     stop('I don\'t know what to do with an object of class ', class(mat))
   }
   

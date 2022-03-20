@@ -12,6 +12,8 @@ Improvements:
 Bug fixes: 
   
   * Fixed an error occurring when using xmin = "estimate" in patchdistr_sews
+  
+  * Remove calls to assert() that were leftover from testing
 
 spatialwarnings v3.0.2 (Release date: 2021-12-16)
 =================================================

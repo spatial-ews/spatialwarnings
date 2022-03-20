@@ -1,9 +1,11 @@
 Dear CRAN maintainers, 
 
-I hope you are having a good end of year. 
+This is a minor update to the spatialwarnings package with minor improvements, along 
+with a few bug fixes. 
 
-This is a minor update to the spatialwarnings package to fix a few bugs and
-inaccurracies in computations.
+This release should fix the problem with leftovers 'assert()' raised by Prof. Brian 
+Ripley. Thanks for pointing those out, I thought they were stripped from CRAN package 
+builds. 
 
 Thanks in advance, 
 
@@ -36,14 +38,20 @@ above), probably due to the use of Rcpp:
 
 ## Changes in this release
 
+This release has received external contributions from J. Guerber.
+
 Improvements: 
+
+  * In patch size distribution plots, fits are now rescaled when xmin is above 1 
+      so they overlay nicely on the observed distribution
   
-  * Matrix attributes are now preserved when generating null matrices (except 
-      when shuffling the original matrix, null_method = 'perm')
+  * Better handling of errors in segmented::segmented() when fitting variograms 
   
 Bug fixes: 
   
-  * Computation of Moran's I is now accurate for small matrices
+  * Fixed an error occurring when using xmin = "estimate" in patchdistr_sews
+  
+  * Remove calls to assert() that were leftover from testing (CRAN policy)
   
   
   

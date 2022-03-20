@@ -1,13 +1,14 @@
+
 Dear CRAN maintainers, 
 
 This is a minor update to the spatialwarnings package with minor improvements, along 
 with a few bug fixes. 
 
-This release should fix the problem with leftovers 'assert()' raised by Prof. Brian 
+This release should fix the problem with leftovers 'assert()s' raised by Prof. Brian 
 Ripley. Thanks for pointing those out, I thought they were stripped from CRAN package 
 builds. 
 
-Thanks in advance, 
+Thanks, 
 
 Alexandre Génin
 
@@ -22,7 +23,10 @@ This package was tested using the following environments:
     ubuntu-latest with R-oldrel): 
      https://travis-ci.org/spatial-ews/spatialwarnings
  
- * Local linux computer (Arch Linux as of 2021-12-14, R 4.1.2)
+ * Local linux computer (Arch Linux as of 2021-03-10, R 4.1.2)
+ 
+ * M1 Mac using https://mac.r-project.org/macbuilder/submit.html (results at: 
+     https://mac.r-project.org/macbuilder/results/1647797175-da4b0c2b39e71edf/)
  
 ## R CMD check results
 

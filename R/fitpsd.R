@@ -58,15 +58,15 @@ optim_safe <- function(f, pars0,
             control = list(maxit = ITERLIM), 
             method = "BFGS", ...)
     }, silent = TRUE)
-#     if (class(optiresult_bfgs) == "try-error") browser()
+    
     # If success, go with BFGS results
-    if ( class(optiresult_bfgs) != "try-error" ) { 
+    if ( inherits(optiresult_bfgs, "try-error") ) { 
       optiresult <- optiresult_bfgs
     }
   }
   
   # If we could not reach a proper solution, report an error
-  if ( class(optiresult) == "try-error" ) { 
+  if ( inherits(optiresult, "try-error") ) { 
     optiresult <- list(value  = NaN, 
                        par = rep(NaN, length(pars0)), 
                        convergence = 128) 

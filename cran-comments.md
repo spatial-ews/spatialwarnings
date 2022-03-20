@@ -28,6 +28,8 @@ This package was tested using the following environments:
  * M1 Mac using https://mac.r-project.org/macbuilder/submit.html (results at: 
      https://mac.r-project.org/macbuilder/results/1647797175-da4b0c2b39e71edf/)
  
+ 
+ 
 ## R CMD check results
 
 One remaining NOTE occurred on some platforms: 
@@ -36,9 +38,10 @@ The package size is sometimes reported as exceeding 1Mb (on ubuntu platforms
 above), probably due to the use of Rcpp: 
 
 * checking installed package size ... NOTE
-  installed size is  7.9Mb
-  sub-directories of 1Mb or more:
-    libs   6.6Mb
+    installed size is  7.9Mb
+    sub-directories of 1Mb or more:
+      libs   6.6Mb
+
 
 ## Changes in this release
 

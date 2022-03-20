@@ -37,25 +37,28 @@ test_that("Moran correlation is computed correctly", {
   expect_true( abs( raw_moran(m1) - 1 ) < 0.01 )
   within_bounds(raw_moran(m1))
   
-  # Test our implementation against the one in package raster
-  if ( requireNamespace("raster", quietly = TRUE) ) { 
-    c <- seq(0.01, 0.99, l = 21)
-    w <- matrix(c(0, 1, 0, 1, 0, 1, 0, 1, 0), byrow = TRUE, ncol = 3)
-    
-    for ( i in seq_along(c) ) { 
-      m <- matrix(runif(n) < c[i], ncol = sqrt(n))
-      diffidx <- abs( raw_moran(m) - raster::Moran(raster::raster(m), w) )
-      if ( ! is.nan(diffidx) ) { 
-        expect_true( diffidx < 1e-10 )
+  if ( exists("EXTENDED_TESTS") && EXTENDED_TESTS ) { 
+    # Test our implementation against the one in package raster
+    # Note that raster produces warnings that do not affect us
+    if ( suppressWarnings( requireNamespace("raster", quietly = TRUE) ) ) { 
+      c <- seq(0.01, 0.99, l = 21)
+      w <- matrix(c(0, 1, 0, 1, 0, 1, 0, 1, 0), byrow = TRUE, ncol = 3)
+      
+      for ( i in seq_along(c) ) { 
+        m <- matrix(runif(n) < c[i], ncol = sqrt(n))
+        diffidx <- abs( raw_moran(m) - raster::Moran(raster::raster(m), w) )
+        if ( ! is.nan(diffidx) ) { 
+          expect_true( diffidx < 1e-10 )
+        }
       }
+      expect_true({ 
+        abs(raw_moran(c1) - raster::Moran(raster::raster(c1), w)) < 1e-10
+      })
+      expect_true({ 
+        abs(raw_moran(c2) - raster::Moran(raster::raster(c2), w)) < 1e-10
+      })
+      
     }
-    expect_true({ 
-      abs(raw_moran(c1) - raster::Moran(raster::raster(c1), w)) < 1e-10
-    })
-    expect_true({ 
-      abs(raw_moran(c2) - raster::Moran(raster::raster(c2), w)) < 1e-10
-    })
-    
   }
   
 })

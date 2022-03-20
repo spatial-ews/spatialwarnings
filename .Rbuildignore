@@ -9,14 +9,12 @@
 README.md
 cran-comments.md
 ^codecov\.yml$
-^tools/export_Rforge.sh$
-tools/imgs
+^tools$
 ^vignettes/using-spatialwarnings_cache/.*$
 ^vignettes/using-spatialwarnings_files/.*$
 ^tests/testthat/pli-R-v0.0.3-2007-07-25.*$
 ^file.*$ 
 ^foo.o$
-^tools/pkg_check.R$
 ^\.unison.*$
 ^examples_i386$
 ^examples_x64$
@@ -29,3 +27,4 @@ tools/imgs
 ^.git$
 ^\.github$
 ^.*vgcore.*$
+^test.sh$

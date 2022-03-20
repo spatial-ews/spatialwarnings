@@ -390,22 +390,26 @@ fit_variogram <- function(mat, model, nmax, nbins, cutoff) {
   
   # Fit variogram. We first use a segmented regression to find a breakpoint in 
   # the empirical variogram, then use that as starting values for correlation 
-  # range. 
-  brk_model <- suppressWarnings({ 
+  # range. Note that the segmented regression can fail, especially when we start giving
+  # null data to it, so we wrap it in a try() block.
+  brk_model <- try(suppressWarnings({ 
     segmented::segmented(lm(gamma ~ dist, 
                             data = vario))
-  })
-  brk_coefs <- coef(brk_model)
+  }), silent = TRUE)
   
-  # Extract the break value, if there is one
-  nugget0 <- max(0, as.vector(brk_coefs["(Intercept)"]))
-  if ( !is.null(brk_model[["psi"]][2]) ) { 
-    range0 <- brk_model[["psi"]][2]
-    psill0 <- abs(nugget0 - median(vario[vario$dist > range0, "gamma"]))
-  } else { 
-    range0 <- 1/3 * (max(vario[ ,"dist"]) - min(vario[ ,"dist"]))
-    psill0 <- 0
-  }
+  range0 <- 1/3 * (max(vario[ ,"dist"]) - min(vario[ ,"dist"]))
+  psill0 <- 0
+  nugget0 <- 0
+  if ( ! inherits(brk_model, "try-error") ) { 
+    brk_coefs <- coef(brk_model)
+    # Extract the break value, if there is one
+    nugget0 <- max(0, as.vector(brk_coefs["(Intercept)"]))
+    if ( ! is.null(brk_model[["psi"]][2]) ) { 
+      range0 <- brk_model[["psi"]][2]
+      psill0 <- abs(nugget0 - median(vario[vario$dist > range0, "gamma"]))
+    } 
+  } 
+  
   pars0 <- c(nugget = nugget0, psill  = psill0, range  = range0)
   
   # Objective function

@@ -96,3 +96,30 @@ test_that("the cpp implementation of the spectrum computations is correct", {
   
 })
 
+test_that("rspectrum/sdr show realistic values", { 
+  
+  
+  # The expected value of sdr on random matrices is one 
+  sdr_random <- mean(replicate(299, { 
+    n <- 100
+    m <- matrix(rnorm(n^2), nrow = n, ncol = n)
+    raw_sdr(m, c(0, 0.2), c(0, 1))
+  }))
+  
+  expect_true({ 
+    abs(sdr_random - 1 ) < 0.1
+  })
+  
+  # When there is reddening, the sdr increases 
+  sdr_red <- mean(replicate(299, { 
+    n <- 100
+    m <- matrix(rnorm(n^2), nrow = n, ncol = n)
+    m[2:n, 2:n] <- (m[2:n, 2:n] + m[1:(n-1), 1:(n-1)]) / 2
+    raw_sdr(m, c(0, 0.2), c(0, 1))
+  }))
+  
+  expect_true({ 
+    sdr_red > 1 
+  })
+  
+})

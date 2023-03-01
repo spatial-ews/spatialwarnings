@@ -31,5 +31,5 @@ Suggests:
     raster
 LinkingTo: Rcpp, RcppArmadillo
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Encoding: UTF-8

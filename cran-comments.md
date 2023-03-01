@@ -26,7 +26,7 @@ This package was tested using the following environments:
  * Local linux computer (Arch Linux as of 2021-03-10, R 4.1.2)
  
  * M1 Mac using https://mac.r-project.org/macbuilder/submit.html (results at: 
-     https://mac.r-project.org/macbuilder/results/1647797175-da4b0c2b39e71edf/)
+     https://mac.r-project.org/macbuilder/results/1647804133-ff347830befb7607/)
  
  
  

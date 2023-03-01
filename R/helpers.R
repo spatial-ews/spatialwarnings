@@ -93,5 +93,5 @@ list_methods <- function(class,
 # Wrapper around future_lapply to set future.seed = TRUE so that random number 
 # generation in child processes is correct. 
 future_lapply_seed <- function(...) { 
-  future.apply::future_lapply(..., future.seed = TRUE)
+  future.apply::future_lapply(..., future.globals = FALSE, future.seed = TRUE)
 }

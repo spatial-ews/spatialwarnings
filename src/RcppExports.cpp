@@ -11,6 +11,20 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// clustering_core
+arma::Mat<arma::uword> clustering_core(arma::Mat<unsigned short> m, arma::uword nstates, bool wrap, bool use_8_nb);
+RcppExport SEXP _spatialwarnings_clustering_core(SEXP mSEXP, SEXP nstatesSEXP, SEXP wrapSEXP, SEXP use_8_nbSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::Mat<unsigned short> >::type m(mSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type nstates(nstatesSEXP);
+    Rcpp::traits::input_parameter< bool >::type wrap(wrapSEXP);
+    Rcpp::traits::input_parameter< bool >::type use_8_nb(use_8_nbSEXP);
+    rcpp_result_gen = Rcpp::wrap(clustering_core(m, nstates, wrap, use_8_nb));
+    return rcpp_result_gen;
+END_RCPP
+}
 // coarse_grain_cpp
 NumericMatrix coarse_grain_cpp(NumericMatrix mat, int subsize);
 RcppExport SEXP _spatialwarnings_coarse_grain_cpp(SEXP matSEXP, SEXP subsizeSEXP) {
@@ -173,6 +187,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_spatialwarnings_clustering_core", (DL_FUNC) &_spatialwarnings_clustering_core, 4},
     {"_spatialwarnings_coarse_grain_cpp", (DL_FUNC) &_spatialwarnings_coarse_grain_cpp, 2},
     {"_spatialwarnings_fl_internal", (DL_FUNC) &_spatialwarnings_fl_internal, 1},
     {"_spatialwarnings_label_cpp", (DL_FUNC) &_spatialwarnings_label_cpp, 3},

@@ -10,6 +10,7 @@
 # greater than 1.5 times the mean patch size have zero probability.
 # 
 
+#'@export
 lsw_sews <- function(mat, wrap = FALSE) { 
   compute_indicator(mat, raw_lsw_sews, 
                     wrap = wrap, 
@@ -53,12 +54,11 @@ raw_lsw_sews <- function(mat, wrap) {
 fit_lnorm <- function(xs) { 
   
   negll <- function(theta) { 
-    - sum( dlnorm(xs, mean = theta[1], sd = theta[2]) )
+    - sum( dlnorm(xs, meanlog = theta[1], sdlog = theta[2], log = TRUE) )
   }
   
   # TODO: check that this makes sense and I haven't been confused by the logs, also 
-  # there is probably an explicit formula for the mle of a lognormal 
-  # (mean of log / sd of log? )
+  # this is probably useless (MLE = mean of log / sd of log? )
   mle <- optim(par = c(mean(log(xs)), 
                        sd(log(xs))), 
                fn = negll) 

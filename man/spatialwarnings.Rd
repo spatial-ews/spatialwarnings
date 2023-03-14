@@ -13,18 +13,18 @@ a system exhibit a change in its stability properties as a threshold is
 crossed, \emph{e.g.} going from multiple stable states to a single stable 
 state. For a few decades, much research has been dedicated to finding a 
 way to anticipate these tipping points in ecological systems. This has led 
-to the development of several indicators, i.e. metrics based on spatial
+to the development of indicators, which are metrics based on spatial
 structure, that could reflect the proximity of an ecosystem to a tipping
 point. 
 
-This package implements the computation of these indicators, or 
+This package implements many of these indicators, or 
 \emph{early-warning signals} (EWS), on spatial raster data. High-level 
-functions and methods provide familiar workflows to compute the indicators 
-and display their variations along environmental gradients or time-series. 
-Lower-level functions are also available to integrate early-warning signals 
-into different workflows. 
+functions and methods provide familiar workflows to compute several related
+indicators at once, and display their variations along environmental gradients 
+or time-series. Lower-level functions are also available to integrate 
+early-warning signals into different workflows. 
 
-Main functions provided by this package: 
+Main, "workflow" functions provided by this package: 
 
 "Workflow" functions, which may compute several indicators at once:
 \itemize{ 
@@ -34,10 +34,10 @@ Main functions provided by this package:
   \item \code{\link{kbdm_sews}}: Kolmogorov complexity
   \item \code{\link{flowlength_sews}}: Flow length 
   \item \code{\link{variogram_sews}}: Variogram-based indicators
+  \item \code{\link{lsw_sews}}: Indicators based on the Lifshitz-Slyozov-Wagner distribution
 }
 
-Individual indicators, which may be used to compute raw indicator values 
-  on a single matrix: 
+Individual indicator functions, which may be used to compute raw indicator values 
 
 \itemize{ 
   \item \code{\link{raw_cg_moran}}: lag-1 spatial autocorrelation 
@@ -49,12 +49,15 @@ Individual indicators, which may be used to compute raw indicator values
           \code{\link{raw_plrange}} : Power-law range
   \item \code{\link{raw_kbdm}}: Kolmogorov complexity
   \item \code{\link{raw_flowlength_uniform}}: Flow Length
-  \item \code{\link{raw_variogram_metrics}}: Variogram-based metrics
+  \item \code{\link{raw_structvar}}: Structural variance
+  \item \code{\link{raw_lsw_aicw}}: Support for LSW distribution relative to lognormal
+  \item \code{\link{raw_patch_radii_skewness}}: Skewness of patch radii
 }
 
 The package homepage is available at 
 \href{https://github.com/spatial-ews/spatialwarnings}{Github}
 and a  
 \href{https://alex.lecairn.org/spatialwarnings-faq.html}{user guide} is 
-also available.
+also available. Do not hesitate to get in touch if you want to make changes to the 
+package or add another indicator.
 }

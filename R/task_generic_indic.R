@@ -22,9 +22,11 @@
 #' 
 #' @return 
 #' 
-#' \code{generic_sews} returns an object of class \code{generic_sews_single}
-#'   (actually a list) if mat is a single matrix or an object of class 
-#'   \code{generic_sews_list} if mat is a list. 
+#' \code{generic_sews} returns an object of class \code{simple_sews_single}
+#'   (actually a list) if \code{mat} is a single matrix or an object of class 
+#'   \code{simple_sews_list} if \code{mat} is a list. You probably want to use some  
+#'   of the methods written for these complicated objects instead of extracting 
+#'   values directly (they are displayed using \code{print(<object>)}).
 #' 
 #' \code{indictest} returns an object of class \code{generic_test} (actually 
 #'   a data.frame). 

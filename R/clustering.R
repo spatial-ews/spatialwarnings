@@ -10,11 +10,12 @@
 #' 
 #' @param wrap Whether space should be considered to wrap at the edges
 #' 
-#' @param use_8_nb Set to TRUE to use an 8-way neighborhood. The default is set to FALSE, 
-#'   which uses a 4-way neighborhood
+#' @param use_8_nb Set to \code{TRUE} to use an 8-way neighborhood. The default is set 
+#'   to FALSE, which uses a 4-way neighborhood
 #' 
-#' @param divide_by_null By default, this function computes the expected number of pairs, 
-#'   and divides it by the observed number of pairs
+#' @param divide_by_null By default, this function computes the observed number of pairs, 
+#'   and divides it by the expected number of pairs under random spatial structure.
+#'   Set this parameter to \code{FALSE} to return the raw proportion of pairs. 
 #' 
 #' @details 
 #' 
@@ -27,7 +28,7 @@
 #'     number of pairs. This proportion is then again divided by the probability of
 #'     obtaining these proportion of pairs under the assumption of no spatial structure
 #'     (random mixing of states in the matrix). 
-#'    
+#'     
 #'   Clustering is equal to one when there is no spatial structure. It is above one when 
 #'     two states tend to be next to each other (i.e. cluster) more than expected by 
 #'     chance. Values below one means that those two states tend to be neighbors less 

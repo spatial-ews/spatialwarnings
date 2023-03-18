@@ -11,11 +11,12 @@ raw_clustering(mat, wrap = TRUE, use_8_nb = FALSE, divide_by_null = TRUE)
 
 \item{wrap}{Whether space should be considered to wrap at the edges}
 
-\item{use_8_nb}{Set to TRUE to use an 8-way neighborhood. The default is set to FALSE, 
-which uses a 4-way neighborhood}
+\item{use_8_nb}{Set to \code{TRUE} to use an 8-way neighborhood. The default is set 
+to FALSE, which uses a 4-way neighborhood}
 
-\item{divide_by_null}{By default, this function computes the expected number of pairs, 
-and divides it by the observed number of pairs}
+\item{divide_by_null}{By default, this function computes the observed number of pairs, 
+and divides it by the expected number of pairs under random spatial structure.
+Set this parameter to \code{FALSE} to return the raw proportion of pairs.}
 }
 \value{
 A vector with the requested clutering values, whose names are equal to 
@@ -35,7 +36,7 @@ The clustering of pairs is defined as the density of pairs, i.e.
     number of pairs. This proportion is then again divided by the probability of
     obtaining these proportion of pairs under the assumption of no spatial structure
     (random mixing of states in the matrix). 
-   
+    
   Clustering is equal to one when there is no spatial structure. It is above one when 
     two states tend to be next to each other (i.e. cluster) more than expected by 
     chance. Values below one means that those two states tend to be neighbors less 
@@ -65,6 +66,6 @@ clust_indic <- compute_indicator(serengeti, raw_clustering,
 plot(clust_indic, along = serengeti.rain) 
 # Add null trend
 clust_test <- indictest(clust_indic, nrep = 19)
-plot(clust_test)
+plot(clust_test, along = serengeti.rain) 
 
 }

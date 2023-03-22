@@ -7,6 +7,9 @@ context("Computation of variograms")
 
 test_that("Computation of variograms works", { 
   
+  # Here so that testthat does not complain about empty tests when missing packages
+  expect_true(TRUE)
+  
   if ( requireNamespace("gstat", quietly = TRUE) && 
        requireNamespace("sp", quietly = TRUE) ) { 
     if ( exists("EXTENDED_TESTS") && EXTENDED_TESTS) { 

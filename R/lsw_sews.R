@@ -27,7 +27,6 @@
 #' 
 #' # TODO
 #' 
-#' 
 #' @return 
 #' 
 #' \code{lsw_sews} returns an object of class \code{simple_sews_single}
@@ -36,7 +35,7 @@
 #'   of the methods written for these complicated objects instead of extracting 
 #'   values directly (they are displayed using \code{print(<object>)}).
 #'
-#'@seealso dLSW, dda
+#'@seealso dLSW, dda, raw_patch_radii_skewness, raw_lsw_aicw
 #'
 #'@references 
 #'  
@@ -79,16 +78,16 @@ internal_lsw_sews <- function(mat, wrap) {
     check_mat(mat)
   }
   
-  # Compute skewness and warn if positive
+  # Compute metrics
   radii <- get_patch_radii(mat, wrap)
   skewness <- cpp_skewness(radii)
   aicw <- get_lsw_aicw(radii)
   
-  # For now we just return the skewness and difference in AIC. We will need something 
-  # a bit more fancy to have distributions fitting et al. 
+  # For now we just return the numerical values. We will need something a bit more 
+  # fancy to have distributions fitting et al. 
   c(cover = mean(mat), 
     skewness = skewness, 
-    lsw_aicw = aicw)
+    lsw_prob = aicw)
 }
 
 #'@rdname lsw_sews
@@ -104,7 +103,7 @@ raw_lsw_aicw <- function(mat, wrap = FALSE) {
   # Get patch size distribution. Assume circle patches from the area. 
   radii <- get_patch_radii(mat, wrap)
   aicw <- get_lsw_aicw(radii)
-  return( c(lsw_aicw = aicw) )
+  return( c(lsw_prob = aicw) )
 }
 
 get_patch_radii <- function(mat, wrap = FALSE) { 
@@ -197,7 +196,7 @@ dLSW <- function(x, mu, log = FALSE){
   p
 }
 
-# The LSW distribution, but standard 
+# The LSW distribution, but standard interface
 #'@rdname dLSW 
 #'
 #'@export 

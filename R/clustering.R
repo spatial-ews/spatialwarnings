@@ -64,7 +64,7 @@
 #' plot(clust_indic, along = serengeti.rain) 
 #' # Add null trend
 #' clust_test <- indictest(clust_indic, nrep = 19)
-#' plot(clust_test)
+#' plot(clust_test, along = serengeti.rain) 
 #' 
 #'@export
 raw_clustering <- function(mat, 

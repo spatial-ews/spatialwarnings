@@ -24,7 +24,6 @@ if ( exists('EXTENDED_TESTS') && EXTENDED_TESTS ) {
   
   test_that("xmins estimation is correct", { 
     
-
     parms <- expand.grid(expo = c(1.5, 1.3, 1.2), 
                          rate = c(0.001, 0.005, 0.01, 0.1, 0.15, 0.2, 0.25, 0.3, 
                                   0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1))
@@ -40,8 +39,8 @@ if ( exists('EXTENDED_TESTS') && EXTENDED_TESTS ) {
       pl_obj <- poweRlaw::displ$new(pldat)
       est_xmin_plpkg <- poweRlaw::estimate_xmin(pl_obj)[["xmin"]]
       
-      if ( !is.na(est_xmin) && 
-           !is.na(est_xmin_plpkg) && 
+      if ( ! is.na(est_xmin) && 
+           ! is.na(est_xmin_plpkg) && 
            length(unique(pldat)) >= 5 ) { 
         # Note: In some pathological cases (few unique patches), there can be 
         # a small difference in xmin, so we use an acceptable error here. 
@@ -93,7 +92,7 @@ if ( exists('EXTENDED_TESTS') && EXTENDED_TESTS ) {
   system("cd ./pli-R-v0.0.3-2007-07-25/zeta-function/ && rm zeta_func zeta_func.o")
   system("cd ./pli-R-v0.0.3-2007-07-25/exponential-integral/ && rm exp_int exp_int.o")
   system("cd ./pli-R-v0.0.3-2007-07-25/ && rm discpowerexp")
-
+  
 } else { 
   message('Skipping xmin estimation testing')
 }

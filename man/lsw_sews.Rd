@@ -56,5 +56,5 @@ plot(lsw_aicw, along = dda.pars[ ,"tau"])
 # TODO Siteur 2023, other relevant papers ?
 }
 \seealso{
-dLSW, dda
+dLSW, dda, raw_patch_radii_skewness, raw_lsw_aicw
 }

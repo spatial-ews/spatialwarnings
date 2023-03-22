@@ -67,15 +67,10 @@ certain measurable properties around those critical points.
 This package aims at providing a practical set of tools for the detection of
 these upcoming critical points in spatial datasets, by using indicators based on
 those properties. Some of those indicators fall within broad families around 
-which the package is centered:
-  
-  * "Generic" spatial indicators
-  * Spectrum-based indicators
-  * Indicators based on patch-size distributions
-
-Each of these indicator types can be computed with this package, along with 
-other, newer ones. Their significance can be assessed using permutation-based 
-tests and results can be displayed using familiar summary/plot methods. 
+which the package is centered, such as "generic" spatial indicators or 
+indicators based on patch-size distributions. Significance of patterns 
+can be assessed using permutation-based tests and results can be displayed 
+using familiar summary/plot methods. 
 
 In total, spatialwarnings provides the following spatial indicators published 
 in the literature: 
@@ -89,6 +84,7 @@ in the literature:
   - Flowlength (Rodriguez et al. 2017)
   - Kolmogorov complexity (Dakos et al. 2017)
   - Variogram-based indicators (Nijp et al. 2019)
+  - Clustering of pairs (Schneider et al. 2016)
 
 In addition, this package provides a straightforward way to implement and test 
 new indicators, so you can design your favorite spatial metric for your 
@@ -103,9 +99,9 @@ A simple analysis with `spatialwarnings` can fit in a few lines of code:
 > library(spatialwarnings)
 >
 > # Compute indicators
-> serengeti.ic <- generic_spews(serengeti,
->                               subsize = 5,
->                               moranI_coarse_grain = TRUE)
+> serengeti.ic <- generic_sews(serengeti,
+>                              subsize = 5,
+>                              moranI_coarse_grain = TRUE)
 > serengeti.test <- indictest(serengeti.ic)
 
 ```

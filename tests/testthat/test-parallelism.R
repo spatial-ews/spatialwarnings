@@ -9,20 +9,17 @@ test_that("Parallelism work", {
   if ( exists("EXTENDED_TESTS") && 
        EXTENDED_TESTS && 
        availableCores() > 1 ) { 
-    a <- generic_sews(forestgap)
+    # We increase the dataset size because otherwise the overhead of setting up workers
+    # may make the parallel verison slower overall
+    a <- generic_sews( c(forestgap, forestgap) )
     
     plan(sequential)
     b.1 <- system.time( indictest(a, 49) ) 
+    
     plan(multisession)
     b.2 <- system.time( indictest(a, 49) ) 
     
     expect_true( b.1["elapsed"] > b.2["elapsed"] )
-    
-    if ( .Platform$OS.type == "unix" ) { 
-      plan(multisession)
-      b.3 <- system.time( indictest(a, 49) ) 
-      expect_true( b.1["elapsed"] > b.3["elapsed"] )
-    }
     
     plan(sequential) # restore plan to no-parallelism
   } else { 

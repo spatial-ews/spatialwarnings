@@ -1,11 +1,15 @@
 
-spatialwarnings v3.1.0 (Release date: unknown yet)
-==================================================
+spatialwarnings v3.1.0 (Release date: unknown)
+==============================================
+
+This release has received external contributions from K. Siteur
 
 New indicators: 
   
-  * Clustering of pairs 
+  * Clustering of pairs (e.g. Schneider et al. 2016)
   
+  * Indicators based on the LSW distribution (Siteur et al. 2023)
+
 spatialwarnings v3.0.3 (Release date: 2022-03-21)
 =================================================
   

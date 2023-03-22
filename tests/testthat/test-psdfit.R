@@ -341,5 +341,8 @@ test_that("Warnings in TPL constant are properly reported", {
     tplnorm(2.41, 1e-7, 300)
   })
   
+  options(spatialwarnings.constants.reltol = NULL)
+  options(spatialwarnings.constants.maxit = NULL)
+  
 })
 

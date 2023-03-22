@@ -7,6 +7,9 @@ context("Test that all null model methods work")
 # Here we just run the code to check that it works
 test_that("All null model methods work", { 
   
+  # We need to increase the max number of iterations otherwise warnings are produced
+  options(spatialwarnings.constants.maxit = 10^(8.5))
+  options(spatialwarnings.constants.reltol = 1e-8)
   
   # Check that all methods run 
   all_methods <- c("perm", "intercept", "smooth") 
@@ -93,6 +96,9 @@ test_that("All null model methods work", {
                           list(), "intercept")
   }, regexp = "using a gaussian")
   
+  # Set options to their default
+  options(spatialwarnings.constants.maxit = NULL)
+  options(spatialwarnings.constants.reltol = NULL)
   
   # Test the simulation of new values 
   

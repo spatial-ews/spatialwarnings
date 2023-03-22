@@ -631,7 +631,7 @@ tpl_ll <- function(x, expo, rate, xmin, approximate = FALSE) {
 tpl_fit <- function(dat, xmin = 1) { 
   
   negll <- function(pars) { 
-    - tpl_ll(dat, pars[1], pars[2], xmin) * 1000
+    - tpl_ll(dat, pars[1], pars[2], xmin) 
   }
   
   # Initialize and find minimum
@@ -679,7 +679,7 @@ tpl_fit <- function(dat, xmin = 1) {
                  npars = 2)
   
   if ( warnNA() && is.na(result[["plexpo"]]) ) { 
-    warning("Fitting of TPL returned NA")
+    warning("Fitting of TPL returned NA/NaN")
   }
   
   if ( is.na(result[["plexpo"]]) ) { 

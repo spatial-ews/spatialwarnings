@@ -51,22 +51,18 @@ double tplinfsum(double expo,
   uword k_stop = k + maxit; 
   // Rcpp::Rcout << "ct: " << current_term << "\n"; 
   
-  while ( reltol < rel_change && k <= k_stop ) { 
+  while ( reltol < rel_change && k < k_stop ) { 
   // while ( k <= kmax ) { 
     current_term = pow(k, - expo) * exp(- k * rate);
     rel_change = current_term / total; 
     total += current_term; 
-    // if ( (uword) k % (uword) 1e6 == 0 || k > (kmax - 3) ) { 
-      // Rcpp::Rcout << "k : " << k << " ct: " << current_term << " relc: " << 
-        // rel_change << " total: " << total << "\n"; 
-    // }
     k += 1.0; 
   }
   
   // Emit warning if we hit k_stop
   if ( k == k_stop ) { 
     Rcpp::Function warning("warning"); 
-    warning("Maximum number of iterations reached in tplinfsum, increase cap with options(spatialwarnings.constants.maxit = <x>"); 
+    warning("Maximum number of iterations reached in tplinfsum, increase with options(spatialwarnings.constants.maxit = <x>"); 
   }
   
   return(total);

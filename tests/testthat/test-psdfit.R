@@ -315,3 +315,31 @@ if ( exists("EXTENDED_TESTS") && EXTENDED_TESTS ) {
   system("cd ./pli-R-v0.0.3-2007-07-25/ && rm discpowerexp")
 
 }
+
+
+test_that("Warnings in TPL constant are properly reported", { 
+  
+  # Not enough iterations to reach reltol
+  options(spatialwarnings.constants.reltol = 1e-8)
+  options(spatialwarnings.constants.maxit = 10)
+  expect_warning({ 
+    tplnorm(2.41, 1e-7, 300)
+  })
+  
+  # Increase number of iterations, sufficient to reach reltol
+  options(spatialwarnings.constants.reltol = 1e-8)
+  options(spatialwarnings.constants.maxit = 1e8)
+  expect_true({ 
+    tplnorm(2.41, 1e-7, 300)
+    TRUE # no warning
+  })
+  
+  # Increase reltol, not enough iterations
+  options(spatialwarnings.constants.reltol = 1e-20)
+  options(spatialwarnings.constants.maxit = 1e8)
+  expect_warning({ 
+    tplnorm(2.41, 1e-7, 300)
+  })
+  
+})
+

@@ -271,10 +271,10 @@ pl_ll <- function(dat, expo, xmin) {
 #'     the power-law normalizing constant
 #'     \deqn{sum_{k=1}^{\infty} x^{ak}e^{-bk}}{sum( x^(ak)exp(-bk)) for k in 1:Inf}. 
 #'     Increase to increase the precision of this constant, which can be useful in some 
-#'     cases, typically with large samples. Default is 1e-8.}
+#'     cases, typically with large sample sizes. Default is 1e-8.}
 #'   \item{spatialwarnings.constants.maxit}{the maximum number of iterations to compute 
-#'     the truncated power-law normalizing constant. Increase if you get a warning 
-#'     that the relative tolerance level (defined above) was not reach. Default is 1e8}
+#'     the normalizing constant of a truncated power-law. Increase if you get a warning 
+#'     that the relative tolerance level (defined above) was not reached. Default is 1e8}
 #'   \item{spatialwarnings.debug.fit_warn_on_bound}{logical value. Warn if the fit is 
 #'     at the boundary of the valid range for distribution parameter}
 #'   \item{spatialwarnings.debug.fit_warn_on_NA}{logical value. Warn if the returned fit 
@@ -644,7 +644,7 @@ tpl_fit <- function(dat, xmin = 1) {
   lls <- unlist(lapply(is, function(i) { 
     negll(c(expo0, i))
   }))
-  llmin <- min(lls[abs(lls) != .Machine$double.xmax])
+  llmin <- min(lls[abs(lls) != .Machine$double.xmax & is.finite(lls)])
   expmrate0 <- is[which(lls == llmin)]
   
   # Debug thing lls

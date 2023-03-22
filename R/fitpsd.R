@@ -17,6 +17,14 @@ ifnotfinite <- function(x, otherwise = .Machine$double.xmax) {
   ifelse(is.finite(x), x, sign(x) * otherwise)
 }
 
+warnbound <- function() { 
+  getOption("spatialwarnings.debug.fit_warn_on_bound", default = FALSE)
+}
+
+warnNA <- function() { 
+  getOption("spatialwarnings.debug.fit_warn_on_NA", default = FALSE)
+}
+
 # This is a safe version of nlm that returns a sensible result (NaNs) when 
 # the algorithm fails to converge. This can happen quite often when looking 
 # for pathological cases (e.g. fitting distribution based on few points in the 
@@ -32,8 +40,8 @@ optim_safe <- function(f, pars0,
       f(exp(pars))
     }
     pars0 <- log(pars0)
-    lower <- ifnotfinite(log(lower))
-    upper <- ifnotfinite(log(upper))
+    lower <- suppressWarnings(ifnotfinite(log(lower)))
+    upper <- suppressWarnings(ifnotfinite(log(upper)))
   } else { 
     optimf <- f
   }
@@ -241,8 +249,8 @@ pl_ll <- function(dat, expo, xmin) {
 #' 
 #' Please note that a best effort is made to have the fit converge, but 
 #'   it may sometimes fail when the parameters are far from their usual 
-#'   range. It is good practice to make sure the fits are sensible when 
-#'   convergence warnings are reported.
+#'   range, and numerical issues may occur. It is good practice to make 
+#'   sure the fits are sensible when convergence warnings are reported.
 #' 
 #' For reference, the shape of the distributions is as follow: 
 #' 
@@ -255,6 +263,23 @@ pl_ll <- function(dat, expo, xmin) {
 #' }
 #' 
 #' The lognormal form follows the \link[=dlnorm]{standard definition}.
+#' 
+#' The following global options can be used to change the behavior of fitting functions 
+#'   and/or produce more verbose output: 
+#' \itemize{ 
+#'   \item{spatialwarnings.constants.reltol}{the relative tolerance to use to compute 
+#'     the power-law normalizing constant
+#'     \deqn{sum_{k=1}^{\infty} x^{ak}e^{-bk}}{sum( x^(ak)exp(-bk)) for k in 1:Inf}. 
+#'     Increase to increase the precision of this constant, which can be useful in some 
+#'     cases, typically with large samples. Default is 1e-8.}
+#'   \item{spatialwarnings.constants.maxit}{the maximum number of iterations to compute 
+#'     the truncated power-law normalizing constant. Increase if you get a warning 
+#'     that the relative tolerance level (defined above) was not reach. Default is 1e8}
+#'   \item{spatialwarnings.debug.fit_warn_on_bound}{logical value. Warn if the fit is 
+#'     at the boundary of the valid range for distribution parameter}
+#'   \item{spatialwarnings.debug.fit_warn_on_NA}{logical value. Warn if the returned fit 
+#'     has \code{NA}/\code{NaN} parameters}
+#' }
 #' 
 #' @seealso \code{\link{patchdistr_sews}}, \code{\link{xmin_estim}}
 #' 
@@ -309,6 +334,16 @@ pl_fit <- function(dat, xmin = 1) {
                  ll = - est[['value']],
                  xmin = xmin,
                  npars = 1)
+  
+  if ( warnNA() && is.na(result[["plexpo"]]) ) { 
+    warning("Fitting of PL returned NA")
+    return(result)
+  }
+  
+  if ( warnbound() && any(abs(result[["plexpo"]] - c(PLMIN, PLMAX)) < 1e-8) ) { 
+    warning("Estimated PL exponent is on the boundary of the valid range")
+  }
+    
   return(result)
 }
 
@@ -473,6 +508,11 @@ exp_fit <- function(dat, xmin = 1) {
                  cutoff = est[['par']], 
                  ll = - est[["value"]],
                  npars = 1)
+  
+  if ( warnbound() && any(abs(result[["cutoff"]] - c(EXPMIN, EXPMAX)) < 1e-8) ) { 
+    warning("Estimated EXP exponent is on the boundary of the valid range")
+  }
+  
   return(result)
 }
 
@@ -543,7 +583,13 @@ lnorm_fit <- function(dat, xmin = 1) {
 # ---------------------------------------
 
 tplnorm <- function(expo, rate, xmin) { 
-  tplinfsum(expo, rate, xmin)
+  
+  maxit <- getOption("spatialwarnings.constants.maxit", default = 1e8L)
+  reltol <- getOption("spatialwarnings.constants.reltol", default = 1e-8)
+  
+  a <- tplinfsum(expo, rate, xmin, maxit, reltol)
+  
+  a
 }
 
 # P(x=k)
@@ -585,7 +631,7 @@ tpl_ll <- function(x, expo, rate, xmin, approximate = FALSE) {
 tpl_fit <- function(dat, xmin = 1) { 
   
   negll <- function(pars) { 
-    - tpl_ll(dat, pars[1], pars[2], xmin)
+    - tpl_ll(dat, pars[1], pars[2], xmin) * 1000
   }
   
   # Initialize and find minimum
@@ -594,16 +640,36 @@ tpl_fit <- function(dat, xmin = 1) {
   # Do a line search over the cutoff to find a minimum, starting from zero 
   # up to 100
   is <- seq(0, 100, length = 128)
+  is <- 10^seq(-7, 2, l = 128)
   lls <- unlist(lapply(is, function(i) { 
     negll(c(expo0, i))
   }))
-  expmrate0 <- is[which.min(lls)]
+  llmin <- min(lls[abs(lls) != .Machine$double.xmax])
+  expmrate0 <- is[which(lls == llmin)]
+  
+  # Debug thing lls
+#   plot( log(spatialwarnings:::cumpsd(dat)) )
+#   vals <- ippl(dat, expo0, xmin = xmin)
+#   points(log(dat), log(vals), col = "red")
+#   vals <- iptpl(dat, expo0, rate = 0, xmin = xmin)
+#   points(log(dat), log(vals), col = "darkgreen")
+#   vals <- iptpl(dat, expo0, rate = expmrate0, xmin = xmin)
+#   points(log(dat), log(vals), col = "blue")
   
   pars0 <- c(expo0, expmrate0)
-  
   est <- optim_safe(negll, pars0, 
                     lower = c(TPL_EXPOMIN, TPL_RATEMIN), 
-                    upper = c(TPL_EXPOMAX, TPL_RATEMAX))
+                    upper = c(TPL_EXPOMAX, TPL_RATEMAX), 
+                    fit_on_logscale = FALSE)
+  
+  # For very small cutoffs, we may want to fit on log scale to get a descent estimate, 
+  # as otherwise there is too little variation in the cutoff for BFGS
+  if ( any(is.na(est[["par"]])) ) { 
+    est <- optim_safe(negll, pars0, 
+                      lower = c(TPL_EXPOMIN, TPL_RATEMIN), 
+                      upper = c(TPL_EXPOMAX, TPL_RATEMAX), 
+                      fit_on_logscale = TRUE)
+  }
   
   result <- list(type = 'tpl',
                  method = 'll', 
@@ -611,5 +677,26 @@ tpl_fit <- function(dat, xmin = 1) {
                  cutoff = est[['par']][2], 
                  ll = - est[["value"]],
                  npars = 2)
+  
+  if ( warnNA() && is.na(result[["plexpo"]]) ) { 
+    warning("Fitting of TPL returned NA")
+  }
+  
+  if ( is.na(result[["plexpo"]]) ) { 
+    return(result)
+  }
+  
+  if ( warnbound() && 
+       any(abs(result[["plexpo"]] - c(TPL_EXPOMIN, TPL_EXPOMAX)) < 1e-8) ) { 
+    warning("Estimated TPL exponent is on the boundary of the valid range")
+  }
+  
+  # We do not warn for reaching minimum exponent because this is quite common when 
+  # fitting truncated power laws to have a very small exponent
+  if ( warnbound() && 
+       any(abs(result[["cutoff"]] - c(TPL_RATEMIN, TPL_RATEMAX)) < 1e-8) ) { 
+    warning("Estimated TPL cutoff is on the boundary of the valid range")
+  }
+  
   return(result)
 }

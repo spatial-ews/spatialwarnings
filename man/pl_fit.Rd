@@ -66,8 +66,8 @@ In the context of distribution-fitting, 'xmin' represents the minimum value
 
 Please note that a best effort is made to have the fit converge, but 
   it may sometimes fail when the parameters are far from their usual 
-  range. It is good practice to make sure the fits are sensible when 
-  convergence warnings are reported.
+  range, and numerical issues may occur. It is good practice to make 
+  sure the fits are sensible when convergence warnings are reported.
 
 For reference, the shape of the distributions is as follow: 
 
@@ -80,6 +80,23 @@ For reference, the shape of the distributions is as follow:
 }
 
 The lognormal form follows the \link[=dlnorm]{standard definition}.
+
+The following global options can be used to change the behavior of fitting functions 
+  and/or produce more verbose output: 
+\itemize{ 
+  \item{spatialwarnings.constants.reltol}{the relative tolerance to use to compute 
+    the power-law normalizing constant
+    \deqn{sum_{k=1}^{\infty} x^{ak}e^{-bk}}{sum( x^(ak)exp(-bk)) for k in 1:Inf}. 
+    Increase to increase the precision of this constant, which can be useful in some 
+    cases, typically with large samples. Default is 1e-8.}
+  \item{spatialwarnings.constants.maxit}{the maximum number of iterations to compute 
+    the truncated power-law normalizing constant. Increase if you get a warning 
+    that the relative tolerance level (defined above) was not reach. Default is 1e8}
+  \item{spatialwarnings.debug.fit_warn_on_bound}{logical value. Warn if the fit is 
+    at the boundary of the valid range for distribution parameter}
+  \item{spatialwarnings.debug.fit_warn_on_NA}{logical value. Warn if the returned fit 
+    has \code{NA}/\code{NaN} parameters}
+}
 }
 \examples{
 

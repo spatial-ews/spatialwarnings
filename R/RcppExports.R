@@ -56,12 +56,8 @@ tplsum <- function(expo, rate, xs, xmin) {
     .Call('_spatialwarnings_tplsum', PACKAGE = 'spatialwarnings', expo, rate, xs, xmin)
 }
 
-tplinfsum <- function(expo, rate, xmin) {
-    .Call('_spatialwarnings_tplinfsum', PACKAGE = 'spatialwarnings', expo, rate, xmin)
-}
-
-lerchphi <- function(z, s, v) {
-    .Call('_spatialwarnings_lerchphi', PACKAGE = 'spatialwarnings', z, s, v)
+tplinfsum <- function(expo, rate, xmin, maxit, reltol) {
+    .Call('_spatialwarnings_tplinfsum', PACKAGE = 'spatialwarnings', expo, rate, xmin, maxit, reltol)
 }
 
 shuffle_matrix <- function(mat) {

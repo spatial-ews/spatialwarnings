@@ -4,20 +4,20 @@
 //   a TPL. The function is vectorized. 
 // 
 
+#ifndef ARMA_NO_DEBUG
+#define ARMA_NO_DEBUG
+#endif 
+
 #include <RcppArmadillo.h>
 
 using namespace arma; 
-
-const int MAXIT = 1e6L; 
-const double TOL = 1e-8; 
-  
 
 //[[Rcpp::export]]
 arma::vec tplsum(double expo, double rate, arma::ivec xs, int xmin) { 
   
   arma::vec output(xs.n_elem);
   
-  for (int i=0; i<xs.n_elem; i++) { 
+  for ( uword i=0; i<xs.n_elem; i++ ) { 
     int x = xs(i);
     double total = 0;
     for (int k=xmin; k<x; k++) { 
@@ -36,62 +36,39 @@ arma::vec tplsum(double expo, double rate, arma::ivec xs, int xmin) {
 // as a normalization term when computing the probabilities of truncated 
 // power laws. 
 //[[Rcpp::export]]
-double tplinfsum(double expo, double rate, int xmin) { 
+double tplinfsum(double expo, 
+                 double rate, 
+                 double xmin, 
+                 arma::uword maxit, 
+                 double reltol) { 
   
   double current_term = pow(xmin, -expo) * exp(-xmin*rate);
   double total = current_term;
   double rel_change = 1.0; 
-  double it = 0; 
-  int k = xmin + 1; 
+  // We use a double for k just in case we go out of the integer range (this is something
+  // R complains about sometimes in kmax)
+  double k = xmin + 1.0; 
+  uword k_stop = k + maxit; 
+  // Rcpp::Rcout << "ct: " << current_term << "\n"; 
   
-  while ( it < MAXIT && TOL < rel_change ) { 
+  while ( reltol < rel_change && k <= k_stop ) { 
+  // while ( k <= kmax ) { 
     current_term = pow(k, - expo) * exp(- k * rate);
     rel_change = current_term / total; 
     total += current_term; 
-//     Rcpp::Rcerr << "it : " << it << " ct: " << current_term << " relc: " << 
-//       rel_change << " total: " << total << "\n"; 
-    it++; 
-    k++; 
+    // if ( (uword) k % (uword) 1e6 == 0 || k > (kmax - 3) ) { 
+      // Rcpp::Rcout << "k : " << k << " ct: " << current_term << " relc: " << 
+        // rel_change << " total: " << total << "\n"; 
+    // }
+    k += 1.0; 
+  }
+  
+  // Emit warning if we hit k_stop
+  if ( k == k_stop ) { 
+    Rcpp::Function warning("warning"); 
+    warning("Maximum number of iterations reached in tplinfsum, increase cap with options(spatialwarnings.constants.maxit = <x>"); 
   }
   
   return(total);
-}
-
-// 
-// This function will compute the lerch phi function. It is a simplified 
-// version of what is done in the VGAM source code (© Thomas Yee), which was 
-// originally written by 
-// 
-// Sergej V. Aksenov (http://www.geocities.com/saksenov) and 
-// Ulrich D. Jentschura (jentschura@physik.tu-dresden.de), 2002.
-// 
-// 
-//[[Rcpp::export]]
-long int lerchphi(double z, double s, long int v) { 
-  
-  // If z is above 1.0, the sum diverges. Return Inf
-  if ( z > 1.0 ) { 
-    return(R_PosInf); 
-  }
-  
-  // If z *is* 1.0, but s is below one, then the series diverges
-  // CASE NOT HANDLED
-  
-  // If v is below zero, the function is undefined 
-  if ( v <= 0.0 ) { 
-    return(R_NaN); 
-  }
-  
-  // In other cases, we proceed with computing the sum
-  double total = 0; 
-  for (int k=1; k<=MAXIT; k++) { 
-    double sumterm = pow(z, k) / pow(k + v, s); 
-    total+= sumterm; 
-    if ( (sumterm/total) < TOL ) { 
-      break; 
-    }
-  }
-  
-  return(total); 
 }
 

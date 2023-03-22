@@ -25,13 +25,13 @@ if ( exists("EXTENDED_TESTS") && EXTENDED_TESTS ) {
       library(testthat)
       setwd('./tests/testthat') 
     }
-
+    
     # Setup pli from Clauzet et al
     for ( s in dir('./pli-R-v0.0.3-2007-07-25', 
                   full.names = TRUE, pattern = '*.R') ) { 
       source(s)
     }
-
+    
     # Compile auxiliary binaries
     system("cd ./pli-R-v0.0.3-2007-07-25/zeta-function/ && make")
     system("cd ./pli-R-v0.0.3-2007-07-25/exponential-integral/ && make")
@@ -217,22 +217,26 @@ if ( exists("EXTENDED_TESTS") && EXTENDED_TESTS ) {
           clauset_result <- suppressWarnings( 
               discpowerexp.loglike(tpldat, expo, rate, threshold = xmin)
             )
-          if (length(clauset_result) > 0) { 
+          if ( length(clauset_result) > 0 ) { 
             expect_equal(tpl_ll(tpldat, expo, rate, xmin),
                          clauset_result, 
                          tolerance = 1e-4)
           }
           
-          our_fit <- tpl_fit(tpldat, xmin = xmin)
+          # We suppress warnings, because we are concerned with the correctness of 
+          # the result only. 
+          suppressWarnings({ 
+            our_fit <- tpl_fit(tpldat, xmin = xmin)
+          })
           
           # The fit with pli can fail, so we check only the results 
           # when it succeeds. Sometimes the returned fits are on the boundary
           # (expo ~= 1), so we do not test in those cases. 
           clauset_fit <- tryNULL(discpowerexp.fit(tpldat, threshold = xmin))
           
-          if ( !is.null(clauset_fit) && 
-                abs(clauset_fit$exponent - (-1)) > 1e-4 && 
-                !is.na(our_fit$ll) ) { 
+          if ( ! is.null(clauset_fit) && 
+               abs(clauset_fit$exponent - (-1)) > 1e-4 && 
+               ! is.na(our_fit$ll) ) { 
             if ( our_fit$ll < clauset_fit$loglike ) { 
               if ( abs(our_fit$ll - clauset_fit$loglike) > 1e-3 ) { 
                 message("We found a better fit than the reference code")
@@ -241,7 +245,6 @@ if ( exists("EXTENDED_TESTS") && EXTENDED_TESTS ) {
               # If the difference is not floating-point error
               if ( abs(our_fit$ll - clauset_fit$loglike) > 1e-3 ) { 
                 message("Reference code found a better fit")
-                browser()
                 fail()
               }
               # These tests will fail

@@ -216,7 +216,7 @@ pl_ll <- function(dat, expo, xmin) {
 #'    \item{type: }{The type of distribution fitted (as a character string)}
 #'    \item{method: }{The method used for the fit - here, maximum likelihood,
 #'                  'll'}
-#'    \item{ll: }{The negative log likelihood at the estimated parameter values}
+#'    \item{ll: }{The log likelihood at the estimated parameter values}
 #'    \item{xmin: }{The value of xmin used for the fit}
 #'    \item{npars: }{The number of parameters of the distribution}
 #'  }

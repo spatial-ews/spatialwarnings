@@ -62,7 +62,7 @@ double tplinfsum(double expo,
   // Emit warning if we hit k_stop
   if ( k == k_stop ) { 
     Rcpp::Function warning("warning"); 
-    warning("Maximum number of iterations reached in tplinfsum, increase with options(spatialwarnings.constants.maxit = <x>"); 
+    warning("Maximum number of iterations reached in tplinfsum, increase above default (1e8) with options(spatialwarnings.constants.maxit = <x>"); 
   }
   
   return(total);

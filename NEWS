@@ -4,6 +4,11 @@ spatialwarnings v3.1.0 (Release date: unknown)
 
 This release has received external contributions from K. Siteur
 
+Improvements: 
+  
+  * The type of neighborhood can now be specified in all patch-related functions, 
+      including high-level functions (e.g. patchdistr_sews)
+  
 New indicators: 
   
   * Clustering of pairs (e.g. Schneider et al. 2016)

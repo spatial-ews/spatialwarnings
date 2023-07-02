@@ -29,9 +29,8 @@
 #' 
 #' @param nbmask Either "moore" for 8-way neighborhood, "von_neumann" for four-way 
 #'   neighborhood (default), or a square matrix with an odd number of lines and columns 
-#'   that describes which neighbors are to be considered around a cell. Default 
-#'   is 4-way or Von Neumann neighborhood (the neighborhood of a cell comprises the cell 
-#'   above, below, on the right and on the left of the target cell). 
+#'   that describes which neighbors are to be considered around a cell. See
+#'   \code{\link{patchsizes}} for details on how to specify more advanced neighborhoods.
 #' 
 #' @return A list object of class 'psdfit' containing among other things 
 #'   - the observed patch size distribution data

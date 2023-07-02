@@ -11,7 +11,8 @@ indicator_psdtype(
   fit_lnorm = FALSE,
   xmin_bounds = NULL,
   best_by = "AIC",
-  wrap = FALSE
+  wrap = FALSE,
+  nbmask = "von_neumann"
 )
 }
 \arguments{
@@ -34,6 +35,12 @@ the whole range of observed patch sizes)}
 
 \item{wrap}{Determines whether patches are considered to wrap around the 
 matrix when reaching the side}
+
+\item{nbmask}{Either "moore" for 8-way neighborhood, "von_neumann" for four-way 
+neighborhood (default), or a square matrix with an odd number of lines and columns 
+that describes which neighbors are to be considered around a cell. Default 
+is 4-way or Von Neumann neighborhood (the neighborhood of a cell comprises the cell 
+above, below, on the right and on the left of the target cell).}
 }
 \value{
 A data.frame (or a list of these if x is a list) with the 

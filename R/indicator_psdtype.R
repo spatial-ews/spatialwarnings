@@ -32,6 +32,12 @@
 #' @param wrap Determines whether patches are considered to wrap around the 
 #'  matrix when reaching the side 
 #' 
+#' @param nbmask Either "moore" for 8-way neighborhood, "von_neumann" for four-way 
+#'   neighborhood (default), or a square matrix with an odd number of lines and columns 
+#'   that describes which neighbors are to be considered around a cell. Default 
+#'   is 4-way or Von Neumann neighborhood (the neighborhood of a cell comprises the cell 
+#'   above, below, on the right and on the left of the target cell). 
+#' 
 #' @return A data.frame (or a list of these if x is a list) with the 
 #'   following columns:
 #'     \itemize{
@@ -110,11 +116,12 @@ indicator_psdtype <- function(x,
                               fit_lnorm = FALSE,
                               xmin_bounds = NULL, 
                               best_by = "AIC", 
-                              wrap = FALSE) { 
+                              wrap = FALSE, 
+                              nbmask = "von_neumann") { 
   
   if ( !merge && is.list(x) ) { 
     return( lapply(x, indicator_psdtype, xmin, merge, fit_lnorm, xmin_bounds, 
-                   best_by, wrap) )
+                   best_by, wrap, nbmask) )
   } 
   
   # Here we do not test if x is not a matrix. This happens when merge = TRUE, 
@@ -134,19 +141,19 @@ indicator_psdtype <- function(x,
   }
   
   # Compute psd
-  psd <- patchsizes(x, merge = merge, wrap = wrap)
+  psd <- patchsizes(x, merge = merge, wrap = wrap, nbmask = nbmask)
   
   # Compute percolation point. If the user requested a merge of all 
   #   patch size distributions, then we return the proportion of matrices 
   #   with percolation. 
   if ( is.list(x) ) { 
-    percol <- lapply(x, percolation)
+    percol <- lapply(x, percolation, nbmask = nbmask)
     percol <- mean(unlist(percol))
-    percol_empty <- lapply(x, function(x) percolation(!x))
+    percol_empty <- lapply(x, function(x) percolation(!x, nbmask = nbmask))
     percol_empty <- mean(unlist(percol_empty))
   } else { 
-    percol <- percolation(x)
-    percol_empty <- percolation(!x)
+    percol <- percolation(x, nbmask = nbmask)
+    percol_empty <- percolation(!x, nbmask = nbmask)
   } 
   
   psdtype_result <- psdtype(psd, xmin, best_by, fit_lnorm)

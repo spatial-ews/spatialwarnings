@@ -5,20 +5,18 @@
 \alias{percolation}
 \title{Labelling of unique patches and detection of percolation.}
 \usage{
-label(
-  mat,
-  nbmask = matrix(c(0, 1, 0, 1, 0, 1, 0, 1, 0), ncol = 3),
-  wrap = FALSE
-)
+label(mat, nbmask = "von_neumann", wrap = FALSE)
 
-percolation(mat, nbmask = matrix(c(0, 1, 0, 1, 0, 1, 0, 1, 0), ncol = 3))
+percolation(mat, nbmask = "von_neumann")
 }
 \arguments{
 \item{mat}{A binary matrix}
 
-\item{nbmask}{a "neighboring mask": a matrix with odd dimensions describing
-which cells are to be considered as neighbors around a cell 
-(see examples).}
+\item{nbmask}{Either "moore" for 8-way neighborhood, "von_neumann" for four-way 
+neighborhood, or a square matrix with an odd number of lines and columns that 
+describes which neighbors are to be considered around a cell. Default 
+is 4-way or Von Neumann neighborhood (the neighborhood of a cell comprises the cell 
+above, below, on the right and on the left of the target cell).}
 
 \item{wrap}{Whether to wrap around lattice boundaries (`TRUE`/`FALSE`), 
 effectively using periodic boundaries.}
@@ -51,10 +49,7 @@ rmat <- matrix(rnorm(100) > .1, ncol = 10)
 display_matrix(label(rmat))
 
 # With 8-way neighborhood mask and no wrapping around borders
-nbmask8 <- matrix(c(1,1,1,
-                    1,0,1,
-                    1,1,1), ncol=3)
-display_matrix(label(rmat, nbmask8, wrap = FALSE))
+display_matrix(label(rmat, "moore", wrap = FALSE))
 
 # On real data: 
 display_matrix(label(forestgap[[5]], nbmask8, wrap = FALSE))

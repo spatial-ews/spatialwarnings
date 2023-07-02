@@ -154,6 +154,7 @@ generate_nulls <- function(input, indicf, nulln, null_method,
 #     mat_tab <- mat_tab[sub, ]
     null_mod <- mgcv::gam(value ~ s(row, col, bs = "tp"), 
                           data = mat_tab, 
+#                           control = mgcv::gam.control(trace = TRUE), 
                           family = null_control[["family"]])
     get_nullmat <- create_nullmat_generator(input, 
                                             null_mod, 

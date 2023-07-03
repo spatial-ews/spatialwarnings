@@ -37,7 +37,7 @@
 #' display_matrix(label(rmat, "moore", wrap = FALSE))
 #' 
 #' # On real data: 
-#' display_matrix(label(forestgap[[5]], nbmask8, wrap = FALSE))
+#' display_matrix(label(forestgap[[5]], "moore", wrap = FALSE))
 #' 
 #' @export
 label <- function(mat, 

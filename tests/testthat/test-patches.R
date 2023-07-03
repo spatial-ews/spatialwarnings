@@ -43,6 +43,11 @@ test_that("Labelling functions & friends work correctly", {
               ncol = 3, nrow = 3, byrow = TRUE)
   
   expect_true({ 
+    a <- patchdistr_sews(m, nbmask = "von_neumann", wrap = TRUE)
+    a[["npatches"]] == 2
+  })
+  
+  expect_true({ 
     a <- patchdistr_sews(m, nbmask = "moore", wrap = TRUE)
     a[["npatches"]] == 1
   })

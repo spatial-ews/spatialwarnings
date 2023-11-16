@@ -27,6 +27,11 @@
 #' @param wrap Determines whether patches are considered to wrap around the 
 #'  matrix when reaching the side 
 #' 
+#' @param nbmask Either "moore" for 8-way neighborhood, "von_neumann" for four-way 
+#'   neighborhood (default), or a square matrix with an odd number of lines and columns 
+#'   that describes which neighbors are to be considered around a cell. See
+#'   \code{\link{patchsizes}} for details on how to specify more advanced neighborhoods.
+#' 
 #' @return A list object of class 'psdfit' containing among other things 
 #'   - the observed patch size distribution data
 #'   - the model outputs for the candidate distribution fits
@@ -138,13 +143,14 @@ patchdistr_sews <- function(mat,
                             best_by = "BIC", 
                             xmin = 1, # a number, or "estimate" option
                             xmin_bounds = NULL, 
-                            wrap = FALSE) {
+                            wrap = FALSE, 
+                            nbmask = "von_neumann") {
   
   # If input is a list -> apply on each element
-  if ( !merge & is.list(mat)) { 
+  if ( ( ! merge ) && is.list(mat)) { 
     results <- future_lapply_seed(mat, patchdistr_sews, merge,
                                   fit_lnorm, best_by, xmin,
-                                  xmin_bounds, wrap)
+                                  xmin_bounds, wrap, nbmask)
     class(results) <- c('patchdistr_sews_list', 'sews_result_list')
     return(results)
   } 
@@ -159,7 +165,7 @@ patchdistr_sews <- function(mat,
   }
   
   # Get patch size distribution
-  psd <- patchsizes(mat, merge = merge, wrap = wrap)
+  psd <- patchsizes(mat, merge = merge, wrap = wrap, nbmask = nbmask)
   
   # Set bounds to search for xmin
   if ( length(psd) > 0 && is.null(xmin_bounds) ) { 
@@ -175,13 +181,13 @@ patchdistr_sews <- function(mat,
   
   # Compute percolation 
   if ( is.list(mat) ) { 
-    percol <- lapply(mat, percolation)
+    percol <- lapply(mat, percolation, nbmask = nbmask)
     percol <- mean(unlist(percol))
-    percol_empty <- lapply(mat, function(mat) percolation(!mat))
+    percol_empty <- lapply(mat, function(mat) percolation(!mat, nbmask = nbmask))
     percol_empty <- mean(unlist(percol_empty))
   } else { 
-    percol <- percolation(mat)
-    percol_empty <- percolation(!mat)
+    percol <- percolation(mat, nbmask = nbmask)
+    percol_empty <- percolation(!mat, nbmask = nbmask)
   } 
   
   # Compute the mean cover 

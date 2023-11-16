@@ -325,6 +325,7 @@ pl_fit <- function(dat, xmin = 1) {
     }
   }
   
+  
   est <- optim_safe(negll, expo_estim, 
                     lower = PLMIN, upper = PLMAX)
   
@@ -343,7 +344,7 @@ pl_fit <- function(dat, xmin = 1) {
   if ( warnbound() && any(abs(result[["plexpo"]] - c(PLMIN, PLMAX)) < 1e-8) ) { 
     warning("Estimated PL exponent is on the boundary of the valid range")
   }
-    
+  
   return(result)
 }
 
@@ -646,6 +647,11 @@ tpl_fit <- function(dat, xmin = 1) {
   }))
   llmin <- min(lls[abs(lls) != .Machine$double.xmax & is.finite(lls)])
   expmrate0 <- is[which(lls == llmin)]
+  
+  # If multiple cutoffs produce the same ll, then use the lowest one 
+  if ( length(expmrate0) > 1 ) { 
+    expmrate0 <- expmrate0[1]
+  }
   
   # Debug thing lls
 #   plot( log(spatialwarnings:::cumpsd(dat)) )

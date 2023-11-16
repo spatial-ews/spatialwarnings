@@ -210,7 +210,9 @@ cLSW <- function(r,mu) {
   x <- seq(0, 1.5, 0.01) * mu
   PDF <- dLSW(x, mu)
   CDF <- cumsum(PDF) / sum(PDF)
-  return(approx(x, CDF, r)$y)
+  y <- approx(x, CDF, r)[["y"]]
+  
+  return(y)
 }
 
 # The (approximate) inverse cumulative LSW distribution. Used for drawing random 

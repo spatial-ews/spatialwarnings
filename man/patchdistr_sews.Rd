@@ -11,7 +11,8 @@ patchdistr_sews(
   best_by = "BIC",
   xmin = 1,
   xmin_bounds = NULL,
-  wrap = FALSE
+  wrap = FALSE,
+  nbmask = "von_neumann"
 )
 }
 \arguments{
@@ -38,6 +39,11 @@ distributions}
 
 \item{wrap}{Determines whether patches are considered to wrap around the 
 matrix when reaching the side}
+
+\item{nbmask}{Either "moore" for 8-way neighborhood, "von_neumann" for four-way 
+neighborhood (default), or a square matrix with an odd number of lines and columns 
+that describes which neighbors are to be considered around a cell. See
+\code{\link{patchsizes}} for details on how to specify more advanced neighborhoods.}
 }
 \value{
 A list object of class 'psdfit' containing among other things 

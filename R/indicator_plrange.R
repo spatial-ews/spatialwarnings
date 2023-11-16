@@ -155,6 +155,11 @@ raw_plrange <- function(mat, xmin_bounds = NULL) {
 
 plrange <- function(psd, xmin_bounds) {
   
+  if ( any(psd == 0) ) { 
+    warning(paste0("You have zeros in your patch size distribution, plrange ", 
+                   "will be NaN"))
+  }
+  
   # If psd is empty, then return NA
   if ( length(unique(psd)) <= 1) {
     return( data.frame(xmin_est = NA_real_, plrange = NA_real_) )

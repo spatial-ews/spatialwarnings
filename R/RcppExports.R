@@ -5,6 +5,10 @@ clustering_core <- function(m, nstates, wrap, use_8_nb) {
     .Call('_spatialwarnings_clustering_core', PACKAGE = 'spatialwarnings', m, nstates, wrap, use_8_nb)
 }
 
+pair_counts_internal <- function(m, nstates, wrap, use_8_nb) {
+    .Call('_spatialwarnings_pair_counts_internal', PACKAGE = 'spatialwarnings', m, nstates, wrap, use_8_nb)
+}
+
 coarse_grain_cpp <- function(mat, subsize) {
     .Call('_spatialwarnings_coarse_grain_cpp', PACKAGE = 'spatialwarnings', mat, subsize)
 }

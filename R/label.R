@@ -4,9 +4,11 @@
 #' 
 #' @param mat A binary matrix
 #' 
-#' @param nbmask a "neighboring mask": a matrix with odd dimensions describing
-#'   which cells are to be considered as neighbors around a cell 
-#'   (see examples).
+#' @param nbmask Either "moore" for 8-way neighborhood, "von_neumann" for four-way 
+#'   neighborhood, or a square matrix with an odd number of lines and columns that 
+#'   describes which neighbors are to be considered around a cell. Default 
+#'   is 4-way or Von Neumann neighborhood (the neighborhood of a cell comprises the cell 
+#'   above, below, on the right and on the left of the target cell). 
 #' 
 #' @param wrap Whether to wrap around lattice boundaries (`TRUE`/`FALSE`), 
 #'   effectively using periodic boundaries.
@@ -32,20 +34,17 @@
 #' display_matrix(label(rmat))
 #' 
 #' # With 8-way neighborhood mask and no wrapping around borders
-#' nbmask8 <- matrix(c(1,1,1,
-#'                     1,0,1,
-#'                     1,1,1), ncol=3)
-#' display_matrix(label(rmat, nbmask8, wrap = FALSE))
+#' display_matrix(label(rmat, "moore", wrap = FALSE))
 #' 
 #' # On real data: 
-#' display_matrix(label(forestgap[[5]], nbmask8, wrap = FALSE))
+#' display_matrix(label(forestgap[[5]], "moore", wrap = FALSE))
 #' 
 #' @export
 label <- function(mat, 
-                  nbmask = matrix(c(0,1,0,
-                                    1,0,1,
-                                    0,1,0), ncol=3), # 4way NB 
+                  nbmask = "von_neumann", 
                   wrap = FALSE) {
+  
+  nbmask <- parse_neighbor_spec(nbmask)
   
   if ( ! is.logical(mat) ) { 
     stop('Labelling of patches requirese a logical matrix',
@@ -105,9 +104,8 @@ label <- function(mat,
 #'   matrix)
 #' 
 #' @export
-percolation <- function(mat, nbmask = matrix(c(0,1,0,
-                                               1,0,1,
-                                               0,1,0), ncol=3)) { 
+percolation <- function(mat, nbmask = "von_neumann") { 
+  
   # We never wrap for percolation, by definition. 
   patches <- label(mat, nbmask, wrap = FALSE)
   return(attr(patches, "percolation"))
@@ -123,9 +121,10 @@ percolation <- function(mat, nbmask = matrix(c(0,1,0,
 #' @param merge Controls whether the obtained patch size distributions are to 
 #'   be pooled together if \code{mat} is a list of matrices. 
 #' 
-#' @param nbmask a square matrix with an odd number of lines and columns that 
+#' @param nbmask Either "moore" for 8-way neighborhood, "von_neumann" for four-way 
+#'   neighborhood, or a square matrix with an odd number of lines and columns that 
 #'   describes which neighbors are to be considered around a cell. Default 
-#'   is 4-way neighborhood (the neighborhood of a cell comprises the cell 
+#'   is 4-way or Von Neumann neighborhood (the neighborhood of a cell comprises the cell 
 #'   above, below, on the right and on the left of the target cell). 
 #' 
 #' @param wrap Whether to wrap around lattice boundaries (`TRUE`/`FALSE`), 
@@ -147,22 +146,23 @@ percolation <- function(mat, nbmask = matrix(c(0,1,0,
 #' print( sapply(list_patches, mean)) # print the average patch size 
 #' 
 #' # Example with 8-way neighborhood
-#' nbmask8 <- matrix(c(1,1,1,
-#'                     1,0,1,
-#'                     1,1,1), ncol = 3)
-#' patchsizes(forestgap[[5]], nbmask = nbmask8)
+#' patchsizes(forestgap[[5]], nbmask = "moore")
 #' 
-#'
+#' # Same neighborhood as above, but specified in matrix form 
+#' moore_nb <- matrix(c(1, 1, 1, 
+#'                      1, 0, 1, 
+#'                      1, 1, 1), 
+#'                    nrow = 3, ncol = 3, byrow = TRUE)
+#' patchsizes(forestgap[[5]], nbmask = moore_nb) 
+#' 
 #' @export
 patchsizes <- function(mat, 
                        merge = FALSE,
-                       nbmask = matrix(c(0,1,0,
-                                         1,0,1,
-                                         0,1,0), ncol = 3), # 4way neighborhood
+                       nbmask = "von_neumann", 
                        wrap = FALSE) { 
   
   if ( is.list(mat)) { 
-    result <- lapply(mat, patchsizes) 
+    result <- lapply(mat, patchsizes, merge, nbmask, wrap) 
     if (merge) { 
       # This always works even if there is only one element
       result <- do.call(c, result)
@@ -180,4 +180,42 @@ patchsizes <- function(mat,
   map <- label(mat, nbmask, wrap)
   
   return(attr(map, "psd"))
+}
+
+
+parse_neighbor_spec <- function(spec) { 
+  
+  moore_nb <- matrix(c(1, 1, 1, 
+                       1, 0, 1, 
+                       1, 1, 1), 
+                     nrow = 3, ncol = 3, byrow = TRUE)
+  von_neumann <- matrix(c(0, 1, 0, 
+                          1, 0, 1, 
+                          0, 1, 0), 
+                        nrow = 3, ncol = 3, byrow = TRUE)
+  
+  if ( is.matrix(spec) ) { 
+    
+    if( nrow(spec) == 3 && ncol(spec) == 3 ) { 
+      return(spec)
+    } 
+  }
+  
+  if ( is.numeric(spec) && spec == 4 ) { 
+    spec <- "von_neumann"
+  }
+  
+  if ( is.numeric(spec) && spec == 8 ) { 
+    spec <- "moore"
+  }
+  
+  if ( is.character(spec) && spec == "moore" ) { 
+    return(moore_nb)
+  }
+  
+  if ( is.character(spec) && spec == "von_neumann" ) { 
+    return(von_neumann)
+  }
+  
+  stop("Unknown neighborhood specification")
 }

@@ -4,12 +4,7 @@
 \alias{patchsizes}
 \title{Get patch sizes.}
 \usage{
-patchsizes(
-  mat,
-  merge = FALSE,
-  nbmask = matrix(c(0, 1, 0, 1, 0, 1, 0, 1, 0), ncol = 3),
-  wrap = FALSE
-)
+patchsizes(mat, merge = FALSE, nbmask = "von_neumann", wrap = FALSE)
 }
 \arguments{
 \item{mat}{A logical matrix or a list of such matrices.}
@@ -17,9 +12,10 @@ patchsizes(
 \item{merge}{Controls whether the obtained patch size distributions are to 
 be pooled together if \code{mat} is a list of matrices.}
 
-\item{nbmask}{a square matrix with an odd number of lines and columns that 
+\item{nbmask}{Either "moore" for 8-way neighborhood, "von_neumann" for four-way 
+neighborhood, or a square matrix with an odd number of lines and columns that 
 describes which neighbors are to be considered around a cell. Default 
-is 4-way neighborhood (the neighborhood of a cell comprises the cell 
+is 4-way or Von Neumann neighborhood (the neighborhood of a cell comprises the cell 
 above, below, on the right and on the left of the target cell).}
 
 \item{wrap}{Whether to wrap around lattice boundaries (`TRUE`/`FALSE`), 
@@ -43,11 +39,14 @@ list_patches <- patchsizes(forestgap) # get the patch size for each matrix
 print( sapply(list_patches, mean)) # print the average patch size 
 
 # Example with 8-way neighborhood
-nbmask8 <- matrix(c(1,1,1,
-                    1,0,1,
-                    1,1,1), ncol = 3)
-patchsizes(forestgap[[5]], nbmask = nbmask8)
+patchsizes(forestgap[[5]], nbmask = "moore")
 
+# Same neighborhood as above, but specified in matrix form 
+moore_nb <- matrix(c(1, 1, 1, 
+                     1, 0, 1, 
+                     1, 1, 1), 
+                   nrow = 3, ncol = 3, byrow = TRUE)
+patchsizes(forestgap[[5]], nbmask = moore_nb) 
 
 }
 \seealso{

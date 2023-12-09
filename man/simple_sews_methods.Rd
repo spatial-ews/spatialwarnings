@@ -20,7 +20,8 @@ in their original order.}
 
 \item{what}{The trendline to be displayed. Defaults to the indicator's 
 values ("value") but other metrics can be displayed. Accepted values are 
-"value", "pval" or "z_score".}
+"value", "pval", "difference" (obs - null mean), or "z_score" 
+( (obs - null mean) / (null sd) ).}
 
 \item{display_null}{Chooses whether a grey ribbon should be added to reflect
 the null distribution. Note that it can not be displayed when the trend 

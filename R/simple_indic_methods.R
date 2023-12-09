@@ -1,6 +1,6 @@
 # 
-# Methods for a simple indicator, i.e. an indicator that produces a single 
-# value for each matrix. 
+# Methods for a simple indicator, i.e. an indicator that produces on or more 
+# numeric values for each matrix. 
 # 
 
 

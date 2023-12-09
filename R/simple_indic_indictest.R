@@ -198,7 +198,8 @@ print.simple_sews_test_list <- function(x, ...) {
 #' 
 #' @param what The trendline to be displayed. Defaults to the indicator's 
 #'   values ("value") but other metrics can be displayed. Accepted values are 
-#'   "value", "pval" or "z_score".
+#'   "value", "pval", "difference" (obs - null mean), or "z_score" 
+#'   ( (obs - null mean) / (null sd) ).
 #' 
 #' @param display_null Chooses whether a grey ribbon should be added to reflect
 #'   the null distribution. Note that it can not be displayed when the trend 
@@ -217,7 +218,7 @@ plot.simple_sews_test <- function(x,
                                   ...) { 
   NextMethod('plot')
 }
-                                          
+
 #'@method plot simple_sews_test_list
 #'@export
 plot.simple_sews_test_list <- function(x, 
@@ -226,8 +227,17 @@ plot.simple_sews_test_list <- function(x,
                                        display_null = TRUE, 
                                        ...) { 
   
+  # Give the user some slack 
+  what <- tolower(what)
+  what <- gsub("-", "_", what) # common mistake with the underscore in z-score
+  
   # Transform into data.frame
   x.df <- as.data.frame(x)
+  
+  # Add the difference to the table 
+  if ( what == "difference" ) { 
+    x.df[ ,"difference"] <- x.df[ ,"value"] - x.df[ ,"null_mean"]
+  }
   
   # If along is not provided, then use the matrixn number
   set_default_xlab <- FALSE 
@@ -255,9 +265,11 @@ plot.simple_sews_test_list <- function(x,
             'in the provided object')
     add_null <- FALSE
   }
-  if ( display_null && what != "value" ) { 
-    warning('Cannot display null model quantiles when the indicator value is ',
-            'not displayed')
+  if ( display_null && what == "value" ) { 
+    warning(
+      'Display quantiles for null values cannot be shown when the indicator value is ',
+      'not displayed'
+    )
     add_null <- FALSE
   }
   

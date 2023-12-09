@@ -61,3 +61,29 @@ test_that("Computation of clustering are OK", {
 
 })
 
+test_that("Counting of pairs makes sense", {
+  n <- 99
+  counts <- lapply(seq.int(n), function(n) { 
+    m <- matrix(sample(letters[1:4], size = 100^2, replace = TRUE),
+                nrow = 100, ncol = 100)
+    pair_counts(m, prop = TRUE)
+  })
+  
+  means <- Reduce(`+`, counts) / n
+  
+  # Sum should be 1
+  expect_true({ 
+    abs( sum(means, na.rm = TRUE) - 1 ) < 0.00001 
+  })
+  
+  # Diags should be equal
+  expect_true({ 
+    all(abs(diff(diag(means))) < 0.1)
+  })
+  
+  # Lower tri values should be equal
+  expect_true({ 
+    all( abs(diff(means[lower.tri(means)])) < 0.01)
+  })
+  
+})

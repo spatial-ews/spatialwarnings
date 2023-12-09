@@ -4,7 +4,8 @@
 
 #' @title Clustering of pairs
 #'
-#' @description Compute clustering of pairs in a landscape
+#' @description Compute the number of pairs of neighbor cells in a landscape and derive 
+#'   from it clustering indices
 #'
 #' @param mat A matrix, usually with discrete values (logical, integers, etc.)
 #'
@@ -13,31 +14,32 @@
 #' @param use_8_nb Set to \code{TRUE} to use an 8-way neighborhood. The default is set
 #'   to FALSE, which uses a 4-way neighborhood
 #'
-#' @param prop Return either the counts of all pairs in the matrix (FALSE), or
-#'   the proportions of each pairs (out of all possible pairs)
-#'
+#' @param prop Return the counts for all pairs in the matrix (FALSE), or
+#'   the proportions for each pair (out of all possible pairs)
+#' 
 #' @details
 #'
 #'   The clustering of pairs is defined as the density of pairs, i.e.
-#'     the proportion of all pairs of cells that share the same state, divided
-#'     by the null expectation given a random, homogeneous spatial structure.
+#'     the proportion of all neighboring pairs of cells that share the same state, 
+#'     divided by the null expectation given a random, homogeneous spatial structure.
 #'
 #'   For example, let's consider a matrix with two states, 'a' and 'b'.
 #'     \code{raw_clustering} will count all pairs of cells 'a-a' or 'b-b', and
 #'     divide this by the total number of pairs. This proportion is then again
 #'     divided by the probability of obtaining these proportion of pairs under
 #'     the assumption of no spatial structure (random mixing of cells in the
-#'     matrix).
+#'     matrix). 
 #'
 #'   Clustering is equal to one when there is no spatial structure. It is
-#'     above one when two states tend to be next to each other (i.e. cluster)
+#'     above one when two states are found next to each other (i.e. cluster)
 #'     more than expected by chance. Values below one means that those two
-#'     states tend to be neighbors less frequently than expected by chance.
+#'     states tend to be neighbors less frequently than expected by chance. 
 #'
-#'   If you are only interested in the proportion of pairs of each combination
+#'   If you are only interested in the proportion of pairs for each combination
 #'     of states, you can use the function \code{pair_counts}, which returns
-#'     a matrix containing either the raw counts or proportions of pairs of
-#'     cells for all states found in the matrix.
+#'     a matrix with as many rows and columns as there are states in the matrix, and 
+#'     contains the counts for all possible pairs of cells found in the matrix 
+#'     (or their relative proportions).
 #'
 #' @return
 #'
@@ -57,19 +59,27 @@
 #'              nrow = ls, ncol = ls)
 #' clust <- raw_clustering(mm, wrap = TRUE, use_8_nb = TRUE)
 #' print(clust)
-#'
+#' 
 #' # Compute clustering along the gradient for the serengeti dataset
 #' data(forestgap)
 #' clust_indic <- compute_indicator(serengeti, raw_clustering,
 #'                                  wrap = TRUE, use_8_nb = FALSE)
-#' # The interesting one is the clustering of state 1 (TRUE in the original matrix),
-#' # which shows similar trends to the variance (as a generic indicator, see
-#' # ?generic_sews)
+#' # The interesting one is the clustering of state 0 (FALSE in the original matrix),
+#' # which corresponds to grassland pixels, which get more and more clustered with 
+#' # increasing rainfall (see also ?generic_sews for how that compares with generic 
+#' # indicators)
 #' plot(clust_indic, along = serengeti.rain)
+#' 
 #' # Add null trend
-#' clust_test <- indictest(clust_indic, nrep = 19)
+#' clust_test <- indictest(clust_indic, nulln = 19)
 #' plot(clust_test, along = serengeti.rain)
-#'
+#' 
+#' # Show the proportion of each pairs of states in the matrix... 
+#' pair_counts(serengeti[[5]])
+#' 
+#' # ... or the total count
+#' pair_counts(serengeti[[5]], prop = FALSE)
+#' 
 #'@export
 raw_clustering <- function(mat,
                            wrap = TRUE,
@@ -130,7 +140,7 @@ pair_counts <- function(mat,
 }
 
 
-# Format a matrix before feeding it to pair-counting functions
+# Format a matrix before feeding it to pair-counting cpp functions
 format_mat_for_pair_count <- function(mat) {
 
    if ( ! is.matrix(mat) ) {

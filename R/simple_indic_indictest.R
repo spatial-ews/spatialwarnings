@@ -265,7 +265,7 @@ plot.simple_sews_test_list <- function(x,
             'in the provided object')
     add_null <- FALSE
   }
-  if ( display_null && what == "value" ) { 
+  if ( display_null && what != "value" ) { 
     warning(
       'Display quantiles for null values cannot be shown when the indicator value is ',
       'not displayed'

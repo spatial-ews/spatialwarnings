@@ -19,10 +19,6 @@ to FALSE, which uses a 4-way neighborhood}
 
 \item{prop}{Return either the counts of all pairs in the matrix (FALSE), or
 the proportions of each pairs (out of all possible pairs)}
-
-\item{divide_by_null}{By default, this function computes the observed number of pairs,
-and divides it by the expected number of pairs under random spatial structure.
-Set this parameter to \code{FALSE} to return the raw proportion of pairs.}
 }
 \value{
 A vector with the requested clutering values for \code{raw_clustering},

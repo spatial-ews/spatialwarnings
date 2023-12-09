@@ -1,16 +1,20 @@
+
+<!-- badges: start -->
 [![Coverage
 status](https://codecov.io/gh/spatial-ews/spatialwarnings/branch/master/graph/badge.svg)](https://codecov.io/github/spatial-ews/spatialwarnings?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/spatialwarnings)](https://cran.r-project.org/package=spatialwarnings)
 [![CRAN_downloads](https://cranlogs.r-pkg.org/badges/last-week/spatialwarnings)](https://cran.r-project.org/package=spatialwarnings)
+[![R-CMD-check](https://github.com/spatial-ews/spatialwarnings/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/spatial-ews/spatialwarnings/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
 
 Spatial early warning signs - R package
 =======================================
 
 This package helps computing spatial early warning signals of critical
-transitions. This is part of a collaborative project between [Sonia Kefi's
-group](http://sonia.kefi.fr/) (Institut de Sciences d'Evolution, CNRS, IRD,
-Université Montpellier, France) and [Vishwesha
-Guttal's](https://teelabiisc.wordpress.com/) (Center for Ecological Sciences,
+transitions, and metrics commonly-used in the related literature. This has been 
+initiated by a collaborative project between [Sonia Kefi's group](http://sonia.kefi.fr/) 
+(Institut de Sciences d'Evolution, CNRS, IRD, Université Montpellier, France) and 
+[Vishwesha Guttal's](https://teelabiisc.wordpress.com/) (Center for Ecological Sciences,
 Indian Institute of Science, Bangalore, India).
 
 The R package provides several sets of functions related to the computation of
@@ -22,8 +26,7 @@ their trends.
 To understand the context behind those indicators, and see how they
 can be computed, the best way is to have a look at our paper about the package:
 
-[Génin, A. , Majumder, S. , Sankaran, S. , Danet, A. , Guttal, V. , Schneider, F. D. and Kéfi, S. (2018),
-Monitoring ecosystem degradation using spatial data and the R package
+[Génin, A. , Majumder, S. , Sankaran, S. , Danet, A. , Guttal, V. , Schneider, F. D. and Kéfi, S. (2018), Monitoring ecosystem degradation using spatial data and the R package
 'spatialwarnings'. Methods in Ecology and Evolution.](https://dx.doi.org/10.1111/2041-210X.13058)
 
 For more advanced users and/or technical questions that may arise,
@@ -34,7 +37,7 @@ a FAQ is also available [there](https://alex.lecairn.org/spatialwarnings-faq.htm
 Alain Danet, [Alexandre Génin (Maintainer)](mailto:a.a.h.genin@uu.nl),
 Vishwesha Guttal, Sonia Kefi, Sabiha Majumder, Sumithra Sankaran, Florian Schneider
 
-`spatialwarnings` has also benefited from contributions from Angeles Garcia-Mayor, Vasilis Dakos
+`spatialwarnings` has also benefited from contributions from Angeles Garcia-Mayor, Vasilis Dakos, 
 
 ## Installation
 

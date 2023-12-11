@@ -3,36 +3,41 @@
 \name{dLSW}
 \alias{dLSW}
 \alias{pLSW}
+\alias{LSW_fit}
 \title{The Lifshitz-Slyozov-Wagner distribution}
 \usage{
 dLSW(x, mu, log = FALSE)
 
 pLSW(x, mu, lower.tail = TRUE, log.p = FALSE)
+
+LSW_fit(x)
 }
 \arguments{
 \item{x}{vector of quantiles}
 
 \item{mu}{the mean of the distribution}
 
-\item{log, }{log.p logical; if \code{TRUE}, probabilities p are given as log(p)}
+\item{log, log.p}{logical; if \code{TRUE}, probabilities p are given as log(p)}
 
 \item{lower.tail}{logical; if TRUE (default), probabilities are
 \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}}
 }
 \value{
 dLSW gives the density, pLSW gives the distribution function, both as numerical 
-  vectors determined by the length of x.
+  vectors determined by the length of x. 
+
+  @seealso dLSW
 }
 \description{
 Density and distribution function for the Lifshitz-Slyozov-Wagner (LSW)
- distribution with mean mu.
+  distribution with mean mu.
 }
 \details{
 The LSW distribution is a continuous distribution with density
 
 \deqn{ 
-  f(x, \mu) = \frac{4x^2}{9\mu^3} ( \frac{3\mu}{3\mu + x} )^{7/3} 
-                ( \frac{3\mu}{3\mu - 2x} )^(11/3) e^{\frac{2x}{2x - 3\mu}} 
+  f(x) = \frac{4x^2}{9\mu^3} ( \frac{3\mu}{3\mu + x} )^{7/3} 
+           ( \frac{3\mu}{3\mu - 2x} )^{11/3} e^{\frac{2x}{2x - 3\mu}} 
 }
 
 where \eqn{\mu} is the mean of the distribution. 
@@ -44,8 +49,8 @@ can use \code{LSW_fit} to fit an LSW distribution to a set of observations.
 The length of the results is determined by the length of \code{x}, and \eqn{\mu} can 
 only be a single value. 
 
-Please note that this distribution has support only on the interval [0,3*mu) 
-  (TODO: does it??). Probabilities outside this interval are returned as 0.
+Please note that this distribution has support only on the interval \code{[0,mu*3/2)}. 
+  Probabilities outside this interval are returned as 0.
 }
 \examples{
 

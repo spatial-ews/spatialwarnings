@@ -4,7 +4,7 @@
 \alias{lsw_sews}
 \alias{raw_patch_radii_skewness}
 \alias{raw_lsw_aicw}
-\title{LSW-based indicators}
+\title{Indicators based on the LSW distribution}
 \usage{
 lsw_sews(mat, wrap = FALSE)
 
@@ -45,9 +45,9 @@ degradation.
 
 This function measures this through the relative support based on AIC for the two 
 distributions (equal to 1 when the empirical distribution is best-approximated by an 
-LSW, and 0 when it is a \link{}{log-normal distribution}), and the skewness of the
-observed patch radii, which should approach a value around -0.92 as conditions 
-worsen.
+LSW, and 0 when it is a log-normal distribution (\code{\link{dlnorm}}), and the 
+skewness of the observed patch radii, which should approach a value around -0.92 as
+conditions worsen.
 }
 \examples{
 
@@ -64,9 +64,10 @@ plot(indics, along = dda.pars[ ,"tau"])
 radii_skewness <- compute_indicator(dda, raw_patch_radii_skewness)
 plot(radii_skewness, along = dda.pars[ ,"tau"])
 
-# Aic weight of LSW distribution relative to a lognormal distribution 
+# Aic weight of LSW distribution relative to a lognormal distribution. tau here 
+# represents the density at equilibrium in Siteur et al's model (2023)
 lsw_aicw <- compute_indicator(dda, raw_lsw_aicw)
-plot(lsw_aicw, along = dda.pars[ ,"tau"])
+plot(lsw_aicw, along = 1 - dda.pars[ ,"tau"])
 
 }
 \references{
@@ -78,6 +79,8 @@ https://doi.org/10.1073/pnas.2202683120.
 }
 \seealso{
 dLSW, dda, raw_patch_radii_skewness, raw_lsw_aicw
+
+dLSW
 }
 \author{
 This code has received contributions from Koen Siteur (\email{k.siteur@gmail.com})

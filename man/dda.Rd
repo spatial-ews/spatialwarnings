@@ -6,9 +6,9 @@
 \alias{dda.pars}
 \title{Density-dependent aggregation model}
 \format{
-An object of class \code{list} of length 14.
+An object of class \code{list} of length 7.
 
-An object of class \code{data.frame} with 14 rows and 5 columns.
+An object of class \code{data.frame} with 7 rows and 5 columns.
 }
 \source{
 Kindly provided by Koen Siteur

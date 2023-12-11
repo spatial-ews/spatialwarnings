@@ -13,15 +13,14 @@
 # 
 # 
 # 
-#'@title LSW-based indicators  
+#' @title Indicators based on the LSW distribution
 #'
-#'@description LSW indicators for systems with density-dependent aggregation 
+#' @description LSW indicators for systems with density-dependent aggregation 
 #'
-#'
-#'@param mat A logical matrix (TRUE/FALSE values) or a list of such matrices
+#' @param mat A logical matrix (TRUE/FALSE values) or a list of such matrices
 #' 
-#'@param wrap Determines whether patches are considered to wrap around the 
-#'  matrix when reaching on of its edges
+#' @param wrap Determines whether patches are considered to wrap around the 
+#'   matrix when reaching on of its edges
 #' 
 #'@details 
 #' 
@@ -41,9 +40,9 @@
 #' 
 #' This function measures this through the relative support based on AIC for the two 
 #' distributions (equal to 1 when the empirical distribution is best-approximated by an 
-#' LSW, and 0 when it is a \link{}{log-normal distribution}), and the skewness of the
-#' observed patch radii, which should approach a value around -0.92 as conditions 
-#' worsen.  
+#' LSW, and 0 when it is a log-normal distribution (\code{\link{dlnorm}}), and the 
+#' skewness of the observed patch radii, which should approach a value around -0.92 as
+#' conditions worsen.  
 #' 
 #' @author This code has received contributions from Koen Siteur (\email{k.siteur@gmail.com})
 #' 
@@ -55,9 +54,9 @@
 #'   of the methods written for these complicated objects instead of extracting 
 #'   values directly (they are displayed using \code{print(<object>)}). 
 #' 
-#'@seealso dLSW, dda, raw_patch_radii_skewness, raw_lsw_aicw
+#' @seealso dLSW, dda, raw_patch_radii_skewness, raw_lsw_aicw
 #'
-#'@references 
+#' @references 
 #'  
 #' Siteur, Koen, Quan-Xing Liu, Vivi Rottschäfer, Tjisse van der Heide, Max Rietkerk, 
 #' Arjen Doelman, Christoffer Boström, and Johan van de Koppel. 2023. 
@@ -67,7 +66,9 @@
 #' 
 #  # TODO other relevant papers ? 
 #'
-#'@examples 
+#' @seealso dLSW
+#'
+#' @examples 
 #'
 #' data(dda)
 #' data(dda.pars)
@@ -82,9 +83,10 @@
 #' radii_skewness <- compute_indicator(dda, raw_patch_radii_skewness)
 #' plot(radii_skewness, along = dda.pars[ ,"tau"])
 #' 
-#' # Aic weight of LSW distribution relative to a lognormal distribution 
+#' # Aic weight of LSW distribution relative to a lognormal distribution. tau here 
+#' # represents the density at equilibrium in Siteur et al's model (2023)
 #' lsw_aicw <- compute_indicator(dda, raw_lsw_aicw)
-#' plot(lsw_aicw, along = dda.pars[ ,"tau"])
+#' plot(lsw_aicw, along = 1 - dda.pars[ ,"tau"])
 #' 
 #'@export
 lsw_sews <- function(mat, wrap = FALSE) { 
@@ -175,27 +177,27 @@ fit_lnorm <- function(xs) {
 # The Lifshitz, Slyozov, Wagner (LSW) probability density function. Used for plotting, 
 # and for computation of the AIC.
 # 
-#'@title The Lifshitz-Slyozov-Wagner distribution 
+#' @title The Lifshitz-Slyozov-Wagner distribution 
 #'
-#'@description Density and distribution function for the Lifshitz-Slyozov-Wagner (LSW)
-#'  distribution with mean mu. 
+#' @description Density and distribution function for the Lifshitz-Slyozov-Wagner (LSW)
+#'   distribution with mean mu. 
 #'
-#'@param x vector of quantiles 
+#' @param x vector of quantiles 
 #'
-#'@param mu the mean of the distribution
+#' @param mu the mean of the distribution
 #'
-#'@param log, log.p logical; if \code{TRUE}, probabilities p are given as log(p)
+#' @param log,log.p logical; if \code{TRUE}, probabilities p are given as log(p)
 #'
-#'@param lower.tail logical; if TRUE (default), probabilities are
+#' @param lower.tail logical; if TRUE (default), probabilities are
 #'         \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}
 #' 
-#'@details 
+#' @details 
 #' 
 #' The LSW distribution is a continuous distribution with density
 #' 
 #' \deqn{ 
-#'   f(x, \mu) = \frac{4x^2}{9\mu^3} ( \frac{3\mu}{3\mu + x} )^{7/3} 
-#'                 ( \frac{3\mu}{3\mu - 2x} )^(11/3) e^{\frac{2x}{2x - 3\mu}} 
+#'   f(x) = \frac{4x^2}{9\mu^3} ( \frac{3\mu}{3\mu + x} )^{7/3} 
+#'            ( \frac{3\mu}{3\mu - 2x} )^{11/3} e^{\frac{2x}{2x - 3\mu}} 
 #' }
 #' 
 #' where \eqn{\mu} is the mean of the distribution. 
@@ -207,10 +209,10 @@ fit_lnorm <- function(xs) {
 #' The length of the results is determined by the length of \code{x}, and \eqn{\mu} can 
 #' only be a single value. 
 #' 
-#' Please note that this distribution has support only on the interval [0,3*mu) 
-#'   (TODO: does it??). Probabilities outside this interval are returned as 0. 
+#' Please note that this distribution has support only on the interval \code{[0,mu*3/2)}. 
+#'   Probabilities outside this interval are returned as 0. 
 #'
-#'@references 
+#' @references 
 #
 #TODO: add reference
 #
@@ -220,11 +222,13 @@ fit_lnorm <- function(xs) {
 #' Ecosystems." Proceedings of the National Academy of Sciences 120 (2): e2202683120.
 #' https://doi.org/10.1073/pnas.2202683120.
 #'
-#'@return
+#' @return
 #' dLSW gives the density, pLSW gives the distribution function, both as numerical 
 #'   vectors determined by the length of x. 
 #'
-#'@examples
+#'   @seealso dLSW
+#'
+#' @examples
 #' 
 #' # Plot the density 
 #' x <- seq(0, 10, l = 128) 
@@ -234,8 +238,6 @@ fit_lnorm <- function(xs) {
 #' legend(x = 0, y = max(dLSW(x, mu = 3)), lty = 1, col = c("black", "red", "blue"), 
 #'        legend = paste("mu =", c(3, 5, 7)))
 #' 
-#TODO: what happens to values below 0? We return prob = 0, but is this the right 
-#definition?
 #'@export
 dLSW <- function(x, mu, log = FALSE) { 
   if ( length(mu) > 1 ) { 
@@ -285,15 +287,16 @@ pLSW <- function(x, mu, lower.tail = TRUE, log.p = FALSE) {
   
   ans
 }
-# 
+
 # # The derivative of the log likelihood function to parameter mu. Used to estimate mu
-# dLdmu <- function(r, mu){
+# dLdmu <- function(r, mu) {
 #   n <- length(r)
 #   -3*n+(7/3)*sum(r/(3*mu+r))-(11/3)*sum(2*r/(3*mu-2*r))+3*mu*sum(2*r/(2*r-3*mu)^2)
 # }
 
 # Function to fit the LSW probability density function. Returns the estimate of mu and 
 # the AIC for model comparison
+#'@rdname dLSW
 #'@export
 LSW_fit <- function(x) {
   

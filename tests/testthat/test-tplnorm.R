@@ -31,9 +31,13 @@ results <- plyr::ldply(seq.int(nrow(grid)), function(gridi) {
     prod <- prod + sum( exp(-b * xs ) * xs^(-a) )
     i <- inext
   }
-
-  ref <- tplinfsum(a, b, xmin = 1, maxit = maxit, reltol = reltol)
-
+  
+  # This can produce warnings that the max number of iterations has been reached. 
+  # Ignore those.
+  suppressWarnings({ 
+    ref <- tplinfsum(a, b, xmin = 1, maxit = maxit, reltol = reltol)
+  })
+  
   data.frame(grid[gridi, ],
              imax = inext,
              maxit = maxit,

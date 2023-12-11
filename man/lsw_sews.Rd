@@ -13,14 +13,14 @@ raw_patch_radii_skewness(mat, wrap = FALSE)
 raw_lsw_aicw(mat, wrap = FALSE)
 }
 \arguments{
-\item{mat}{A logical matrix (TRUE/FALSE values) or a list of these}
+\item{mat}{A logical matrix (TRUE/FALSE values) or a list of such matrices}
 
 \item{wrap}{Determines whether patches are considered to wrap around the 
 matrix when reaching on of its edges}
 }
 \value{
 \code{lsw_sews} returns an object of class \code{simple_sews_single}
-  (actually a list) if \code{mat} is a single matrix or an object of class 
+  (a list) if \code{mat} is a single matrix or an object of class 
   \code{simple_sews_list} if \code{mat} is a list. You probably want to use some  
   of the methods written for these complicated objects instead of extracting 
   values directly (they are displayed using \code{print(<object>)}).
@@ -29,13 +29,32 @@ matrix when reaching on of its edges}
 LSW indicators for systems with density-dependent aggregation
 }
 \details{
-# TODO
+In systems where a mobile resource or consumer can be fixed in space by a sessile 
+species, specific patterns are expected to appear. Such systems can include situations 
+where nutrients available in the environmeent are fixed by a sessile species (e.g. 
+seagrasses or corals), or where the behavior of herbivores is altered to restrict 
+them to certain areas (see full theoretical background in Siteur et al. 2023). 
+
+In those systems, as environmental conditions change and the global density of 
+the sessile species decreases, its spatial structure is expected to change. The area 
+of patches of the sessile species (as measured by their radii, which assumes circular
+patches), is expected to go from a log-normal to a  Lifshitz–Slyozov–Wagner (LSW)
+distribution. Thus, measuring how close the observed distribution of radii are to 
+those two candidate distributions can constitute an indicator of ecosystem 
+degradation. 
+
+This function measures this through the relative support based on AIC for the two 
+distributions (equal to 1 when the empirical distribution is best-approximated by an 
+LSW, and 0 when it is a \link{}{log-normal distribution}), and the skewness of the
+observed patch radii, which should approach a value around -0.92 as conditions 
+worsen.
 }
 \examples{
 
 data(dda)
 data(dda.pars)
 
+# Compute all indicators at once (skewness and relative AIC support)
 indics <- lsw_sews(dda)
 plot(indics, along = dda.pars[ ,"tau"]) 
 
@@ -49,12 +68,17 @@ plot(radii_skewness, along = dda.pars[ ,"tau"])
 lsw_aicw <- compute_indicator(dda, raw_lsw_aicw)
 plot(lsw_aicw, along = dda.pars[ ,"tau"])
 
-
-
 }
 \references{
-# TODO Siteur 2023, other relevant papers ?
+Siteur, Koen, Quan-Xing Liu, Vivi Rottschäfer, Tjisse van der Heide, Max Rietkerk, 
+Arjen Doelman, Christoffer Boström, and Johan van de Koppel. 2023. 
+"Phase-Separation Physics Underlies New Theory for the Resilience of Patchy 
+Ecosystems." Proceedings of the National Academy of Sciences 120 (2): e2202683120.
+https://doi.org/10.1073/pnas.2202683120.
 }
 \seealso{
 dLSW, dda, raw_patch_radii_skewness, raw_lsw_aicw
+}
+\author{
+This code has received contributions from Koen Siteur (\email{k.siteur@gmail.com})
 }

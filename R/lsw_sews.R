@@ -18,34 +18,61 @@
 #'@description LSW indicators for systems with density-dependent aggregation 
 #'
 #'
-#'@param mat A logical matrix (TRUE/FALSE values) or a list of these
+#'@param mat A logical matrix (TRUE/FALSE values) or a list of such matrices
 #' 
 #'@param wrap Determines whether patches are considered to wrap around the 
 #'  matrix when reaching on of its edges
 #' 
 #'@details 
 #' 
-#' # TODO
+#' In systems where a mobile resource or consumer can be fixed in space by a sessile 
+#' species, specific patterns are expected to appear. Such systems can include situations 
+#' where nutrients available in the environmeent are fixed by a sessile species (e.g. 
+#' seagrasses or corals), or where the behavior of herbivores is altered to restrict 
+#' them to certain areas (see full theoretical background in Siteur et al. 2023). 
+#' 
+#' In those systems, as environmental conditions change and the global density of 
+#' the sessile species decreases, its spatial structure is expected to change. The area 
+#' of patches of the sessile species (as measured by their radii, which assumes circular
+#' patches), is expected to go from a log-normal to a  Lifshitz–Slyozov–Wagner (LSW)
+#' distribution. Thus, measuring how close the observed distribution of radii are to 
+#' those two candidate distributions can constitute an indicator of ecosystem 
+#' degradation. 
+#' 
+#' This function measures this through the relative support based on AIC for the two 
+#' distributions (equal to 1 when the empirical distribution is best-approximated by an 
+#' LSW, and 0 when it is a \link{}{log-normal distribution}), and the skewness of the
+#' observed patch radii, which should approach a value around -0.92 as conditions 
+#' worsen.  
+#' 
+#' @author This code has received contributions from Koen Siteur (\email{k.siteur@gmail.com})
 #' 
 #' @return 
 #' 
 #' \code{lsw_sews} returns an object of class \code{simple_sews_single}
-#'   (actually a list) if \code{mat} is a single matrix or an object of class 
+#'   (a list) if \code{mat} is a single matrix or an object of class 
 #'   \code{simple_sews_list} if \code{mat} is a list. You probably want to use some  
 #'   of the methods written for these complicated objects instead of extracting 
-#'   values directly (they are displayed using \code{print(<object>)}).
-#'
+#'   values directly (they are displayed using \code{print(<object>)}). 
+#' 
 #'@seealso dLSW, dda, raw_patch_radii_skewness, raw_lsw_aicw
 #'
 #'@references 
 #'  
-#'  # TODO Siteur 2023, other relevant papers ? 
+#' Siteur, Koen, Quan-Xing Liu, Vivi Rottschäfer, Tjisse van der Heide, Max Rietkerk, 
+#' Arjen Doelman, Christoffer Boström, and Johan van de Koppel. 2023. 
+#' "Phase-Separation Physics Underlies New Theory for the Resilience of Patchy 
+#' Ecosystems." Proceedings of the National Academy of Sciences 120 (2): e2202683120.
+#' https://doi.org/10.1073/pnas.2202683120.
+#' 
+#  # TODO other relevant papers ? 
 #'
 #'@examples 
 #'
 #' data(dda)
 #' data(dda.pars)
 #' 
+#' # Compute all indicators at once (skewness and relative AIC support)
 #' indics <- lsw_sews(dda)
 #' plot(indics, along = dda.pars[ ,"tau"]) 
 #' 
@@ -58,8 +85,6 @@
 #' # Aic weight of LSW distribution relative to a lognormal distribution 
 #' lsw_aicw <- compute_indicator(dda, raw_lsw_aicw)
 #' plot(lsw_aicw, along = dda.pars[ ,"tau"])
-#' 
-#' 
 #' 
 #'@export
 lsw_sews <- function(mat, wrap = FALSE) { 
@@ -113,7 +138,7 @@ get_patch_radii <- function(mat, wrap = FALSE) {
 }
 
 get_lsw_aicw <- function(radii) {
-  fit_lsw <- fitLSW(radii)
+  fit_lsw <- LSW_fit(radii)
   
   # Fit a lognormal
   fit_lnorm <- fit_lnorm(radii)
@@ -157,15 +182,43 @@ fit_lnorm <- function(xs) {
 #'
 #'@param x vector of quantiles 
 #'
-#'@param vector of means 
-#' 
+#'@param mu the mean of the distribution
+#'
 #'@param log, log.p logical; if \code{TRUE}, probabilities p are given as log(p)
 #'
 #'@param lower.tail logical; if TRUE (default), probabilities are
 #'         \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}
 #' 
 #'@details 
-#' # TODO
+#' 
+#' The LSW distribution is a continuous distribution with density
+#' 
+#' \deqn{ 
+#'   f(x, \mu) = \frac{4x^2}{9\mu^3} ( \frac{3\mu}{3\mu + x} )^{7/3} 
+#'                 ( \frac{3\mu}{3\mu - 2x} )^(11/3) e^{\frac{2x}{2x - 3\mu}} 
+#' }
+#' 
+#' where \eqn{\mu} is the mean of the distribution. 
+#' 
+#' The functions \code{dLSW} gives the probability density, \code{pLSW} gives the 
+#' distribution function. \code{qLSW} and \code{rLSW} are not implemented. You 
+#' can use \code{LSW_fit} to fit an LSW distribution to a set of observations. 
+#' 
+#' The length of the results is determined by the length of \code{x}, and \eqn{\mu} can 
+#' only be a single value. 
+#' 
+#' Please note that this distribution has support only on the interval [0,3*mu) 
+#'   (TODO: does it??). Probabilities outside this interval are returned as 0. 
+#'
+#'@references 
+#
+#TODO: add reference
+#
+#' Siteur, Koen, Quan-Xing Liu, Vivi Rottschäfer, Tjisse van der Heide, Max Rietkerk, 
+#' Arjen Doelman, Christoffer Boström, and Johan van de Koppel. 2023. 
+#' "Phase-Separation Physics Underlies New Theory for the Resilience of Patchy 
+#' Ecosystems." Proceedings of the National Academy of Sciences 120 (2): e2202683120.
+#' https://doi.org/10.1073/pnas.2202683120.
 #'
 #'@return
 #' dLSW gives the density, pLSW gives the distribution function, both as numerical 
@@ -181,16 +234,30 @@ fit_lnorm <- function(xs) {
 #' legend(x = 0, y = max(dLSW(x, mu = 3)), lty = 1, col = c("black", "red", "blue"), 
 #'        legend = paste("mu =", c(3, 5, 7)))
 #' 
+#TODO: what happens to values below 0? We return prob = 0, but is this the right 
+#definition?
 #'@export
-dLSW <- function(x, mu, log = FALSE){
-  p <- ifelse(x<1.5*mu,
-              (4*x^2/(9*mu^3)) * (3*mu/(3*mu+x))^(7/3) * 
-                (3*mu/(3*mu-2*x))^(11/3) * exp(2*x/(2*x-3*mu)),
-              0) 
+dLSW <- function(x, mu, log = FALSE) { 
+  if ( length(mu) > 1 ) { 
+    stop("dLSW does not support multiple values for mu")
+  }
+  
+  zero_val <- ifelse(log, -Inf, 0)
+  p <- rep(zero_val, length(x))
+  x_ok <- which(x<1.5 * mu & x >= 0)
+  x <- x[x_ok]
+  
   if ( log ) { 
-    # TODO: actually implement this by working out the math on paper for 
-    # better numerical stability, but right now it works well
-    p <- log(p)
+    p[x_ok] <- - 7 * log(x+3*mu) /3+2 * log(x) + 
+                  2 * x / (2 * x -  3 * mu) - 
+                  ( 11 * log(3 * mu - 2 * x) ) / 3 + 
+                  3 * log(mu) + 
+                  log(324)
+  } else { 
+    p[x_ok] <- (4*x^2/(9*mu^3)) * 
+                 (3*mu/(3*mu+x))^(7/3) * 
+                 (3*mu/(3*mu-2*x))^(11/3) * 
+                 exp(2*x/(2*x-3*mu))
   }
   
   p
@@ -200,46 +267,42 @@ dLSW <- function(x, mu, log = FALSE){
 #'@rdname dLSW 
 #'
 #'@export 
-pLSW <- function(r, mu, lower.tail = TRUE, log.p = FALSE) { 
-  stop("TODO")
-}
-
-# The (approximate) cumulative LSW distribution. Used for plotting.
-cLSW <- function(r,mu) {
-  # TODO: is there an analytical expression for the LSW distribution ? 
-  x <- seq(0, 1.5, 0.01) * mu
-  PDF <- dLSW(x, mu)
-  CDF <- cumsum(PDF) / sum(PDF)
-  y <- approx(x, CDF, r)[["y"]]
+pLSW <- function(x, mu, lower.tail = TRUE, log.p = FALSE) { 
   
-  return(y)
+  # TODO: is there an analytical expression for the LSW distribution function ? 
+  ans <- vapply(x, function(thisr) { 
+    integrate(dLSW, lower = 0, upper = thisr, mu = mu, log = FALSE, 
+              subdivisions = 512)[["value"]]
+  }, numeric(1))
+  
+  if ( ! lower.tail ) { 
+    ans <- 1 - ans
+  }
+  
+  if ( log.p ) { 
+    ans <- log(ans)
+  }
+  
+  ans
 }
-
-# The (approximate) inverse cumulative LSW distribution. Used for drawing random 
-# patch radii
-icLSW <- function(X, mu){
-  x <- seq(0,1.5,0.001) * mu
-  PDF <- dLSW(x,mu)
-  CDF <- cumsum(PDF)/sum(PDF)
-  return(suppressWarnings((approx(CDF,x,X)$y)))  #I suppress warnings here. THe warning is because the approx function is fed Y values with the same X value. This is because the LSW distribution becomes very flat as it approaches 1.5.
-}
-
-# The derivative of the log likelihood function to parameter mu. Used to estimate mu
-dLdmu <- function(r, mu){
-  n <- length(r)
-  -3*n+(7/3)*sum(r/(3*mu+r))-(11/3)*sum(2*r/(3*mu-2*r))+3*mu*sum(2*r/(2*r-3*mu)^2)
-}
+# 
+# # The derivative of the log likelihood function to parameter mu. Used to estimate mu
+# dLdmu <- function(r, mu){
+#   n <- length(r)
+#   -3*n+(7/3)*sum(r/(3*mu+r))-(11/3)*sum(2*r/(3*mu-2*r))+3*mu*sum(2*r/(2*r-3*mu)^2)
+# }
 
 # Function to fit the LSW probability density function. Returns the estimate of mu and 
 # the AIC for model comparison
-fitLSW <- function(r){
+#'@export
+LSW_fit <- function(x) {
   
   negll <- function(mu) { 
-    nll <- dLSW(r, mu, log = TRUE) 
+    nll <- - dLSW(x, mu, log = TRUE) 
     if ( any( ! is.finite(nll) ) ) { 
       return(Inf)
     }
-    - sum(nll)
+    sum(nll)
   }
   
   # Here we want to stick to values so that all r < 3mu/2 otherwise the log 
@@ -247,29 +310,15 @@ fitLSW <- function(r){
   # i.e  mu > 2*max(r)/3. We find the smallest value that produces a finite negll and 
   # use that as our lower bound for LL minimization later on. 
   boundsearch <- uniroot(f = function(x) is.finite(negll(x)) - 0.5, 
-                         lower = min(r), 
-                         upper = max(r))
+                         lower = min(x), 
+                         upper = max(x))
   minbound <- boundsearch[["root"]] + boundsearch[["estim.prec"]]
   
-  est <- optim(par = max(r), 
+  est <- optim(par = max(x), 
                lower = minbound, 
-               upper = max(r), 
+               upper = max(x), 
                method = "L-BFGS-B", 
                fn = negll)
-  
-  # Show dldmu 
-#   mus <- seq(0, max(r), l = 64)
-#   mus <- seq(2*max(r)/3 + epsilon, max(r), l = 64)
-#   plot(mus, sapply(mus, function(mu) { 
-#     dLdmu(r, mu)
-#     negll(mu)
-#   }))
-#   
-#   mu_fit <- uniroot(function(mu){ dLdmu(r, mu) },
-#                     interval = c(minbound, max(r)))$root
-#   AIC_fit <- 2 - 2 * sum(log(dLSW(r, mu_fit)))
-#   cat(sprintf("directll mu est: %s / uniroot mu est: %s / ll directll: %s\n", 
-#               mu_fit, est[["par"]], -est[["value"]]))
   
   mu_fit <- est[["par"]]
   AIC_fit <- 2 - 2 * ( - est[["value"]] )

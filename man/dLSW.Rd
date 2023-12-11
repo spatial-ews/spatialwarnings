@@ -7,17 +7,17 @@
 \usage{
 dLSW(x, mu, log = FALSE)
 
-pLSW(r, mu, lower.tail = TRUE, log.p = FALSE)
+pLSW(x, mu, lower.tail = TRUE, log.p = FALSE)
 }
 \arguments{
 \item{x}{vector of quantiles}
+
+\item{mu}{the mean of the distribution}
 
 \item{log, }{log.p logical; if \code{TRUE}, probabilities p are given as log(p)}
 
 \item{lower.tail}{logical; if TRUE (default), probabilities are
 \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}}
-
-\item{vector}{of means}
 }
 \value{
 dLSW gives the density, pLSW gives the distribution function, both as numerical 
@@ -28,7 +28,24 @@ Density and distribution function for the Lifshitz-Slyozov-Wagner (LSW)
  distribution with mean mu.
 }
 \details{
-# TODO
+The LSW distribution is a continuous distribution with density
+
+\deqn{ 
+  f(x, \mu) = \frac{4x^2}{9\mu^3} ( \frac{3\mu}{3\mu + x} )^{7/3} 
+                ( \frac{3\mu}{3\mu - 2x} )^(11/3) e^{\frac{2x}{2x - 3\mu}} 
+}
+
+where \eqn{\mu} is the mean of the distribution. 
+
+The functions \code{dLSW} gives the probability density, \code{pLSW} gives the 
+distribution function. \code{qLSW} and \code{rLSW} are not implemented. You 
+can use \code{LSW_fit} to fit an LSW distribution to a set of observations. 
+
+The length of the results is determined by the length of \code{x}, and \eqn{\mu} can 
+only be a single value. 
+
+Please note that this distribution has support only on the interval [0,3*mu) 
+  (TODO: does it??). Probabilities outside this interval are returned as 0.
 }
 \examples{
 
@@ -40,4 +57,11 @@ lines(x, dLSW(x, mu = 7), type = "l", col = "blue")
 legend(x = 0, y = max(dLSW(x, mu = 3)), lty = 1, col = c("black", "red", "blue"), 
        legend = paste("mu =", c(3, 5, 7)))
 
+}
+\references{
+Siteur, Koen, Quan-Xing Liu, Vivi Rottschäfer, Tjisse van der Heide, Max Rietkerk, 
+Arjen Doelman, Christoffer Boström, and Johan van de Koppel. 2023. 
+"Phase-Separation Physics Underlies New Theory for the Resilience of Patchy 
+Ecosystems." Proceedings of the National Academy of Sciences 120 (2): e2202683120.
+https://doi.org/10.1073/pnas.2202683120.
 }

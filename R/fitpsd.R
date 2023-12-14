@@ -213,22 +213,21 @@ pl_ll <- function(dat, expo, xmin) {
 #' @return A list containing at list the following components: 
 #'
 #' \itemize{ 
-#'    \item{type: }{The type of distribution fitted (as a character string)}
-#'    \item{method: }{The method used for the fit - here, maximum likelihood,
-#'                  'll'}
-#'    \item{ll: }{The log likelihood at the estimated parameter values}
-#'    \item{xmin: }{The value of xmin used for the fit}
-#'    \item{npars: }{The number of parameters of the distribution}
+#'    \item \code{type}: The type of distribution fitted (as a character string)
+#'    \item \code{method}: The method used for the fit - here, maximum likelihood, 'll'
+#'    \item \code{ll}: The log likelihood at the estimated parameter values
+#'    \item \code{xmin}: The value of xmin used for the fit
+#'    \item \code{npars}: The number of parameters of the distribution
 #'  }
 #' 
-#' Additionnaly, this list may have one or more of the following parameters 
-#'   depending on the type of distribution that has been fitted: 
+#' Additionally, this list may have one or more of the following elements depending on 
+#'   the type of distribution that has been fitted: 
 #'   \itemize{ 
-#'     \item{plexpo: }{The exponent of the power-law}
-#'     \item{cutoff: }{The rate of truncation, for truncated power law and 
-#'                 exponential fits}
-#'     \item{meanlog: }{The mean of the lognormal distribution}
-#'     \item{sdlog: }{The s.d. of the lognormal distribution}
+#'     \item \code{plexpo}: The exponent of the power-law
+#'     \item \code{cutoff}: The rate of truncation, for truncated power law and 
+#'                 exponential fits
+#'     \item \code{meanlog}: The mean of the lognormal distribution
+#'     \item \code{sdlog}: The s.d. of the lognormal distribution
 #'   }
 #' 
 #' @details These functions will fit distributions to a set of values using 

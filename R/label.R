@@ -5,10 +5,9 @@
 #' @param mat A binary matrix
 #' 
 #' @param nbmask Either "moore" for 8-way neighborhood, "von_neumann" for four-way 
-#'   neighborhood, or a square matrix with an odd number of lines and columns that 
-#'   describes which neighbors are to be considered around a cell. Default 
-#'   is 4-way or Von Neumann neighborhood (the neighborhood of a cell comprises the cell 
-#'   above, below, on the right and on the left of the target cell). 
+#'   neighborhood (default), or a 3x3 matrix describing which neighbors to 
+#'   consider around a cell. See \code{\link{patchsizes}} for details on how to specify 
+#'   such neighborhoods.
 #' 
 #' @param wrap Whether to wrap around lattice boundaries (`TRUE`/`FALSE`), 
 #'   effectively using periodic boundaries.
@@ -122,10 +121,9 @@ percolation <- function(mat, nbmask = "von_neumann") {
 #'   be pooled together if \code{mat} is a list of matrices. 
 #' 
 #' @param nbmask Either "moore" for 8-way neighborhood, "von_neumann" for four-way 
-#'   neighborhood, or a square matrix with an odd number of lines and columns that 
-#'   describes which neighbors are to be considered around a cell. Default 
-#'   is 4-way or Von Neumann neighborhood (the neighborhood of a cell comprises the cell 
-#'   above, below, on the right and on the left of the target cell). 
+#'   neighborhood (default), or a 3x3 matrix describing which neighbors to 
+#'   consider around a cell. See \code{\link{patchsizes}} for details on how to specify 
+#'   such neighborhoods.
 #' 
 #' @param wrap Whether to wrap around lattice boundaries (`TRUE`/`FALSE`), 
 #'   effectively using periodic boundaries.

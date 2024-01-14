@@ -66,6 +66,8 @@ clust <- raw_clustering(mm, wrap = TRUE, use_8_nb = TRUE)
 print(clust)
 
 # Compute clustering along the gradient for the serengeti dataset
+\donttest{
+
 data(forestgap)
 clust_indic <- compute_indicator(serengeti, raw_clustering,
                                  wrap = TRUE, use_8_nb = FALSE)
@@ -84,5 +86,7 @@ pair_counts(serengeti[[5]])
 
 # ... or the total count
 pair_counts(serengeti[[5]], prop = FALSE)
+
+}
 
 }

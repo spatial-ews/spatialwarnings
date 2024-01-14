@@ -119,7 +119,7 @@
 #' 
 #' data(forestgap)
 #' 
-#' \dontrun{
+#' \donttest{
 #' psd_indic <- patchdistr_sews(forestgap)
 #' 
 #' summary(psd_indic)

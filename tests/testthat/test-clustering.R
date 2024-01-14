@@ -4,11 +4,24 @@
 
 test_that("Neighbor-counting is OK", {
 
+  # Check that total number of pairs matches counting done by hand
   expect_true( total_pair_count(diag(2), TRUE, TRUE) == 16  )
   expect_true( total_pair_count(diag(2), FALSE, TRUE) == 6  )
   expect_true( total_pair_count(diag(2), FALSE, FALSE) == 4 )
   expect_true( total_pair_count(diag(2), TRUE, FALSE) == 8  )
-
+  
+  # Check that total number of pairs matches a manual sum after the fact
+  for ( wrap in c(TRUE, FALSE) ) { 
+    for ( use_8_nb in c(TRUE, FALSE) ) { 
+      a <- pair_counts(diag(10), wrap = wrap, use_8_nb = use_8_nb)
+      b <- pair_counts(diag(10), prop = FALSE, wrap = wrap, use_8_nb = use_8_nb) 
+      b <- b / sum(b, na.rm = TRUE)
+      expect_true({ 
+        all( abs(a[!is.na(a)] - b[!is.na(b)]) < 1e-8 )
+      })
+    }
+  }
+  
 })
 
 test_that("Computation of clustering are OK", {

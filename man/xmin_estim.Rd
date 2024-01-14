@@ -28,7 +28,7 @@ The function returns NA if \code{dat} has only three unique values
 }
 \examples{
 
-\dontrun{ 
+\donttest{ 
 psd <- patchsizes(forestgap[[5]])
 xmin_estim(psd)
 }

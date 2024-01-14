@@ -36,7 +36,7 @@ label_cpp <- function(mat, nbmask, wrap) {
 #'   \code{NaN} is returned. This function assumes a 4-way neighborhood, and does 
 #'   not wrap around at the sides of the matrix.
 #' 
-#' @seealso \code{\link{indicator_moran}}, \code{\link{generic_sews}} 
+#' @seealso \code{\link{generic_sews}} 
 #' 
 #' @examples
 #' 

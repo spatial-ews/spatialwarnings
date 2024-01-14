@@ -56,7 +56,7 @@ Null model evaluations are also done on coarse-grained matrices.
 \examples{
 
 data(serengeti)
-\dontrun{
+\donttest{
 raw_cg_skewness(serengeti[[1]])
 compute_indicator(serengeti, fun = raw_cg_skewness, subsize = 5)
 }

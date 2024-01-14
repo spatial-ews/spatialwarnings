@@ -45,7 +45,7 @@
 #' 
 #' @examples 
 #' 
-#' \dontrun{ 
+#' \donttest{ 
 #' 
 #' kbdm_result <- kbdm_sews(serengeti, subsize = 3)
 #' plot(kbdm_result, along = serengeti.rain)
@@ -94,7 +94,7 @@ kbdm_sews <- function(mat, subsize = 3) {
 #' 
 #' @examples 
 #' 
-#' \dontrun{ 
+#' \donttest{ 
 #' raw_kbdm(forestgap[[1]], subsize = 3)
 #' }
 #' 

@@ -63,7 +63,7 @@ maxpatch_sews <- create_indicator(maxpatchsize)
 mp_indic <- maxpatch_sews(forestgap)
 summary(mp_indic)
 
-\dontrun{ 
+\donttest{ 
 # Assess significance and display trends
 mp_test <- indictest(mp_indic, nulln = 49)
 plot(mp_test)
@@ -89,7 +89,7 @@ plot(cv_indic, along = serengeti.rain)
 cv_indic2 <- compute_indicator(serengeti, spatial_cv, subsize = 3)
 plot(cv_indic2, along = serengeti.rain)
 
-\dontrun{ 
+\donttest{ 
 indictest(cv_indic, nulln = 99)
 }
 }

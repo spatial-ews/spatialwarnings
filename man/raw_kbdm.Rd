@@ -29,7 +29,7 @@ The Kolmogorov complexity cannot be computed directly for large strings
 }
 \examples{
 
-\dontrun{ 
+\donttest{ 
 raw_kbdm(forestgap[[1]], subsize = 3)
 }
 

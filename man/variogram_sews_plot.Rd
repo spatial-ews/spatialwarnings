@@ -53,7 +53,7 @@ The \code{plot()} function will display how the estimated
 }
 \examples{
   
-\dontrun{ 
+\donttest{ 
 serengeti_ews <- variogram_sews(serengeti, model ="exp")
 
 # Display the change in variogram parameters 

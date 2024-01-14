@@ -51,7 +51,7 @@
 #' @seealso \code{\link{patchdistr_sews}}
 #' 
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' forestgap.plr <- indicator_plrange(forestgap) 
 #' do.call(rbind, forestgap.plr) # convert results to data.frame
 #' 
@@ -134,7 +134,7 @@ indicator_plrange <- function(mat,
 #' @seealso \code{\link{patchdistr_sews}}
 #' 
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' forestgap.plr <- raw_plrange(forestgap[[2]]) 
 #' 
 #' # Restrict to small xmins 

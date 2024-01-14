@@ -37,5 +37,5 @@ raw_moran(m)
 
 }
 \seealso{
-\code{\link{indicator_moran}}, \code{\link{generic_sews}}
+\code{\link{generic_sews}}
 }

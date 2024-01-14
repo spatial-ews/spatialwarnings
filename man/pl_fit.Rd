@@ -24,22 +24,22 @@ distribution}
 \value{
 A list containing at list the following components: 
 
-\itemize{ 
-   \item \code{type}: The type of distribution fitted (as a character string)
-   \item \code{method}: The method used for the fit - here, maximum likelihood, 'll'
-   \item \code{ll}: The log likelihood at the estimated parameter values
-   \item \code{xmin}: The value of xmin used for the fit
-   \item \code{npars}: The number of parameters of the distribution
+\describe{ 
+   \item{\code{type}}{The type of distribution fitted (as a character string)}
+   \item{\code{method}}{The method used for the fit - here, maximum likelihood, 'll'}
+   \item{\code{ll}}{The log likelihood at the estimated parameter values}
+   \item{\code{xmin}}{The value of xmin used for the fit}
+   \item{\code{npars}}{The number of parameters of the distribution}
  }
 
 Additionally, this list may have one or more of the following elements depending on 
   the type of distribution that has been fitted: 
-  \itemize{ 
-    \item \code{plexpo}: The exponent of the power-law
-    \item \code{cutoff}: The rate of truncation, for truncated power law and 
-                exponential fits
-    \item \code{meanlog}: The mean of the lognormal distribution
-    \item \code{sdlog}: The s.d. of the lognormal distribution
+  \describe{ 
+    \item{\code{plexpo}}{The exponent of the power-law}
+    \item{\code{cutoff}}{The rate of truncation, for truncated power law and 
+       exponential fits}
+    \item{\code{meanlog}}{The mean of the lognormal distribution}
+    \item{\code{sdlog}}{The s.d. of the lognormal distribution}
   }
 }
 \description{
@@ -70,11 +70,11 @@ Please note that a best effort is made to have the fit converge, but
 
 For reference, the shape of the distributions is as follow: 
 
-\itemize{
-  \item{power-law }{\eqn{x^{-a}}{x^(-a)} where a is the power-law exponent}
-  \item{exponential }{\eqn{exp(-bx)}{exp(-bx)} where b is the truncation rate
-          of the exponential } 
-  \item{truncated power-law }{\eqn{x^{-a}exp(-bx)}{x^(-a)exp(-bx)} where a
+\describe{
+  \item{power-law}{\eqn{x^{-a}}{x^(-a)} where a is the power-law exponent}
+  \item{exponential}{\eqn{exp(-bx)}{exp(-bx)} where b is the truncation rate
+          of the exponential}
+  \item{truncated power-law}{\eqn{x^{-a}exp(-bx)}{x^(-a)exp(-bx)} where a
     and b are the exponent of the power law and the rate of truncation}
 }
 
@@ -82,7 +82,7 @@ The lognormal form follows the \link[=dlnorm]{standard definition}.
 
 The following global options can be used to change the behavior of fitting functions 
   and/or produce more verbose output: 
-\itemize{ 
+\describe{ 
   \item{spatialwarnings.constants.reltol}{the relative tolerance to use to compute 
     the power-law normalizing constant
     \deqn{sum_{k=1}^{\infty} x^{ak}e^{-bk}}{sum( x^(ak)exp(-bk)) for k in 1:Inf}. 
@@ -103,7 +103,7 @@ The following global options can be used to change the behavior of fitting funct
 exp_fit(patchsizes(forestgap[[8]]))
  
 # Use the estimated parameters as an indicator function
-\dontrun{
+\donttest{
 
 get_truncation <- function(mat) { 
    c(exp_cutoff = exp_fit(patchsizes(mat))$cutoff)

@@ -37,7 +37,7 @@ be a useful indicator to anticipate transitions in model ecological
 }
 \examples{
 
-\dontrun{ 
+\donttest{ 
 
 kbdm_result <- kbdm_sews(serengeti, subsize = 3)
 plot(kbdm_result, along = serengeti.rain)

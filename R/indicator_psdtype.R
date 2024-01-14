@@ -40,18 +40,18 @@
 #' @return A data.frame (or a list of these if x is a list) with the 
 #'   following columns:
 #'     \itemize{
-#'       \item `method` the method used for fitting (currently: only 
+#'       \item \code{method} the method used for fitting (currently: only 
 #'          log-likelihood is implemented, "ll")
-#'       \item `type` the type of distribution fit
-#'       \item `npars` the number of parameters of the distribution type
-#'       \item `AIC`, `AICc` and `BIC` the values for Akaike Information 
+#'       \item \code{type} the type of distribution
+#'       \item npars the number of parameters of the distribution type
+#'       \item AIC, `AICc` and `BIC` the values for Akaike Information 
 #'         Criterion (or the corrected for small samples equivalent AICc), 
 #'         and Bayesion Information Criterion (BIC)
-#'       \item `best` A logical vector indicating which distribution is the 
+#'       \item \code{best} A logical vector indicating which distribution is the 
 #'         best fit 
-#'       \item `plexpo`, `cutoff`, `meanlog`, `sdlog` the estimates for
-#'         distribution parameters (see \code{\link{pl_fit}})
-#'       \item 'percolation' A logical value indicating whether there is 
+#'       \item \code{plexpo}, \code{cutoff}, \code{meanlog}, \code{sdlog} the estimates
+#'          for distribution parameters (see \code{\link{pl_fit}})
+#'       \item \code{percolation} A logical value indicating whether there is 
 #'         \code{\link{percolation}} in the system. 
 #'     }
 #' 
@@ -104,7 +104,7 @@
 #' indicator_psdtype(forestgap[[1]])
 #' 
 #' # A list of these matrices
-#' \dontrun{ 
+#' \donttest{ 
 #' indicator_psdtype(forestgap)
 #' }
 #'

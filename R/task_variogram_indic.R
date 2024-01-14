@@ -76,7 +76,7 @@
 #'
 #' @examples 
 #' 
-#' \dontrun{
+#' \donttest{
 #' serengeti_ews <- variogram_sews(serengeti, 
 #'                                 model ="exp")
 #' plot(serengeti_ews, along = serengeti.rain)
@@ -156,7 +156,7 @@ variogram_sews <- function(mat,
 #' 
 #' @examples 
 #' 
-#' \dontrun{ 
+#' \donttest{ 
 #' vario_indics <- variogram_sews(serengeti)
 #' predict(vario_indics)
 #' vario_test <- indictest(vario_indics, nulln = 19)
@@ -207,7 +207,7 @@ extract_variogram.variogram_sews_single <- function(x, ...) {
 #' 
 #' @examples 
 #' 
-#' \dontrun{ 
+#' \donttest{ 
 #' vario_indics <- variogram_sews(serengeti)
 #' predict(vario_indics)
 #' vario_test <- indictest(vario_indics, nulln = 19)
@@ -270,7 +270,7 @@ predict.variogram_sews_single <- function(object, newdist = NULL, ...) {
 #' 
 #' @examples 
 #'   
-#' \dontrun{ 
+#' \donttest{ 
 #' serengeti_ews <- variogram_sews(serengeti, model ="exp")
 #' 
 #' # Display the change in variogram parameters 

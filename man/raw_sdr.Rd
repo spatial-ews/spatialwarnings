@@ -43,7 +43,7 @@ Low and high frequencies are averaged in order to compute the SDR. The
 }
 \examples{
 
-\dontrun{ 
+\donttest{ 
 data(serengeti)
 serengeti.sdr <- raw_sdr(serengeti[[1]], 
                          sdr_low_range = c(0, 0.2), 

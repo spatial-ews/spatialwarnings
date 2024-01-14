@@ -47,7 +47,7 @@ Null model evaluations are also done on coarse-grained matrices.
 }
 \examples{
 
-\dontrun{
+\donttest{
 data(serengeti)
 raw_cg_variance(serengeti[[1]])
 compute_indicator(serengeti, fun = raw_cg_variance, subsize = 5)

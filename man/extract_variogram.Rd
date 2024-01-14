@@ -23,7 +23,7 @@ Extract the empirical variogram from a \code{variogram_sews}
 }
 \examples{
 
-\dontrun{ 
+\donttest{ 
 vario_indics <- variogram_sews(serengeti)
 predict(vario_indics)
 vario_test <- indictest(vario_indics, nulln = 19)

@@ -65,16 +65,16 @@ If a matrix has attributes, then these are preserved and passed to the
 
 The list \code{null_control} can be used to adjust the computation of 
   null matrices. It can have the following components: 
-  \itemize{ 
-    \item `family` The family used in the model used to produce the null 
+  \describe{ 
+    \item{\code{family}}{The family used in the model used to produce the null 
       matrices. Typically, it is one of \code{\link[=stats]{binomial}()}, 
-      \code{\link[=stats]{binomial}()}, etc. 
+      \code{\link[=stats]{binomial}()}, etc. }
 
-    \item `qinf` The lower quantile to compute from the null distribution 
-      and display in summaries/plots. A numeric value between 0 and 1.
+    \item{\code{qinf}}{The lower quantile to compute from the null distribution 
+      and display in summaries/plots. A numeric value between 0 and 1.}
 
-    \item `qsup` The upper quantile to compute from the null distribution 
-      and display in summaries/plots. A numeric value between 0 and 1.
+    \item{\code{qsup}}{The upper quantile to compute from the null distribution 
+      and display in summaries/plots. A numeric value between 0 and 1.}
   }
 }
 \references{

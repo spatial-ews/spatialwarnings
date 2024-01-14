@@ -36,7 +36,7 @@ where \eqn{x_{max}}{x_max} is the maximum observed patch size, and
 \eqn{x_{smallest}}{x_smallest} is the minimum observed patch size.
 }
 \examples{
-\dontrun{
+\donttest{
 forestgap.plr <- raw_plrange(forestgap[[2]]) 
 
 # Restrict to small xmins 

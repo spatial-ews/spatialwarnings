@@ -68,7 +68,7 @@ The trend of SDR values can be plotted using the \code{plot()} method.
   method.
 }
 \examples{
-\dontrun{
+\donttest{
 
 data(serengeti) 
 data(serengeti.rain) 

@@ -38,7 +38,7 @@ The function \code{\link{patchdistr_sews}} fits competing
 }
 \examples{
 
-\dontrun{ 
+\donttest{ 
 patch_indics <- patchdistr_sews(forestgap)
 
 predict(patch_indics)

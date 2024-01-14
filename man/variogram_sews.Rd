@@ -66,7 +66,7 @@ Please note that this part of the package is still experimental and deserves
 }
 \examples{
 
-\dontrun{
+\donttest{
 serengeti_ews <- variogram_sews(serengeti, 
                                 model ="exp")
 plot(serengeti_ews, along = serengeti.rain)

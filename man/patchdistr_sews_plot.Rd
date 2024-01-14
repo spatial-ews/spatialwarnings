@@ -53,7 +53,7 @@ The \code{plot} function will produce a figure summarizing the changes
 }
 \examples{
 
-\dontrun{ 
+\donttest{ 
 data(forestgap)
 psd_indic <- patchdistr_sews(forestgap)
 

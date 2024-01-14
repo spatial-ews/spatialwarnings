@@ -7,8 +7,8 @@ This release has received external contributions from K. Siteur
 Improvements: 
   
   * The type of neighborhood can now be specified in all patch-related functions, 
-      including high-level functions (e.g. patchdistr_sews). Neighborhood can also be 
-      specified using "von_neumann" or "moore", on top of a 3x3 matrix
+      including high-level functions (e.g. `patchdistr_sews`). Neighborhood can also be 
+      specified using the strings "von_neumann" or "moore", on top of a 3x3 matrix
   
 New indicators: 
   
@@ -16,9 +16,11 @@ New indicators:
   
   * Indicators related to the LSW distribution (Siteur et al. 2023)
 
-Bug fixes: 
+Bug fixes and misc changes: 
   
   * Documentation improvements and minor fixes 
+  
+  * Old defunct functions have been removed
 
 spatialwarnings v3.0.3 (Release date: 2022-03-21)
 =================================================

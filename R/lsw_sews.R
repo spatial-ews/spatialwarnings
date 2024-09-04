@@ -66,8 +66,6 @@
 #' 
 #  # TODO other relevant papers ? 
 #'
-#' @seealso dLSW
-#'
 #' @examples 
 #'
 #' data(dda)
@@ -214,7 +212,7 @@ fit_lnorm <- function(xs) {
 #'
 #' @references 
 #
-#TODO: add reference
+#TODO: add reference to distribution
 #
 #' Siteur, Koen, Quan-Xing Liu, Vivi Rottschäfer, Tjisse van der Heide, Max Rietkerk, 
 #' Arjen Doelman, Christoffer Boström, and Johan van de Koppel. 2023. 
@@ -226,7 +224,7 @@ fit_lnorm <- function(xs) {
 #' dLSW gives the density, pLSW gives the distribution function, both as numerical 
 #'   vectors determined by the length of x. 
 #'
-#'   @seealso dLSW
+#' @seealso lsw_sews
 #'
 #' @examples
 #' 

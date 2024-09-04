@@ -79,8 +79,6 @@ https://doi.org/10.1073/pnas.2202683120.
 }
 \seealso{
 dLSW, dda, raw_patch_radii_skewness, raw_lsw_aicw
-
-dLSW
 }
 \author{
 This code has received contributions from Koen Siteur (\email{k.siteur@gmail.com})

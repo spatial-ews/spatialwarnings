@@ -60,7 +60,7 @@
 #'     as many columns as the number of values returned by the indicator 
 #'     function}
 #'   \item{\code{null_mean}}{the mean indicator values in the null distribution}
-#'   \item{code{null_sd}}{the standard deviation of the null distribution}
+#'   \item{\code{null_sd}}{the standard deviation of the null distribution}
 #'   \item{\code{null_qsup}}{the upper quantile of the null distribution, by default 
 #'     the 95% upper quantile, but see \code{\link{indictest}} for a way to 
 #'     adjust this}

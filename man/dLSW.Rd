@@ -24,9 +24,7 @@ LSW_fit(x)
 }
 \value{
 dLSW gives the density, pLSW gives the distribution function, both as numerical 
-  vectors determined by the length of x. 
-
-  @seealso dLSW
+  vectors determined by the length of x.
 }
 \description{
 Density and distribution function for the Lifshitz-Slyozov-Wagner (LSW)
@@ -69,4 +67,7 @@ Arjen Doelman, Christoffer Boström, and Johan van de Koppel. 2023.
 "Phase-Separation Physics Underlies New Theory for the Resilience of Patchy 
 Ecosystems." Proceedings of the National Academy of Sciences 120 (2): e2202683120.
 https://doi.org/10.1073/pnas.2202683120.
+}
+\seealso{
+lsw_sews
 }

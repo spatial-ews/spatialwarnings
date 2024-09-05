@@ -9,17 +9,15 @@
 #' 
 #' @description Assess the significance of spatial early-warning indicators
 #' 
-#' @param x A spatial warning object such as one produced by the \code{*_sews}
+#' @param x An object such as one produced by the \code{*_sews}
 #'   functions, or \code{\link{compute_indicator}}
 #' 
-#' @param nulln The number of values to compute to produce the null 
-#'   distribution 
+#' @param nulln The number of values to produce the null distribution 
 #' 
 #' @param null_method The method used to produce the null values (see Details)
 #' 
 #' @param null_control List of arguments used to control the generation of 
-#'   null matrices. If NULL, then arguments then sensible defaults are chosen 
-#'   (see Details)
+#'   null matrices. If NULL, then sensible defaults are chosen (see Details)
 #' 
 #' @param ... Additional arguments are ignored
 #' 
@@ -50,9 +48,9 @@
 #'   the matrix, then values are drawn from this model. When using the
 #'   "intercept" or "smooth" null models, it is important to make sure the
 #'   model 'family' corresponds to the type of values present in the matrix. By
-#'   default, if a matrix contains TRUE/FALSE values, a `binomial()` family is
-#'   used, otherwise a `gaussian()` family is used. More information about null
-#'   models is available in the \href{https://alex.lecairn.org/spatialwarnings-faq.html#Using_advanced_null_models}{spatialwarnings FAQ}. 
+#'   default, if a matrix contains \code{TRUE}/\code{FALSE} values, a `binomial()` 
+#'   family is used, otherwise a `gaussian()` family is used. More information about 
+#'   null models is available in the \href{https://alex.lecairn.org/spatialwarnings-faq.html#Using_advanced_null_models}{spatialwarnings FAQ}. 
 #' 
 #' Please note that specific null methods may exists for some indicators, such as
 #' \code{\link[=flowlength_sews]{flowlength}}. These are often based on 
@@ -67,7 +65,7 @@
 #'   \describe{ 
 #'     \item{\code{family}}{The family used in the model used to produce the null 
 #'       matrices. Typically, it is one of \code{\link[=stats]{binomial}()}, 
-#'       \code{\link[=stats]{binomial}()}, etc. }
+#'       \code{\link[=stats]{gaussian}()}, etc. }
 #' 
 #'     \item{\code{qinf}}{The lower quantile to compute from the null distribution 
 #'       and display in summaries/plots. A numeric value between 0 and 1.}

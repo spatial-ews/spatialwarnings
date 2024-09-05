@@ -27,5 +27,5 @@ extract_spectrum(indics)
 
 }
 \seealso{
-\code{\link{spectral_sews}}
+\code{\link{spectral_sews}}, \code{\link{rspectrum}}
 }

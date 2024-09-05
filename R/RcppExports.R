@@ -27,14 +27,14 @@ label_cpp <- function(mat, nbmask, wrap) {
 #' @description This function computes the Moran's I index of spatial 
 #'   correlation at lag 1.
 #' 
-#' @param mat A matrix
+#' @param mat A matrix containing logical, numeric or integer values
 #' 
 #' @return The Moran's I numeric value as a numeric number.
 #' 
 #' @details This function returns the spatial correlation as measured by 
 #'   the Moran's I index. If the variance of the matrix is zero, then 
-#'   \code{NaN} is returned. This function assumes a 4-way neighborhood, and does 
-#'   not wrap around at the sides of the matrix.
+#'   \code{NaN} is returned. This function assumes a 4-way neighborhood (a.k.a. 
+#'   von-Neumann neighborhood), and does not wrap around at the sides of the matrix.
 #' 
 #' @seealso \code{\link{generic_sews}} 
 #' 
@@ -81,10 +81,10 @@ shuffle_and_compute <- function(mat, indic, nrep) {
 #' @return A data.frame with two columns: \code{dist}, the wave number and 
 #'   \code{rspec}, the normalized value of the r-spectrum
 #' 
-#' @details This functions returns a data.frame with \code{NA}s in the rspec 
-#'   column if the input matrix has zero variance. Note that if the matrix 
-#'   is not square, then only the largest square matrix fitting in the upper 
-#'   right corner is used. 
+#' @details This functions returns a \code{data.frame} with \code{NA}s in the
+#'   \code{rspec} column if the input matrix has zero variance. Note that if the matrix 
+#'   is not square, then only the largest square matrix fitting in the upper left
+#'   corner is used. 
 #' 
 #' @seealso \code{\link{spectral_sews}}
 #' 

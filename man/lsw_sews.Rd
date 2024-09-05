@@ -13,7 +13,8 @@ raw_patch_radii_skewness(mat, wrap = FALSE)
 raw_lsw_aicw(mat, wrap = FALSE)
 }
 \arguments{
-\item{mat}{A logical matrix (TRUE/FALSE values) or a list of such matrices}
+\item{mat}{A logical matrix (\code{TRUE}/\code{FALSE} values) or a list of such
+matrices}
 
 \item{wrap}{Determines whether patches are considered to wrap around the 
 matrix when reaching on of its edges}
@@ -78,8 +79,9 @@ Ecosystems." Proceedings of the National Academy of Sciences 120 (2): e220268312
 https://doi.org/10.1073/pnas.2202683120.
 }
 \seealso{
-dLSW, dda, raw_patch_radii_skewness, raw_lsw_aicw
+\code{\link{dLSW}}, \code{\link{dda}},
+  \code{\link{raw_patch_radii_skewness}}, \code{\link{raw_lsw_aicw}}
 }
 \author{
-This code has received contributions from Koen Siteur (\email{k.siteur@gmail.com})
+This code has received contributions from Koen Siteur
 }

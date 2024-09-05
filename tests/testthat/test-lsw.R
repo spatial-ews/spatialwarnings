@@ -77,3 +77,31 @@ test_that("LSW fitting recovers correct values", {
   
 })
 
+test_that("LSW indicators produce consistent values", { 
+  
+  
+  m <- list(diag(100)*rnorm(10), 
+            diag(100)*rnorm(10))
+  
+  # Does not work with logical matrices
+  expect_error({ 
+    lsw_sews(m)
+  })
+  
+  
+  m <- dda[1:2]
+  
+  lapply(c(TRUE, FALSE), function(wrap) { 
+    ic <- as.data.frame(lsw_sews(m, wrap = wrap))
+    
+    # Check that results are consistent with individual functions
+    ic_ref <- unlist(lapply(m, function(mc) { 
+      c(mean(mc), raw_patch_radii_skewness(mc, wrap = wrap), raw_lsw_aicw(mc, wrap = wrap)) 
+    }))
+    
+    expect_true(
+      all(abs(ic_ref - ic[ ,"value"]) < 1e-8)
+    )
+  })
+  
+})

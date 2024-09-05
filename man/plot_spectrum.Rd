@@ -11,7 +11,7 @@ plot_spectrum(x, along = NULL, log = TRUE, display_null = TRUE, ...)
 returned by \code{\link{indictest}} applied on such object}
 
 \item{along}{A vector providing numerical or categorical values along 
-which the indicator trends will be plotted. If \code{NULL} then the
+which the indicator trends will be plotted. If \code{NULL}, then the
 indicator values are plotted sequentially in their original order.}
 
 \item{log}{Whether to use a log scale or a linear scale on the y axis}
@@ -25,7 +25,7 @@ ignored if \code{x} has not been produced through \code{\link{indictest}}
 \description{
 Display the r-spectrum (or multiple spectra) that are contained
   in an object returned by \code{\link{spectral_sews}} object (or the result 
-  of \code{\link{indictest}} applied on such object.
+  of \code{\link{indictest}} applied on such object).
 }
 \seealso{
 \code{\link{rspectrum}}, \code{\link{spectral_sews}}, 

@@ -8,7 +8,8 @@
 #' @description Computation, significance assessment and display of spatial 
 #'   generic early warning signals (Moran's I, variance and skewness)
 #' 
-#' @param mat A matrix (quantitative data), a binary matrix (TRUE/FALSE data), 
+#' @param mat A matrix (quantitative data), a binary matrix (which contains 
+#'   \code{TRUE} or \code{FALSE} values) 
 #'   or a list of those
 #' 
 #' @param subsize The subsize used for the coarse-graining phase (see Details)
@@ -23,22 +24,21 @@
 #' @return 
 #' 
 #' \code{generic_sews} returns an object of class \code{simple_sews_single}
-#'   (actually a list) if \code{mat} is a single matrix or an object of class 
+#'   (a list) if \code{mat} is a single matrix or an object of class 
 #'   \code{simple_sews_list} if \code{mat} is a list. You probably want to use some  
 #'   of the methods written for these complicated objects instead of extracting 
 #'   values directly (they are displayed using \code{print(<object>)}).
 #' 
-#' \code{indictest} returns an object of class \code{generic_test} (actually 
-#'   a data.frame). 
+#' \code{indictest} returns an object of class \code{generic_test} (a \code{data.frame}). 
 #' 
-#' \code{plot} methods return ggplot objects, usually immediately displayed 
-#'   when R is being used interactively.
+#' \code{plot} methods return \code{ggplot} objects, usually immediately displayed 
+#'   when \code{plot} is being called at the R prompt. 
 #' 
 #' @details 
 #' 
 #' The Generic Early warning signal are based on the property of a 
 #'   dynamical system to "slow down" when approaching a critical point, 
-#'   that is take more time to return to equilibrium after a perturbation. This 
+#'   that is, take more time to return to equilibrium after a perturbation. This 
 #'   is expected to be reflected in several spatial characteristics: the 
 #'   variance, the spatial autocorrelation (at lag-1) and the skewness. This 
 #'   function provides a convenient workflow to compute these indicators, 

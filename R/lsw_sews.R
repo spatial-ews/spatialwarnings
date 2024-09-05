@@ -17,7 +17,8 @@
 #'
 #' @description LSW indicators for systems with density-dependent aggregation 
 #'
-#' @param mat A logical matrix (TRUE/FALSE values) or a list of such matrices
+#' @param mat A logical matrix (\code{TRUE}/\code{FALSE} values) or a list of such
+#'   matrices
 #' 
 #' @param wrap Determines whether patches are considered to wrap around the 
 #'   matrix when reaching on of its edges
@@ -44,7 +45,7 @@
 #' skewness of the observed patch radii, which should approach a value around -0.92 as
 #' conditions worsen.  
 #' 
-#' @author This code has received contributions from Koen Siteur (\email{k.siteur@gmail.com})
+#' @author This code has received contributions from Koen Siteur
 #' 
 #' @return 
 #' 
@@ -54,7 +55,8 @@
 #'   of the methods written for these complicated objects instead of extracting 
 #'   values directly (they are displayed using \code{print(<object>)}). 
 #' 
-#' @seealso dLSW, dda, raw_patch_radii_skewness, raw_lsw_aicw
+#' @seealso \code{\link{dLSW}}, \code{\link{dda}},
+#'   \code{\link{raw_patch_radii_skewness}}, \code{\link{raw_lsw_aicw}}
 #'
 #' @references 
 #'  
@@ -204,7 +206,7 @@ fit_lnorm <- function(xs) {
 #' distribution function. \code{qLSW} and \code{rLSW} are not implemented. You 
 #' can use \code{LSW_fit} to fit an LSW distribution to a set of observations. 
 #' 
-#' The length of the results is determined by the length of \code{x}, and \eqn{\mu} can 
+#' The length of the results is determined by the length of \code{x}, and \code{mu} can 
 #' only be a single value. 
 #' 
 #' Please note that this distribution has support only on the interval \code{[0,mu*3/2)}. 
@@ -222,9 +224,9 @@ fit_lnorm <- function(xs) {
 #'
 #' @return
 #' dLSW gives the density, pLSW gives the distribution function, both as numerical 
-#'   vectors determined by the length of x. 
+#'   vectors determined by the length of \code{x}. 
 #'
-#' @seealso lsw_sews
+#' @seealso \code{\link{lsw_sews}}
 #'
 #' @examples
 #' 

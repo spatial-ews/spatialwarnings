@@ -23,10 +23,10 @@ const double step = 1.0;
 //' @return A data.frame with two columns: \code{dist}, the wave number and 
 //'   \code{rspec}, the normalized value of the r-spectrum
 //' 
-//' @details This functions returns a data.frame with \code{NA}s in the rspec 
-//'   column if the input matrix has zero variance. Note that if the matrix 
-//'   is not square, then only the largest square matrix fitting in the upper 
-//'   right corner is used. 
+//' @details This functions returns a \code{data.frame} with \code{NA}s in the
+//'   \code{rspec} column if the input matrix has zero variance. Note that if the matrix 
+//'   is not square, then only the largest square matrix fitting in the upper left
+//'   corner is used. 
 //' 
 //' @seealso \code{\link{spectral_sews}}
 //' 

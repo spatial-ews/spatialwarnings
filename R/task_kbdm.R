@@ -34,7 +34,7 @@
 #'   changes in the dynamics of ecological systems under stress. Ecological 
 #'   Complexity 32:144-155. 
 #'   
-#' @param mat A logical matrix (TRUE/FALSE values) or a list of logical 
+#' @param mat A logical matrix (\code{TRUE}/\code{FALSE} values) or a list of logical 
 #'   matrices
 #' 
 #' @param subsize A submatrix size to carry out the Block Decomposition Method

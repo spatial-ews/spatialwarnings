@@ -19,7 +19,7 @@
 #'   or height equal to the size of the matrix). 
 #' 
 #' @details The \code{label} function "labels" the patches of a binary 
-#'   (TRUE/FALSE) matrix. It returns a matrix of similar height and width, 
+#'   (\code{TRUE}/\code{FALSE}) matrix. It returns a matrix of similar height and width, 
 #'   with integer values representing the ID of each unique patch (contiguous
 #'    cells). Empty cells are labelled as \code{NA}.
 #' 

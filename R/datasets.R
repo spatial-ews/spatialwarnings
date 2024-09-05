@@ -118,7 +118,7 @@
 #' ddasews <- lsw_sews(dda)
 #' plot(ddasews, along = dda.pars[ ,"tau"]) # tau is the changing parameter
 #' 
-#' display_matrix(dda[[6]]) 
+#' display_matrix(dda[[4]]) 
 #' 
 #' @references 
 #' 

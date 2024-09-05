@@ -19,11 +19,11 @@ accept extra arguments.}
 \item{taskname}{The task name. A character string used used for plots and
 textual summaries that describes the indicator (or set of indicators) 
 being computed. If a task name cannot be derived from \code{fun}, then 
-default name is used.}
+a default name is used.}
 
 \item{mat}{A matrix or a list of matrices.}
 
-\item{...}{Additional arguments being passed to the function \code{fun}}
+\item{...}{Additional arguments to pass to the function \code{fun}}
 }
 \value{
 \code{create_indicator} returns a function that can be used in the same way 
@@ -85,7 +85,7 @@ cv_sews <- create_indicator(spatial_cv)
 cv_indic <- cv_sews(serengeti, subsize = 3)
 plot(cv_indic, along = serengeti.rain)
 
-# We can do the same work in one run using compute_indicator
+# We can do the same work in one go using compute_indicator
 cv_indic2 <- compute_indicator(serengeti, spatial_cv, subsize = 3)
 plot(cv_indic2, along = serengeti.rain)
 

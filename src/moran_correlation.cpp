@@ -2,6 +2,11 @@
 // A small function that computes moran's I index 
 // 
 
+
+#ifndef ARMA_NO_DEBUG
+#define ARMA_NO_DEBUG
+#endif
+
 #include <RcppArmadillo.h>
 using namespace arma;
 
@@ -11,16 +16,16 @@ using namespace arma;
 //' @description This function computes the Moran's I index of spatial 
 //'   correlation at lag 1.
 //' 
-//' @param mat A matrix
+//' @param mat A matrix containing logical, numeric or integer values
 //' 
 //' @return The Moran's I numeric value as a numeric number.
 //' 
 //' @details This function returns the spatial correlation as measured by 
 //'   the Moran's I index. If the variance of the matrix is zero, then 
-//'   \code{NaN} is returned. This function assumes a 4-way neighborhood, and does 
-//'   not wrap around at the sides of the matrix.
+//'   \code{NaN} is returned. This function assumes a 4-way neighborhood (a.k.a. 
+//'   von-Neumann neighborhood), and does not wrap around at the sides of the matrix.
 //' 
-//' @seealso \code{\link{indicator_moran}}, \code{\link{generic_sews}} 
+//' @seealso \code{\link{generic_sews}} 
 //' 
 //' @examples
 //' 

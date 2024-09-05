@@ -87,7 +87,7 @@ indictest.spectral_sews_single <- function(x,
 #' 
 #' @return The empirical r-spectrum as a \code{data.frame}
 #' 
-#' @seealso \code{\link{spectral_sews}}
+#' @seealso \code{\link{spectral_sews}}, \code{\link{rspectrum}}
 #' 
 #' @examples 
 #' 
@@ -114,13 +114,13 @@ extract_spectrum.spectral_sews_single <- function(x, ...) {
 #' 
 #' @description Display the r-spectrum (or multiple spectra) that are contained
 #'   in an object returned by \code{\link{spectral_sews}} object (or the result 
-#'   of \code{\link{indictest}} applied on such object. 
+#'   of \code{\link{indictest}} applied on such object). 
 #' 
 #' @param x An object produced by \code{\link{spectral_sews}} or the result 
 #'   returned by \code{\link{indictest}} applied on such object
 #' 
 #' @param along A vector providing numerical or categorical values along 
-#'   which the indicator trends will be plotted. If \code{NULL} then the
+#'   which the indicator trends will be plotted. If \code{NULL}, then the
 #'   indicator values are plotted sequentially in their original order. 
 #' 
 #' @param log Whether to use a log scale or a linear scale on the y axis

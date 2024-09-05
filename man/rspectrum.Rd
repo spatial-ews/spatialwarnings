@@ -17,10 +17,10 @@ A data.frame with two columns: \code{dist}, the wave number and
 Compute the r-spectrum of a matrix
 }
 \details{
-This functions returns a data.frame with \code{NA}s in the rspec 
-  column if the input matrix has zero variance. Note that if the matrix 
-  is not square, then only the largest square matrix fitting in the upper 
-  right corner is used.
+This functions returns a \code{data.frame} with \code{NA}s in the
+  \code{rspec} column if the input matrix has zero variance. Note that if the matrix 
+  is not square, then only the largest square matrix fitting in the upper left
+  corner is used.
 }
 \examples{
 

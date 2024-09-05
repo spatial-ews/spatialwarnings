@@ -16,13 +16,13 @@
 #' 
 #' @param sdr_low_range The range of values (in proportion) to 
 #'   use for the computation of the spectral density ratio.
-#'   For example, for the lowest 20% (default value), set sdr_low_range to 
-#'   c(0, .2). See also the Details section. 
+#'   For example, for the lowest 20\% (default value), set \code{sdr_low_range} to 
+#'   \code{c(0, .2)}. See also the Details section. 
 #'  
 #' @param sdr_high_range The range of values (in proportion) to 
 #'   use for the computation of the spectral density ratio. For example, for 
-#'   the higher 20% (default value), set sdr_high_range to 
-#'   c(.8, 1). See also the Details section. 
+#'   the higher 20\% (default value), set \code{sdr_high_range} to 
+#'   \code{c(.8, 1)}. See also the Details section. 
 #' 
 #' @param quiet Do not display some warnings
 #' 
@@ -38,17 +38,16 @@
 #' immediately when called interactively). 
 #' 
 #' @details Spectral early warning signals are based on the fact that some 
-#'   dynamical systems can exhibit an change in some characteristics of their 
+#'   dynamical systems can exhibit an change in specific characteristics of their 
 #'   spatial structure when approaching a transition. In particular, long-range 
-#'   correlations are expected to have an increased importance. 
-#' 
-#' This is expected to be reflected in the spectrum of the spatial structure
-#'   by an increase of the relative importance of lower frequencies over higher 
-#'   frequencies ("reddening" of the spectrum).
+#'   correlations are expected to have an increased importance. This is expected 
+#'   to be reflected in the spectrum of the spatial structure as an increase of the
+#'   relative importance of lower frequencies over higher frequencies ("reddening" 
+#'   of the spatial spectrum).
 #'   
 #' This task allows computing the radial-spectrum which gives the relative 
 #'   importance of each space scale as a function of distance, from 1 to 
-#'   \code{N/2} (N being the minimum between the number of rows and columns). 
+#'   \code{N/2} (\code{N} being the minimum between the number of rows and columns). 
 #'   If the matrix is not square, then it is cropped to biggest square that 
 #'   fits within the left side of the matrix. 
 #' 
@@ -213,7 +212,7 @@ spectral_sews <- function(mat,
 #'   of the r-spectrum. 
 #' 
 #' @param mat A matrix with continuous values, or a logical matrix 
-#'   (TRUE/FALSE). 
+#'   (\code{TRUE}/\code{FALSE} values). 
 #' 
 #' @param sdr_low_range The range of values (in proportion) to 
 #'   use for the computation of the spectral density ratio.

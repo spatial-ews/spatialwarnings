@@ -27,7 +27,7 @@ arma::Mat<arma::uword> clustering_core(arma::Mat<unsigned short> m,
   uword nr = m.n_rows;
   uword nc = m.n_cols;
 
-  double ncells = (double)nr * nc;
+  // double ncells = (double)nr * nc;
 
   //
   // Pair distribution for four neighbors (and wrapping, remove the edges if
@@ -137,7 +137,7 @@ arma::Mat<arma::uword> pair_counts_internal(arma::Mat<unsigned short> m,
   uword nr = m.n_rows;
   uword nc = m.n_cols;
 
-  double ncells = (double)nr * nc;
+  // double ncells = (double)nr * nc;
 
   //
   // Pair distribution for four neighbors (and wrapping, remove the edges if

@@ -7,7 +7,7 @@
 kbdm_sews(mat, subsize = 3)
 }
 \arguments{
-\item{mat}{A logical matrix (TRUE/FALSE values) or a list of logical 
+\item{mat}{A logical matrix (\code{TRUE}/\code{FALSE} values) or a list of logical 
 matrices}
 
 \item{subsize}{A submatrix size to carry out the Block Decomposition Method

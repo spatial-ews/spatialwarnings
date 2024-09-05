@@ -345,4 +345,3 @@ test_that("Warnings in TPL constant are properly reported", {
   options(spatialwarnings.constants.maxit = NULL)
 
 })
-

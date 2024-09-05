@@ -23,9 +23,12 @@ to \code{TRUE} will rescale the predicted probabilities so that they align on
 the cumulative distribution of the observed patch sizes}
 }
 \value{
-A list with component obs, a data.frame containing the observed 
-  distribution values and pred, a data.frame containing the fitted 
-  values.
+A list with component \code{obs}, a \code{data.frame} containing the observed 
+  distribution values and \code{pred}, a \code{data.frame} containing the fitted 
+  values. Both \code{data.frame}s have columns \code{matrixn}, the number of 
+  the matrix for which values are given, \code{type}, the fitted type of distribution, 
+  as well as \code{patchsize} and \code{y}, the patch size and value of the
+  inverse cumulative distribution function (i.e. \eqn{1 - P(x<k)}).
 }
 \description{
 Export the observed and fitted patch size distributions

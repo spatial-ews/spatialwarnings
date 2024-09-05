@@ -18,10 +18,10 @@ if multiple matrices are given as input.}
 to search for the best xmin (see Details).}
 }
 \value{
-A data.frame with columns minsize, maxsize which are the observed 
-  minimum and maximum patch sizes. The estimated \eqn{x_{min}}{x_min} and the 
-  value of the power-law range. If multiple matrices were provided, then 
-  a list of data.frames is returned
+A \code{data.frame} with columns \code{minsize}, \code{maxsize} which are the
+  observed minimum and maximum patch sizes, the estimated \eqn{x_{min}} as column
+  \code{xmin} and the value of the power-law range as \code{plrange}. If multiple
+  matrices were provided, then a list of data.frames is returned
 }
 \description{
 Compute the power-law range of a matrix
@@ -34,9 +34,9 @@ to occur. The power-law range (PLR) measures the truncation of the PSD
 in a single value (see also \code{\link{patchdistr_sews}} for more details). 
 
 To compute the PLR, power-laws are fitted with a variable 
-minimum patch size (xmin) and the one with the lowest Kolmogorov-Smirnov
+minimum patch size (\eqn{x_{min}}) and the one with the lowest Kolmogorov-Smirnov
 distance to the empirical distribution is retained. PLR is then computed 
-using this best-fitting xmin: 
+using this best-fitting \eqn{x_{min}} as: 
 
 \deqn{\frac{log(x_{max}) - log(x_{min})}{log(x_{max}) - log(x_{smallest})}}{ (log(xmax) - log(xmin))/(log(xmax) - log(xsmallest))}
 

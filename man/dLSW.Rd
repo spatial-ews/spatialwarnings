@@ -24,7 +24,7 @@ LSW_fit(x)
 }
 \value{
 dLSW gives the density, pLSW gives the distribution function, both as numerical 
-  vectors determined by the length of x.
+  vectors determined by the length of \code{x}.
 }
 \description{
 Density and distribution function for the Lifshitz-Slyozov-Wagner (LSW)
@@ -44,7 +44,7 @@ The functions \code{dLSW} gives the probability density, \code{pLSW} gives the
 distribution function. \code{qLSW} and \code{rLSW} are not implemented. You 
 can use \code{LSW_fit} to fit an LSW distribution to a set of observations. 
 
-The length of the results is determined by the length of \code{x}, and \eqn{\mu} can 
+The length of the results is determined by the length of \code{x}, and \code{mu} can 
 only be a single value. 
 
 Please note that this distribution has support only on the interval \code{[0,mu*3/2)}. 
@@ -69,5 +69,5 @@ Ecosystems." Proceedings of the National Academy of Sciences 120 (2): e220268312
 https://doi.org/10.1073/pnas.2202683120.
 }
 \seealso{
-lsw_sews
+\code{\link{lsw_sews}}
 }

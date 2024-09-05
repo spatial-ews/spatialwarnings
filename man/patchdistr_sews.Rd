@@ -16,12 +16,12 @@ patchdistr_sews(
 )
 }
 \arguments{
-\item{mat}{A logical matrix (TRUE/FALSE values) or a list of these}
+\item{mat}{A logical matrix (\code{TRUE}/\code{FALSE} values) or a list of these}
 
 \item{merge}{The default behavior is to produce indicators values for each 
 matrix. If this parameter is set to TRUE then the patch size distributions 
 are pooled together before fitting, yielding only one final indicator 
-value for the set of matrices.}
+value for the set of input matrices (argument \code{mat}).}
 
 \item{fit_lnorm}{When patch size distributions are compared, should we 
 consider lognormal type ? (see details)}
@@ -29,13 +29,12 @@ consider lognormal type ? (see details)}
 \item{best_by}{The criterion to use to select the best fit (one of "AIC", 
 "BIC" or "AICc")}
 
-\item{xmin}{The xmin to be used to fit the patch size distributions. Use 
-the special value "estimate" to compute first the xmin that produces 
+\item{xmin}{The \eqn{x_{min}} to be used to fit the patch size distributions. Use 
+the special value "estimate" to compute first the \eqn{x_{min}} that produces 
 the best power-law fit, then use this estimated value to fit all 
 distributions.}
 
-\item{xmin_bounds}{Bounds when estimating the xmin for power-law
-distributions}
+\item{xmin_bounds}{Bounds when estimating \eqn{x_{min}} for power-law distributions}
 
 \item{wrap}{Determines whether patches are considered to wrap around the 
 matrix when reaching the side}
@@ -99,10 +98,10 @@ using this best-fitting xmin:
 
 Results can be displayed using the text-based \code{summary} and \code{print}, 
 but graphical options are also available to plot the trends (\code{plot}) and 
-the fitted distributions ( \code{\link{plot_distr}}). Plotting functions are 
+the fitted distributions (\code{\link{plot_distr}}). Plotting functions are 
 documented in a \link[=patchdistr_sews_plot]{separate page}. Observed and 
 fitted distributions can be produced using the \code{predict} function, 
-as documented in \link[=patchdistr_sews_predict]{this page}.
+as documented on \link[=patchdistr_sews_predict]{this page}.
 }
 \examples{
 

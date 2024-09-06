@@ -44,7 +44,7 @@
 #'   a generalized linear model of the form `y ~ 1` (where y represents the 
 #'   values of the matrix) is fitted, then values are drawn from this model. If 
 #'   \code{null_method} is set to "smooth", then a smooth surface is fitted
-#'   based on a generalized additive model (using \code{\link[=mgcv]{gam}}) to
+#'   based on a generalized additive model (using \code{\link[mgcv]{gam}}) to
 #'   the matrix, then values are drawn from this model. When using the
 #'   "intercept" or "smooth" null models, it is important to make sure the
 #'   model 'family' corresponds to the type of values present in the matrix. By

@@ -11,7 +11,7 @@
 #'   \code{*_sews} functions or \code{indictest()}
 #' 
 #' @param palette A color palette to use in the plot. It can be any color 
-#'   palette understood by \link{scale_fill_brewer}. 
+#'   palette understood by \link[ggplot2]{scale_fill_brewer}. 
 #' 
 #' @param along A vector of values used in facet headers. If \code{object} is 
 #'   a matrix, this is ignored. 

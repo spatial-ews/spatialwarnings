@@ -12,7 +12,7 @@
 #'  the patches contained in a matrix. The distributions are returned with 
 #'  their corresponding AIC, BIC and AICc to select the best fit.
 #'  
-#' @param x A logical (TRUE/FALSE values) matrix or a list of these. 
+#' @param x A logical (\code{TRUE}/\code{FALSE} values) matrix or a list of these. 
 #' 
 #' @param xmin The xmin to be used to fit the patch size distributions. Use 
 #'   the special values "estimate" to use an estimated xmin for each fit

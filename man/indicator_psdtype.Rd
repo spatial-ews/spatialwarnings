@@ -16,7 +16,7 @@ indicator_psdtype(
 )
 }
 \arguments{
-\item{x}{A logical (TRUE/FALSE values) matrix or a list of these.}
+\item{x}{A logical (\code{TRUE}/\code{FALSE} values) matrix or a list of these.}
 
 \item{xmin}{The xmin to be used to fit the patch size distributions. Use 
 the special values "estimate" to use an estimated xmin for each fit}

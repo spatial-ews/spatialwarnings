@@ -47,6 +47,7 @@ Suggests:
     testthat, 
     covr, 
     acss, 
+    acss.data, 
     mgcv, 
     gstat, 
     sp, 

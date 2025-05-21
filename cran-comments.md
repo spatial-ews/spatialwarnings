@@ -1,17 +1,16 @@
 
 Dear CRAN maintainers, 
 
-This is a minor update to the spatialwarnings package with minor improvements, along 
-with a few bug fixes. 
+This is an incremental update to the spatialwarnings package with a few improvements,
+along with a few bug fixes. This package version should also fix NOTEs appearing on the CRAN test page (minor errors in the formatting of documentation).
 
-This release should fix the problem with leftovers 'assert()s' raised by Prof. Brian 
-Ripley. Thanks for pointing those out, I thought they were stripped from CRAN package 
-builds. 
+Please note that my email has changed from <a.a.h.genin@uu.nl> to 
+<alexandre.genin@sete.cnrs.fr>, as I have been changing institutions. I no longer 
+have access to my last email. 
 
 Thanks, 
 
 Alexandre Génin
-
 
 
 ## Test environments
@@ -21,13 +20,14 @@ This package was tested using the following environments:
  * R-lib Github actions (macOS with R-latest, windows with R-latest, 
     ubuntu-latest with R-devel, ubuntu-latest with R-release, 
     ubuntu-latest with R-oldrel): 
-     https://travis-ci.org/spatial-ews/spatialwarnings
+     https://github.com/spatial-ews/spatialwarnings/actions/runs/10738867095
  
- * Local linux computer (Arch Linux as of 2021-03-10, R 4.1.2)
+ * Local linux computer (Arch Linux, R 4.5.0)
  
- * M1 Mac using https://mac.r-project.org/macbuilder/submit.html (results at: 
-     https://mac.r-project.org/macbuilder/results/1647804133-ff347830befb7607/)
+ * M1 Mac using https://mac.r-project.org/macbuilder/submit.html (R-release, results at: 
+     https://mac.r-project.org/macbuilder/results/1725630635-ffef2c949e143726/)
  
+ * Win builder service (R-release, devel, oldrelease)
  
  
 ## R CMD check results
@@ -35,33 +35,19 @@ This package was tested using the following environments:
 One remaining NOTE occurred on some platforms: 
 
 The package size is sometimes reported as exceeding 1Mb (on ubuntu platforms 
-above), probably due to the use of Rcpp: 
+above), maybe due to the use of Rcpp: 
 
 * checking installed package size ... NOTE
-    installed size is  7.9Mb
-    sub-directories of 1Mb or more:
-      libs   6.6Mb
+  installed size is  7.7Mb
+  sub-directories of 1Mb or more:
+    libs   6.4Mb
 
 
 ## Changes in this release
 
-This release has received external contributions from J. Guerber.
+This is a maintenance release to fix an error arising in the package acss. acss is now 
+explicitely attached to the search path, rather than just loaded. 
 
-Improvements: 
-
-  * In patch size distribution plots, fits are now rescaled when xmin is above 1 
-      so they overlay nicely on the observed distribution
-  
-  * Better handling of errors in segmented::segmented() when fitting variograms 
-  
-Bug fixes: 
-  
-  * Fixed an error occurring when using xmin = "estimate" in patchdistr_sews
-  
-  * Remove calls to assert() that were leftover from testing (CRAN policy)
-  
-  
-  
 ## Package Description
 
 spatialwarnings is a package that assists ecologists in carrying out 

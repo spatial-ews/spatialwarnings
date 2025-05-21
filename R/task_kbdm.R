@@ -102,9 +102,13 @@ kbdm_sews <- function(mat, subsize = 3) {
 raw_kbdm <- function(mat, subsize) {
   
   if ( ! requireNamespace("acss") ) { 
-    stop(paste0('Computation of kbdm requires the package acss. Install it ', 
-                'using install.packages("acss")'))
+    stop(paste0('Computation of kbdm requires the package acss. You can install it ', 
+                'using the command install.packages("acss")'))
   }
+  
+  # Explicitely attach the acss package, otherwise it cannot find the acss_data object 
+  # and fails. 
+  require(acss)
   
   if ( subsize > 3 || subsize < 1 ) { 
     stop("subsize must be between 1 and 3.")

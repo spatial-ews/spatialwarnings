@@ -106,9 +106,10 @@ raw_kbdm <- function(mat, subsize) {
                 'using the command install.packages("acss")'))
   }
   
-  # Explicitely attach the acss package, otherwise it cannot find the acss_data object 
-  # and fails. 
-  require(acss)
+  # Explicitely attach the acss.data package, otherwise it cannot find the acss_data
+  # object and fails. This package is a hard dependency of acss, so it should always 
+  # be installed if acss is available. 
+  stopifnot(attachNamespace("acss.data"))
   
   if ( subsize > 3 || subsize < 1 ) { 
     stop("subsize must be between 1 and 3.")

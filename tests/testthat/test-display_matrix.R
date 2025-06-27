@@ -5,7 +5,7 @@
 context("Test that matrices can be displayed")
 
 isgg <- function(o) { 
-  all(class(o) == c("gg", "ggplot"))
+  inherits(o, c("ggplot", "ggplot2::ggplot"))
 }
 
 test_that("display_matrix methods work", { 

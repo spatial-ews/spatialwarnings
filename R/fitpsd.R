@@ -80,13 +80,14 @@ optim_safe <- function(f, pars0,
                        convergence = 128) 
     return(optiresult)
   }
-  
+
   if ( optiresult[["convergence"]] > 3 ) { 
     msg <- paste0('optim returned an error (error code:',
                   optiresult[["convergence"]], ").\n",
                   "Make sure the results are reasonable using plot_distr")
     if ( optiresult[["convergence"]] %in% c(51, 52) ) {
-      msg <- paste0(msg, "\nError message from optim():\n", optiresult, "\n")
+      msg <- paste0(msg, "\nError message from optim():\n", optiresult[["message"]],
+                    "\n")
     }
     stop(msg)
   }

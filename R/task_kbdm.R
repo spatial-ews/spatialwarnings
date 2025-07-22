@@ -132,20 +132,22 @@ raw_kbdm <- function(mat, subsize) {
 
 # Safe acss function that calls directly acss_data with :: 
 # This is directly copy/pasted from the acss code so that we can include 
-# the :: in the reference to acss_data
+# the :: in the reference to acss_data. This fixes an error arising from acss not 
+# finding acss_data when the package acss.data is not in the search path. 
 acss_safe <- function(string, alphabet = 9) {
   stopifnot(is.character(string))
   names <- string
   
   string <- acss_normalize_string(string)
   
-  if (is.null(alphabet)) { 
+  if ( is.null(alphabet) ) { 
     tmp <- acss.data::acss_data[string, ]
   } else {
     alphabet <- as.numeric(alphabet)
-    if (any(!(alphabet %in% c(2, 4, 5, 6, 9)))) { 
+    if ( any(!(alphabet %in% c(2, 4, 5, 6, 9))) ) { 
       stop("alphabet must be in c(2, 4, 5, 6, 9)")
     }
+    
     tmp <- acss.data::acss_data[string, 
                                 paste("K", alphabet, sep = "."), 
                                 drop = FALSE]
@@ -161,11 +163,16 @@ acss_safe <- function(string, alphabet = 9) {
 
 acss_normalize_string <- function(string) {
   splitted <- strsplit(string, "")
+  
   elements <- lapply(splitted, unique)
-  if (any(vapply(elements, length, 0) > 10)) 
-  stop("two many symbols (more than 10)")
+  
+  if (any(vapply(elements, length, 0) > 10)) { 
+    stop("too many symbols (more than 10)")
+  }
+  
   exchanged <- mapply(function(x, y) {
     seq(0, length.out = length(x))[match(y, x)] 
   }, elements, splitted, SIMPLIFY = FALSE)
+  
   vapply(exchanged, paste, "", collapse = "")
 }

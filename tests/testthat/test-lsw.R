@@ -83,9 +83,11 @@ test_that("LSW indicators produce consistent values", {
   m <- list(diag(100)*rnorm(10), 
             diag(100)*rnorm(10))
   
-  # Does not work with logical matrices
+  # Does not work with non-logical matrices. Note the call() to suppressWarnings,
+  # because this will produce an error in a future(), which makes future_lapply()
+  # spit out a warning
   expect_error({ 
-    lsw_sews(m)
+    suppressWarnings( lsw_sews(m) )
   })
   
   

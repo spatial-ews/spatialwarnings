@@ -5,8 +5,13 @@
 test_that("Labelling functions & friends work correctly", { 
   
   n <- 512
+
+  # Fix seed to one that does not produce warning in patchdistr_sews()
+  oseed <- .Random.seed
+  set.seed(123)
   m <- matrix(rnorm(n*n) > 0.3, nrow = n, ncol = n)
-  
+  .Random.seed <- oseed
+
   # Make sure args are dispatched correctly
   X <- patchsizes(list(m, m), nbmask = "moore", wrap = TRUE)
   expect_true({ 
@@ -15,7 +20,7 @@ test_that("Labelling functions & friends work correctly", {
   
   
   # Make sure the type of neighborhood is passed even when using high-level 
-  # functions 
+  # functions. We remove warnings because we fit on random data that can sometimes
   options(spatialwarnings.constants.maxit = 1e9L)
   x1 <- patchdistr_sews(m)
   x2 <- patchdistr_sews(m, nbmask = "moore")

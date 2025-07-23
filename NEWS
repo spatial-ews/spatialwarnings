@@ -1,6 +1,12 @@
-
-spatialwarnings v3.1.0 (Release date: unknown)
+spatialwarnings v3.1.1 (Release date: unknown)
 ==============================================
+
+This is a minor release to make tests compatible with an upcoming release of ggplot2.
+
+
+
+spatialwarnings v3.1.0 (Release date: 2024-09-06)
+=================================================
 
 This release has received external contributions from K. Siteur
 

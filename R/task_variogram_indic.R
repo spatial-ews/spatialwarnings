@@ -422,9 +422,14 @@ fit_variogram <- function(mat, model, nmax, nbins, cutoff) {
     sum( ( (vario[ ,"gamma"] - pred) )^2 )
   }
   
-  fit <- optim_safe(ssq, pars0, 
-                    lower = c(0, 0, 0))
-  
+  fit <- optim_safe(ssq, pars0,
+                    # sensible bounds for nugget, psill, range
+                    lower = c(0, 0, 0),
+                    upper = c(max(vario[ ,"gamma"]),
+                              max(vario[ ,"gamma"]),
+                              2*max(vario[ ,"dist"]))
+                    )
+
   vario[ ,"pred"] <- with(as.list(fit$par), 
                           spherical_model(vario[ ,"dist"], 
                                           nugget, psill, range))

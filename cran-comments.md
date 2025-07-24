@@ -1,12 +1,8 @@
 
 Dear CRAN maintainers, 
 
-This is an incremental update to the spatialwarnings package with a few improvements,
-along with a few bug fixes. This package version should also fix NOTEs appearing on the CRAN test page (minor errors in the formatting of documentation).
-
-Please note that my email has changed from <a.a.h.genin@uu.nl> to 
-<alexandre.genin@sete.cnrs.fr>, as I have been changing institutions. I no longer 
-have access to my last email. 
+This is a maintenance release of spatialwarnings to avoid test failure with an upcoming 
+version of ggplot2, along with a couple of minor improvements. 
 
 Thanks, 
 
@@ -24,8 +20,7 @@ This package was tested using the following environments:
  
  * Local linux computer (Arch Linux, R 4.5.0)
  
- * M1 Mac using https://mac.r-project.org/macbuilder/submit.html (R-release, results at: 
-     https://mac.r-project.org/macbuilder/results/1725630635-ffef2c949e143726/)
+ * M1 Mac using https://mac.r-project.org/macbuilder/submit.html 
  
  * Win builder service (R-release, devel, oldrelease)
  
@@ -42,12 +37,7 @@ above), maybe due to the use of Rcpp:
   sub-directories of 1Mb or more:
     libs   6.4Mb
 
-
-## Changes in this release
-
-This is a maintenance release to fix an error arising in the package acss. acss is now 
-explicitely attached to the search path, rather than just loaded. 
-
+    
 ## Package Description
 
 spatialwarnings is a package that assists ecologists in carrying out 

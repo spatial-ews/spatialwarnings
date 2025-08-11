@@ -7,19 +7,24 @@ context("Computation of variograms")
 
 test_that("Computation of variograms works", { 
   
+  skip_on_cran()
+
   # Here so that testthat does not complain about empty tests when missing packages
   expect_true(TRUE)
   
   if ( requireNamespace("gstat", quietly = TRUE) && 
        requireNamespace("sp", quietly = TRUE) ) { 
+
     if ( exists("EXTENDED_TESTS") && EXTENDED_TESTS) { 
       mats <- list(arizona[[4]], forestgap[[8]], serengeti[[6]]) 
     } else { 
       mats <- list(forestgap[[8]])
+      # Synthetic matrix
+#       mats <- list(outer(seq.int(64), seq.int(64), function(x, y) x * y))
     }
     
     for ( example_mat in mats ) { 
-      example_mat = serengeti[[6]]
+
       nbins <- 32
       nmax = 2e6L # 5e5L # prod(dim(example_mat)) ^2
       cutoff = sqrt(ncol(example_mat)^2 + nrow(example_mat)^2) / 10
@@ -32,7 +37,7 @@ test_that("Computation of variograms works", {
                               seq.int(ncol(example_mat)))
       locations <- locations[sample.int(nrow(locations), 
                                         replace = FALSE, 
-                                        size = min(nrow(locations),nmax/10)), ]
+                                        size = min(nrow(locations), nmax/10)), ]
       values <- apply(locations, 1, function(X) example_mat[X[1], X[2]])
       locations.gstat <- sp::SpatialPointsDataFrame(locations, 
                                                     data.frame(z = values))

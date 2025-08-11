@@ -1,7 +1,7 @@
 
 Dear CRAN maintainers, 
 
-This is a maintenance release of spatialwarnings to avoid test failure with an upcoming 
+This is a maintenance release of spatialwarnings to avoid tests failure with an upcoming 
 version of ggplot2, along with a couple of minor improvements. 
 
 Thanks, 
@@ -24,10 +24,9 @@ This package was tested using the following environments:
  
  * Win builder service (R-release, devel, oldrelease)
  
- 
 ## R CMD check results
 
-One remaining NOTE occurred on some platforms: 
+One or two remaining NOTEs occurred on some platforms: 
 
 The package size is sometimes reported as exceeding 1Mb (on ubuntu platforms 
 above), maybe due to the use of Rcpp: 
@@ -37,7 +36,13 @@ above), maybe due to the use of Rcpp:
   sub-directories of 1Mb or more:
     libs   6.4Mb
 
-    
+One NOTE is reported on win-builder/oldrelease, probably because the testing archive was generated using a newer version of R (v4.5.0), which generates the 'Author' field a bit differently:
+
+* checking DESCRIPTION meta-information ... NOTE
+  Author field differs from that derived from Authors@R
+    Author:    'Alain Danet [aut], Alexandre Genin [aut, cre] (ORCID: <https://orcid.org/0000-0002-3333-1338>), Vishwesha Guttal [aut], Sonia Kefi [aut], Sabiha Majumder [aut], Sumithra Sankaran [aut], Florian Schneider [aut]'
+    Authors@R: 'Alain Danet [aut], Alexandre Genin [aut, cre] (<https://orcid.org/0000-0002-3333-1338>), Vishwesha Guttal [aut], Sonia Kefi [aut], Sabiha Majumder [aut], Sumithra Sankaran [aut], Florian Schneider [aut]'
+
 ## Package Description
 
 spatialwarnings is a package that assists ecologists in carrying out 

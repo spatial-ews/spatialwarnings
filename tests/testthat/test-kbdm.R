@@ -7,6 +7,8 @@ context('Test that the computations for Kolmogorov complexity are correct')
 
 test_that("Kbdm results are correct", { 
   
+  skip_on_cran()
+
   # We can't reproduce exactly the results because we cannot compute 
   # Kbdm using 4x4 submatrices in acss::acss. We just compute the test on 
   # the scale-free patterns which do not show as much noise as the 

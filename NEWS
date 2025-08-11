@@ -7,7 +7,7 @@ Bug fixes and misc changes:
 
   * New bounds added to the parameters of variogram fits to improve convergence
 
-  * Tests have been made lighter for CRAN
+  * Tests are now shorter on CRAN machines
 
 spatialwarnings v3.1.0 (Release date: 2024-09-06)
 =================================================

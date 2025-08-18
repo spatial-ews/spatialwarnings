@@ -38,34 +38,54 @@ format_pvalues <- function(X, nreps) {
          formatC(X, format = "f", digits = 3))
 }
 
-# Print a line with matrix size information 
+# Print a line with matrix size information
+#' @title Display size information of a sews_result object
+#'
+#' @param x A \code{sews_result} object (as provided by **_sews functions, such
+#'   as \code{generic_sews()}
+#'
+#' @param ... Other arguments are ignored.
+#'
+#' @details This function is used to display information about the size of matrices
+#'   used by various functions in spatialwarnings. It is mostly destined to internal
+#'   use.
+#'
 #'@export
-display_size_info <- function(x, ...) { 
+display_size_info <- function(x, ...) {
   UseMethod('display_size_info')
 }
 
 # ... for sews_result_single class
-#'@export
-display_size_info.sews_result_single <- function(x, ...) { 
+#'@rdname display_size_info
+#'@exportS3Method
+display_size_info.sews_result_single <- function(x, ...) {
   display_size_info(list(x))
 }
 
 # ... for sews_result_list class
-#'@export
-display_size_info.sews_result_list <- display_size_info.list <- function(x, ...) { 
+#'@rdname display_size_info
+#'@exportS3Method
+display_size_info.sews_result_list <- function(x, ...) {
   sizes <- sapply(x, function(x) dim(x[["orig_data"]]))
   sizes <- apply(sizes, 1, function(X) length(unique(X)) == 1)
   has_different_sizes <- ! any(sizes)
-  if (has_different_sizes) { 
+  if (has_different_sizes) {
     size_text_report <- "variable sizes"
-  } else { 
-    size_text_report <- paste0("size: ", nrow(x[[1]][["orig_data"]]), 'x', 
+  } else {
+    size_text_report <- paste0("size: ", nrow(x[[1]][["orig_data"]]), 'x',
                                ncol(x[[1]][["orig_data"]]))
-  } 
-  cat(' ', 
-      length(x), ' ', 
+  }
+  cat(' ',
+      length(x), ' ',
       ifelse(length(x)>1, 'matrices', 'matrix'), ' ',
       "(", size_text_report,')\n', sep = '')
+}
+
+# ...for generic lists
+#'@rdname display_size_info
+#'@exportS3Method
+display_size_info.list <- function(x, ...) {
+  display_size_info.sews_result_list(x, ...)
 }
 
 ifNULLthen <- function(a, b) { 

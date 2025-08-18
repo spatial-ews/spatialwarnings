@@ -63,14 +63,16 @@ test_that("Computation of clustering are OK", {
 
 
   # Make sure clustering of random matrices is close to one
-  clusts <- replicate(199, {
-    m <- matrix(sample(letters[1:4], size = 100^2, replace = TRUE),
-                nrow = 100, ncol = 100)
-    raw_clustering(m)
-  })
-  expect_true({
-    all( abs(apply(clusts, 1, mean) - 1) < 0.10 )
-  })
+  if ( exists("EXTENDED_TESTS") && EXTENDED_TESTS ) {
+    clusts <- replicate(199, {
+      m <- matrix(sample(letters[1:4], size = 100^2, replace = TRUE),
+                  nrow = 100, ncol = 100)
+      raw_clustering(m)
+    })
+    expect_true({
+      all( abs(apply(clusts, 1, mean) - 1) < 0.10 )
+    })
+  }
 
 })
 

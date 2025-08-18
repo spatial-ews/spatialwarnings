@@ -64,7 +64,7 @@ if ( exists("EXTENDED_TESTS") && EXTENDED_TESTS ) {
           # pl_fit <-> zeta.fit
           our_expo <- pl_fit(pldat, xmin = xmin)[['plexpo']]
           clauset_expo <- zeta.fit(pldat, threshold = xmin)[['exponent']]
-          powerlaw_expo <- estimate_pars( poweRlaw::displ$new(pldat) )[["pars"]]
+          powerlaw_expo <- poweRlaw::estimate_pars( poweRlaw::displ$new(pldat) )[["pars"]]
           expect_equal(clauset_expo, our_expo, tol = 1e-3)
 
           # Look at fit

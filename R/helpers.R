@@ -39,16 +39,19 @@ format_pvalues <- function(X, nreps) {
 }
 
 # Print a line with matrix size information 
+#'@export
 display_size_info <- function(x, ...) { 
   UseMethod('display_size_info')
 }
 
 # ... for sews_result_single class
+#'@export
 display_size_info.sews_result_single <- function(x, ...) { 
   display_size_info(list(x))
 }
 
 # ... for sews_result_list class
+#'@export
 display_size_info.sews_result_list <- display_size_info.list <- function(x, ...) { 
   sizes <- sapply(x, function(x) dim(x[["orig_data"]]))
   sizes <- apply(sizes, 1, function(X) length(unique(X)) == 1)

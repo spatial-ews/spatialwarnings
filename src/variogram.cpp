@@ -5,7 +5,6 @@
 
 #include <math.h>
 
-#include <R.h>
 #include <Rcpp.h>
 using namespace Rcpp; 
 
@@ -51,15 +50,16 @@ NumericMatrix variogram_internal_cpp(NumericMatrix mat,
     double dist; 
     while ( ! found_coords ) { 
       // Get coordinates of cell in matrix
-      i1 = (int) floor(R::runif(0, nr)); 
-      j1 = (int) floor(R::runif(0, nc)); 
-      i2 = (int) floor(R::runif(0, nr)); 
-      j2 = (int) floor(R::runif(0, nc)); 
+      i1 = (int) floor(R::runif(0, nr));
+      j1 = (int) floor(R::runif(0, nc));
+      i2 = (int) floor(R::runif(0, nr));
+      j2 = (int) floor(R::runif(0, nc));
       
       // Here we use rejection sampling so that the sampled points for the 
       // variogram are biased towards zero distance: this helps having a 
       // variogram that is better-sampled at low distances, which are generally
-      // the interesting parts for computing variogram-based EWS metrics
+      // the interesting parts for computing variogram-based EWS metrics. This is
+      // quite inefficient and would deserve improvements.
       dist = sqrt( (double)( (i1-i2)*(i1-i2) + (j1-j2)*(j1-j2) ) ); 
       double p_keep = exp( - SHORT_DIST_BIAS * dist / maxrange ); 
 //       Rcout << "dist: " << dist << " p_keep: " << p_keep << "\n"; 

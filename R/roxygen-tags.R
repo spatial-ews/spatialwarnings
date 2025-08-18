@@ -12,8 +12,6 @@
 #' @importFrom Rcpp sourceCpp
 # 
 # 
-# The NULL is mandatory so that devtools actually reads this file.
-NULL
 
 #
 # These tags are here to explicitely show what is imported

@@ -1,8 +1,6 @@
 
 # We add the two next lines so we do not export the functions written in this 
 # file, unless explicitely specified.
-#'@export
-NULL
 
 # A function that checks the arguments passed to the indicator functions.
 check_mat <- function(mat, NAerror = TRUE) { 

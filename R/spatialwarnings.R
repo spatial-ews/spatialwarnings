@@ -1,8 +1,6 @@
-# 
-# This is the main page for the package documentation. 
-# 
-#' @rdname spatialwarnings
-#' 
+#
+# This is the main page for the package documentation.
+#
 #' @title Early Spatial-Warnings of Ecosystem Degradation
 #' 
 #' @description 
@@ -62,9 +60,7 @@
 #' also available. Do not hesitate to get in touch if you want to make changes to the 
 #' package or add another indicator. 
 #' 
-#' @docType package
-#' @name spatialwarnings
-#' 
 #' @aliases spatialwarnings-package
 #' 
-NULL
+#' @keywords internal
+"_PACKAGE"

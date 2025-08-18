@@ -85,5 +85,4 @@
 #'
 #' @aliases simple_sews_object
 #'
-NULL
 

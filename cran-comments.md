@@ -1,6 +1,10 @@
 
 Dear CRAN maintainers, 
 
+This is a reupload of a previous version of this package which failed CRAN pretest due 
+to testing taking too much time. This version takes ~120-130s to run tests on 
+win-builder, so I expect this issue to be fixed. 
+
 This is a maintenance release of spatialwarnings to avoid tests failure with an upcoming 
 version of ggplot2, along with a couple of minor improvements. 
 
@@ -16,11 +20,9 @@ This package was tested using the following environments:
  * R-lib Github actions (macOS with R-latest, windows with R-latest, 
     ubuntu-latest with R-devel, ubuntu-latest with R-release, 
     ubuntu-latest with R-oldrel): 
-     https://github.com/spatial-ews/spatialwarnings/actions/runs/10738867095
+     https://github.com/spatial-ews/spatialwarnings/actions/
  
  * Local linux computer (Arch Linux, R 4.5.0)
- 
- * M1 Mac using https://mac.r-project.org/macbuilder/submit.html 
  
  * Win builder service (R-release, devel, oldrelease)
  

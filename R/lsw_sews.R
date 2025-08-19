@@ -27,7 +27,7 @@
 #' 
 #' In systems where a mobile resource or consumer can be fixed in space by a sessile 
 #' species, specific patterns are expected to appear. Such systems can include situations 
-#' where nutrients available in the environmeent are fixed by a sessile species (e.g. 
+#' where nutrients available in the environment are fixed by a sessile species (e.g.
 #' seagrasses or corals), or where the behavior of herbivores is altered to restrict 
 #' them to certain areas (see full theoretical background in Siteur et al. 2023). 
 #' 

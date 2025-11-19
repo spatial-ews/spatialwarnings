@@ -156,7 +156,7 @@ format_mat_for_pair_count <- function(mat) {
 
   if ( is.logical(mat) ) {
     dims <- dim(mat)
-    mat <- factor(c("TRUE", "FALSE")[mat+1], levels = c("TRUE", "FALSE"))
+    mat <- factor(c("FALSE", "TRUE")[mat+1], levels = c("TRUE", "FALSE"))
     dim(mat) <- dims
   }
 

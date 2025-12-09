@@ -87,15 +87,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // tplsum
-arma::vec tplsum(double expo, double rate, arma::ivec xs, int xmin);
+arma::vec tplsum(const double expo, const double rate, const arma::ivec xs, const int xmin);
 RcppExport SEXP _spatialwarnings_tplsum(SEXP expoSEXP, SEXP rateSEXP, SEXP xsSEXP, SEXP xminSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type expo(expoSEXP);
-    Rcpp::traits::input_parameter< double >::type rate(rateSEXP);
-    Rcpp::traits::input_parameter< arma::ivec >::type xs(xsSEXP);
-    Rcpp::traits::input_parameter< int >::type xmin(xminSEXP);
+    Rcpp::traits::input_parameter< const double >::type expo(expoSEXP);
+    Rcpp::traits::input_parameter< const double >::type rate(rateSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec >::type xs(xsSEXP);
+    Rcpp::traits::input_parameter< const int >::type xmin(xminSEXP);
     rcpp_result_gen = Rcpp::wrap(tplsum(expo, rate, xs, xmin));
     return rcpp_result_gen;
 END_RCPP

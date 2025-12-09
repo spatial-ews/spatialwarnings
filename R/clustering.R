@@ -137,8 +137,14 @@ pair_counts <- function(mat,
   }
 
   # Make a semi-triangular matrix
-  pairs[lower.tri(pairs)] <- pairs[upper.tri(pairs)] + pairs[lower.tri(pairs)]
-  pairs[upper.tri(pairs)] <- NA
+  for ( row in seq(1, nrow(pairs)-1) ) {
+    for ( col in seq(2, ncol(pairs)) ) {
+      pairs[col, row] <- pairs[row, col]
+      pairs[row, col] <- NA
+    }
+  }
+#   pairs[lower.tri(pairs)] <- pairs[upper.tri(pairs)] + pairs[lower.tri(pairs)]
+#   pairs[upper.tri(pairs)] <- NA
 
   return(pairs)
 }

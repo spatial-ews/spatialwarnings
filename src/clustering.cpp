@@ -78,12 +78,14 @@ arma::Mat<arma::uword> clustering_core(arma::Mat<unsigned short> m,
           dpairs(this_state)++;
         }
 
-        ushort state_upleft = m((nr + i - 1) % nr, (nc + j - 1) % nc);
+        ushort state_upleft = m((nr + i - 1) % nr,
+                                (nc + j - 1) % nc);
         if (use_8_nb && state_upleft == this_state) {
           dpairs(this_state)++;
         }
 
-        ushort state_upright = m((nr + i - 1) % nr, (nc + j - 1) % nc);
+        ushort state_upright = m((nr + i - 1) % nr,
+                                 (nc + j - 1) % nc);
         if (use_8_nb && state_upright == this_state) {
           dpairs(this_state)++;
         }
@@ -176,15 +178,18 @@ arma::Mat<arma::uword> pair_counts_internal(arma::Mat<unsigned short> m,
 
       if (wrap) {
         // left column
-        ushort state_left = m(i, (nc + j - 1) % nc);
+        ushort state_left = m(i,
+                              (nc + j - 1) % nc);
         ushort state_up = m((nr + i - 1) % nr, j);
 
         pairs(this_state, state_left)++;
         pairs(this_state, state_up)++;
 
         if ( use_8_nb ) {
-          ushort state_upleft = m((nr + i - 1) % nr, (nc + j - 1) % nc);
-          ushort state_upright = m((nr + i - 1) % nr, (nc + j - 1) % nc);
+          ushort state_upleft = m((nr + i - 1) % nr,
+                                  (nc + j - 1) % nc);
+          ushort state_upright = m((nr + i - 1) % nr,
+                                   (nc + j + 1) % nc);
           pairs(this_state, state_upleft)++;
           pairs(this_state, state_upright)++;
         }
@@ -206,7 +211,7 @@ arma::Mat<arma::uword> pair_counts_internal(arma::Mat<unsigned short> m,
         }
 
         if (use_8_nb && i > 0 && j < (nc - 1)) {
-          ushort state_upright = m(i, j + 1);
+          ushort state_upright = m(i - 1, j + 1);
           pairs(this_state, state_upright)++;
         }
       }

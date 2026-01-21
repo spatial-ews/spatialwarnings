@@ -21,7 +21,53 @@ test_that("Neighbor-counting is OK", {
       })
     }
   }
-  
+})
+
+test_that("Counting gives the same results as hand-counting", {
+  egmat <- matrix(
+    c("a", "b", "c",
+      "a", "a", "b",
+      "c", "a", "c"),
+    byrow = TRUE, nrow = 3, ncol = 3
+  )
+
+  # 4 neihbors
+  test1 <- pair_counts(egmat, prop = FALSE, wrap = FALSE)
+  expect_true({
+    all(
+      c(test1["a", "a"] == 3,
+        test1["b", "b"] == 0,
+        test1["c", "c"] == 0,
+        test1["b", "a"] == 3,
+        test1["c", "a"] == 3,
+        test1["c", "b"] == 3,
+        test1["b", "b"] == 0)
+    )
+  })
+
+  test1 <- pair_counts(egmat, prop = FALSE, wrap = TRUE)
+  expect_true({
+    all(
+      c(test1["a", "a"] == 3,
+        test1["b", "b"] == 0,
+        test1["c", "c"] == 2,
+        test1["b", "a"] == 5,
+        test1["c", "a"] == 5,
+        test1["c", "b"] == 3)
+    )
+  })
+
+  test1 <- pair_counts(egmat, prop = FALSE, wrap = TRUE, use_8_nb = TRUE)
+  expect_true({
+    all(
+      c(test1["a", "a"] == 6,
+        test1["b", "b"] == 1,
+        test1["c", "c"] == 3,
+        test1["b", "a"] == 8,
+        test1["c", "a"] == 12,
+        test1["c", "b"] == 6)
+    )
+  })
 })
 
 test_that("Computation of clustering are OK", {
@@ -100,5 +146,13 @@ test_that("Counting of pairs makes sense", {
   expect_true({ 
     all( abs(diff(means[lower.tri(means)])) < 0.01)
   })
-  
+
+  expect_true({
+    all(abs(
+      c(means["a", "a"] + means["b", "a"]/2 + means["c", "a"]/2 + means["d", "a"]/2,
+        means["b", "a"]/2 + means["b", "b"] + means["c", "b"] / 2 + means["d", "b"]/2) -
+        .25
+    ) < 1e-2)
+  })
+
 })

@@ -1,7 +1,7 @@
 Package: spatialwarnings
 Type: Package
 Title: Spatial Early Warning Signals of Ecosystem Degradation
-Version: 3.1.1
+Version: 3.1.99
 Authors@R: c(person(given = "Alain",
                     family = "Danet",
                     role = "aut"),
